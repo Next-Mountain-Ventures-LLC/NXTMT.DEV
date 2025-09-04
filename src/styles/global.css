@@ -110,18 +110,18 @@
     
     /* Secondary: Neon yellow */
     --secondary: 50 100% 60%;
-    --secondary-foreground: 240 70% 5%; /* Dark text on yellow for readability */
+    --secondary-foreground: 240 75% 15%; /* Darker text on yellow for better readability and contrast */
     
     --muted: 240 60% 15%;
     --muted-foreground: 0 0% 80%;
     
     /* Accent: Neon cyan */
     --accent: 180 100% 60%;
-    --accent-foreground: 240 70% 5%;
+    --accent-foreground: 0 0% 100%; /* Changed to white for better contrast */
     
     /* Success: Neon green */
     --success: 135 100% 60%;
-    --success-foreground: 240 70% 5%;
+    --success-foreground: 240 75% 15%; /* Darker for better contrast */
     
     /* Destructive: Neon red */
     --destructive: 0 100% 60%;

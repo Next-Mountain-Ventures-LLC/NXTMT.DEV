@@ -88,8 +88,8 @@ export default function ServicesSection() {
       
       <div className="container mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-accent/20 border border-accent/30 text-accent-foreground backdrop-blur-sm">
-            <span>Our Expertise</span>
+          <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-accent/40 border border-accent/50 text-accent-foreground backdrop-blur-sm">
+            <span className="drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]">Our Expertise</span>
           </div>
           
           <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-4 leading-tight">

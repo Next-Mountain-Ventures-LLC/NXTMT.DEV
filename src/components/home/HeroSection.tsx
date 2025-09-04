@@ -25,9 +25,9 @@ export default function HeroSection() {
       </div>
 
       <div className="container relative z-10 px-4 py-32 mx-auto text-center">
-        <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/20 border border-primary/30 text-primary-foreground backdrop-blur-sm">
+        <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/40 border border-primary/50 text-primary-foreground backdrop-blur-sm">
           <Star className="w-3.5 h-3.5 mr-1.5" />
-          <span>Creative Studio & Web Agency</span>
+          <span className="drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]">Creative Studio & Web Agency</span>
         </div>
 
         <div className="mb-6 animate-crt-on">
