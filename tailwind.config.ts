@@ -67,7 +67,7 @@ export default {
         'cosmic-gradient': 'linear-gradient(to bottom right, hsl(5, 90%, 25%), hsl(0, 0%, 8%), hsl(0, 0%, 5%))',
         'hero-stars': 'radial-gradient(circle, transparent 20%, hsl(0, 0%, 8%) 80%), radial-gradient(circle, white 0.5px, transparent 0.5px)',
         'glow-conic': 'conic-gradient(from 180deg at 50% 50%, hsl(5, 90%, 55%) 0deg, hsl(50, 100%, 55%) 72deg, hsl(330, 85%, 65%) 144deg, hsl(135, 80%, 45%) 216deg, hsl(0, 0%, 40%) 288deg, hsl(5, 90%, 55%) 360deg)',
-        'nxtmt-gradient': 'linear-gradient(to right, hsl(5, 90%, 55%), hsl(50, 100%, 55%), hsl(135, 80%, 45%), hsl(330, 85%, 65%))',
+        'nxtmt-gradient': 'linear-gradient(to right, hsl(5, 100%, 65%), hsl(50, 100%, 65%), hsl(135, 100%, 60%), hsl(330, 100%, 75%))',
       },
       backdropBlur: {
         'cosmic': '8px',

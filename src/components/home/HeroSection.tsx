@@ -33,9 +33,9 @@ export default function HeroSection() {
           <span className="block">We Build Digital Experiences</span>
           <span className="relative">
             That 
-            <span className="relative inline-block ml-4 text-transparent bg-clip-text bg-nxtmt-gradient animate-cosmic-glow">
-              Inspire
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-nxtmt-gradient"></span>
+            <span className="relative inline-block ml-4 text-white bg-clip-text font-bold">
+              <span className="relative z-10 bg-clip-text text-transparent bg-nxtmt-gradient">Inspire</span>
+              <span className="absolute -bottom-1 left-0 w-full h-1 bg-nxtmt-gradient"></span>
             </span>
           </span>
         </h1>

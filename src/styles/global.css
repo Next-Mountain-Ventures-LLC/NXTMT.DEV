@@ -104,23 +104,23 @@
     --popover: 0 0% 12%;
     --popover-foreground: 0 0% 98%;
     
-    /* Primary: Red from logo */
-    --primary: 5 90% 55%;
+    /* Primary: Red from logo - brightened for better contrast */
+    --primary: 5 100% 65%;
     --primary-foreground: 0 0% 100%;
     
-    /* Secondary: Yellow from logo */
-    --secondary: 50 100% 55%;
+    /* Secondary: Yellow from logo - brightened for better contrast */
+    --secondary: 50 100% 65%;
     --secondary-foreground: 0 0% 8%; /* Dark text on yellow for readability */
     
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 75%;
+    --muted: 0 0% 25%;
+    --muted-foreground: 0 0% 85%;
     
-    /* Accent: Pink from logo */
-    --accent: 330 85% 65%;
+    /* Accent: Pink from logo - brightened for better contrast */
+    --accent: 330 100% 75%;
     --accent-foreground: 0 0% 100%;
     
-    /* Success: Green from logo */
-    --success: 135 80% 45%;
+    /* Success: Green from logo - brightened for better contrast */
+    --success: 135 100% 60%;
     --success-foreground: 0 0% 100%;
     
     --destructive: 0 84.2% 60.2%;
