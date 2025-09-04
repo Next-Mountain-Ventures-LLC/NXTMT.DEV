@@ -19,21 +19,27 @@ export default function ContactForm() {
     setSubmitStatus(null);
 
     try {
+      // Create FormData object for multipart/form-data submission
+      const formDataObj = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataObj.append(key, value);
+      });
+
       const response = await fetch("https://api.new.website/api/submit-form/", {
         method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        body: JSON.stringify(formData),
+        // Don't manually set Content-Type for FormData - browser will add boundary
+        body: formDataObj,
       });
 
       if (response.ok) {
         setSubmitStatus("success");
         setFormData(defaultFormData);
       } else {
+        console.error("Form submission error:", await response.text());
         setSubmitStatus("error");
       }
     } catch (error) {
+      console.error("Form submission error:", error);
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
