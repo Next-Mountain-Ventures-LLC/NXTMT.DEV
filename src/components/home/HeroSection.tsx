@@ -33,9 +33,21 @@ export default function HeroSection() {
           <span className="block">We Build Digital Experiences</span>
           <span className="relative">
             That 
-            <span className="relative inline-block ml-4 text-white bg-clip-text font-bold">
-              <span className="relative z-10 bg-clip-text text-transparent bg-nxtmt-gradient">Inspire</span>
-              <span className="absolute -bottom-1 left-0 w-full h-1 bg-nxtmt-gradient"></span>
+            <span className="relative inline-block ml-4 font-bold">
+              {/* Apply direct inline styles to ensure the gradient text renders properly */}
+              <span style={{
+                background: 'linear-gradient(to right, #FF6B6B, #FFE66D, #FF70B3, #4CD97B)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent',
+                textShadow: '0 0 2px rgba(255,255,255,0.2)',
+                WebkitTextStroke: '1px rgba(255,255,255,0.1)',
+                padding: '0 4px',
+                display: 'inline-block'
+              }}>
+                Inspire
+              </span>
+              <span className="absolute -bottom-1 left-0 w-full h-1.5 bg-nxtmt-gradient rounded-full"></span>
             </span>
           </span>
         </h1>
