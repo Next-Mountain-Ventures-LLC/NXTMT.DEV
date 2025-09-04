@@ -94,45 +94,49 @@
 
 @layer base {
   :root {
-    /* Cosmic theme - dark background with vibrant accents */
-    --background: 230 25% 5%; /* Deep navy/black background */
+    /* Cosmic theme based on logo colors (red, yellow, green, pink, black) */
+    --background: 0 0% 8%; /* Black background from logo base */
     --foreground: 0 0% 98%; /* Light text for readability */
     
-    --card: 230 25% 7%; /* Slightly lighter than background */
+    --card: 0 0% 12%; /* Slightly lighter than background */
     --card-foreground: 0 0% 98%;
     
-    --popover: 230 25% 7%;
+    --popover: 0 0% 12%;
     --popover-foreground: 0 0% 98%;
     
-    /* Primary: Vibrant purple */
-    --primary: 265 89% 62%;
+    /* Primary: Red from logo */
+    --primary: 5 90% 55%;
     --primary-foreground: 0 0% 100%;
     
-    /* Secondary: Deep blue */
-    --secondary: 220 89% 57%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary: Yellow from logo */
+    --secondary: 50 100% 55%;
+    --secondary-foreground: 0 0% 8%; /* Dark text on yellow for readability */
     
-    --muted: 230 25% 12%;
-    --muted-foreground: 240 5% 75%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 75%;
     
-    /* Accent: Neon pink */
-    --accent: 330 100% 65%;
+    /* Accent: Pink from logo */
+    --accent: 330 85% 65%;
     --accent-foreground: 0 0% 100%;
+    
+    /* Success: Green from logo */
+    --success: 135 80% 45%;
+    --success-foreground: 0 0% 100%;
     
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 230 25% 15%;
-    --input: 230 25% 15%;
-    --ring: 265 89% 62%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 5 90% 55%;
     
     --radius: 0.75rem; /* Slightly more rounded corners */
     
-    --chart-1: 265 89% 62%; /* Purple */
-    --chart-2: 220 89% 57%; /* Blue */
-    --chart-3: 330 100% 65%; /* Pink */
-    --chart-4: 170 75% 50%; /* Teal */
-    --chart-5: 120 95% 55%; /* Neon green */
+    --chart-1: 5 90% 55%; /* Red */
+    --chart-2: 50 100% 55%; /* Yellow */
+    --chart-3: 330 85% 65%; /* Pink */
+    --chart-4: 135 80% 45%; /* Green */
+    --chart-5: 0 0% 40%; /* Gray */
   }
 }
 

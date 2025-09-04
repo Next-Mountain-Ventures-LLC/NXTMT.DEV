@@ -1,6 +1,7 @@
 ---
 import { buttonVariants } from "@/components/ui/button";
-import { Rocket } from "lucide-react";
+import { Image } from 'astro:assets';
+import logoImage from '../assets/logo_nw_ae1e53ab.webp';
 ---
 
 <header
@@ -11,8 +12,8 @@ import { Rocket } from "lucide-react";
   >
     <div class="flex gap-6 md:gap-10">
       <a href="/" class="flex items-center space-x-2 group">
-        <Rocket className="h-6 w-6 text-primary transition-transform group-hover:-translate-y-1 duration-300" />
-        <span class="inline-block font-display font-bold text-lg tracking-tight">COSMIC</span>
+        <Image src={logoImage} alt="NXTMT Logo" class="h-8 w-8 transition-transform group-hover:scale-110 duration-300" />
+        <span class="inline-block font-display font-bold text-lg tracking-tight">NXTMT</span>
       </a>
     </div>
     <div class="flex flex-1 items-center justify-end space-x-4">
@@ -52,7 +53,7 @@ import { Rocket } from "lucide-react";
           class={buttonVariants({ 
             variant: 'default', 
             size: 'sm',
-            class: 'ml-2 bg-primary/90 hover:bg-primary transition-all duration-300 shadow-[0_0_15px_rgba(147,51,234,0.5)] hover:shadow-[0_0_20px_rgba(147,51,234,0.8)]'
+            class: 'ml-2 bg-primary/90 hover:bg-primary transition-all duration-300 shadow-[0_0_15px_rgba(239,68,68,0.5)] hover:shadow-[0_0_20px_rgba(239,68,68,0.8)]'
           })}
         >
           Contact

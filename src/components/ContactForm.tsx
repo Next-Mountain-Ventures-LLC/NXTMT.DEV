@@ -101,7 +101,7 @@ export default function ContactForm() {
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-primary/90 hover:bg-primary text-primary-foreground shadow-[0_0_15px_rgba(147,51,234,0.5)] hover:shadow-[0_0_20px_rgba(147,51,234,0.8)] transition-all duration-300 font-medium py-3 rounded-lg"
+        className="w-full bg-primary/90 hover:bg-primary text-primary-foreground shadow-[0_0_15px_rgba(239,68,68,0.5)] hover:shadow-[0_0_20px_rgba(239,68,68,0.8)] transition-all duration-300 font-medium py-3 rounded-lg"
       >
         {isSubmitting ? (
           <span className="flex items-center justify-center">

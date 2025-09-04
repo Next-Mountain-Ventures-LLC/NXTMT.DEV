@@ -55,8 +55,8 @@ export default {
           '50%': { transform: 'translateY(-10px)' },
         },
         'cosmic-glow': {
-          '0%, 100%': { boxShadow: '0 0 15px 0 rgba(147, 51, 234, 0.5)' },
-          '50%': { boxShadow: '0 0 25px 5px rgba(147, 51, 234, 0.8)' },
+          '0%, 100%': { boxShadow: '0 0 15px 0 rgba(239, 68, 68, 0.5)' },
+          '50%': { boxShadow: '0 0 25px 5px rgba(239, 68, 68, 0.8)' },
         },
         'star-twinkle': {
           '0%, 100%': { opacity: '1' },
@@ -64,9 +64,10 @@ export default {
         },
       },
       backgroundImage: {
-        'cosmic-gradient': 'linear-gradient(to bottom right, hsl(265, 89%, 10%), hsl(230, 25%, 5%), hsl(265, 89%, 5%))',
-        'hero-stars': 'radial-gradient(circle, transparent 20%, hsl(230, 25%, 5%) 80%), radial-gradient(circle, white 0.5px, transparent 0.5px)',
-        'glow-conic': 'conic-gradient(from 180deg at 50% 50%, hsl(265, 89%, 62%) 0deg, hsl(220, 89%, 57%) 72deg, hsl(330, 100%, 65%) 144deg, hsl(120, 95%, 55%) 216deg, hsl(170, 75%, 50%) 288deg, hsl(265, 89%, 62%) 360deg)',
+        'cosmic-gradient': 'linear-gradient(to bottom right, hsl(5, 90%, 25%), hsl(0, 0%, 8%), hsl(0, 0%, 5%))',
+        'hero-stars': 'radial-gradient(circle, transparent 20%, hsl(0, 0%, 8%) 80%), radial-gradient(circle, white 0.5px, transparent 0.5px)',
+        'glow-conic': 'conic-gradient(from 180deg at 50% 50%, hsl(5, 90%, 55%) 0deg, hsl(50, 100%, 55%) 72deg, hsl(330, 85%, 65%) 144deg, hsl(135, 80%, 45%) 216deg, hsl(0, 0%, 40%) 288deg, hsl(5, 90%, 55%) 360deg)',
+        'nxtmt-gradient': 'linear-gradient(to right, hsl(5, 90%, 55%), hsl(50, 100%, 55%), hsl(135, 80%, 45%), hsl(330, 85%, 65%))',
       },
       backdropBlur: {
         'cosmic': '8px',

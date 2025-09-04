@@ -33,9 +33,9 @@ export default function HeroSection() {
           <span className="block">We Build Digital Experiences</span>
           <span className="relative">
             That 
-            <span className="relative inline-block ml-4 text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent animate-cosmic-glow">
+            <span className="relative inline-block ml-4 text-transparent bg-clip-text bg-nxtmt-gradient animate-cosmic-glow">
               Inspire
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary via-secondary to-accent"></span>
+              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-nxtmt-gradient"></span>
             </span>
           </span>
         </h1>
@@ -47,7 +47,7 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button 
             size="lg" 
-            className="bg-primary/90 hover:bg-primary shadow-[0_0_15px_rgba(147,51,234,0.5)] hover:shadow-[0_0_20px_rgba(147,51,234,0.8)] transition-all duration-300 font-medium rounded-full px-6 py-4 text-sm"
+            className="bg-primary/90 hover:bg-primary shadow-[0_0_15px_rgba(239,68,68,0.5)] hover:shadow-[0_0_20px_rgba(239,68,68,0.8)] transition-all duration-300 font-medium rounded-full px-6 py-4 text-sm"
           >
             Start Your Project
             <Rocket className="ml-2 h-4 w-4" />
