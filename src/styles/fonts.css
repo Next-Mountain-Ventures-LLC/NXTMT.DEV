@@ -1,9 +1,12 @@
 /* 
-Import fonts - Outfit for display (headers) and Poppins for body text
+Import fonts - Press Start 2P for display (retro gaming headers) and VT323 for body text
 */
 
-/* Outfit - Display Font */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+/* Press Start 2P - Retro Gaming Display Font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-/* Poppins - Body Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* VT323 - Retro Terminal/Gaming Body Font */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+/* Source Code Pro - Retro Terminal Alternative */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap');

@@ -94,49 +94,50 @@
 
 @layer base {
   :root {
-    /* Cosmic theme based on logo colors (red, yellow, green, pink, black) */
-    --background: 0 0% 8%; /* Black background from logo base */
-    --foreground: 0 0% 98%; /* Light text for readability */
+    /* Retro gaming theme colors */
+    --background: 240 75% 5%; /* Deep blue-black background */
+    --foreground: 0 0% 95%; /* Off-white text for retro feel */
     
-    --card: 0 0% 12%; /* Slightly lighter than background */
-    --card-foreground: 0 0% 98%;
+    --card: 240 70% 8%; /* Slightly lighter than background */
+    --card-foreground: 0 0% 95%;
     
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 240 70% 8%;
+    --popover-foreground: 0 0% 95%;
     
-    /* Primary: Red from logo - brightened for better contrast */
-    --primary: 5 100% 65%;
+    /* Primary: Neon pink */
+    --primary: 330 100% 60%;
     --primary-foreground: 0 0% 100%;
     
-    /* Secondary: Yellow from logo - brightened for better contrast */
-    --secondary: 50 100% 65%;
-    --secondary-foreground: 0 0% 8%; /* Dark text on yellow for readability */
+    /* Secondary: Neon yellow */
+    --secondary: 50 100% 60%;
+    --secondary-foreground: 240 70% 5%; /* Dark text on yellow for readability */
     
-    --muted: 0 0% 25%;
-    --muted-foreground: 0 0% 85%;
+    --muted: 240 60% 15%;
+    --muted-foreground: 0 0% 80%;
     
-    /* Accent: Pink from logo - brightened for better contrast */
-    --accent: 330 100% 75%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent: Neon cyan */
+    --accent: 180 100% 60%;
+    --accent-foreground: 240 70% 5%;
     
-    /* Success: Green from logo - brightened for better contrast */
+    /* Success: Neon green */
     --success: 135 100% 60%;
-    --success-foreground: 0 0% 100%;
+    --success-foreground: 240 70% 5%;
     
-    --destructive: 0 84.2% 60.2%;
+    /* Destructive: Neon red */
+    --destructive: 0 100% 60%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 5 90% 55%;
+    --border: 240 60% 20%;
+    --input: 240 60% 20%;
+    --ring: 330 100% 60%;
     
-    --radius: 0.75rem; /* Slightly more rounded corners */
+    --radius: 0; /* Sharp corners for pixel-perfect retro look */
     
-    --chart-1: 5 90% 55%; /* Red */
-    --chart-2: 50 100% 55%; /* Yellow */
-    --chart-3: 330 85% 65%; /* Pink */
-    --chart-4: 135 80% 45%; /* Green */
-    --chart-5: 0 0% 40%; /* Gray */
+    --chart-1: 330 100% 60%; /* Neon pink */
+    --chart-2: 50 100% 60%; /* Neon yellow */
+    --chart-3: 180 100% 60%; /* Neon cyan */
+    --chart-4: 135 100% 60%; /* Neon green */
+    --chart-5: 270 100% 60%; /* Neon purple */
   }
 }
 
@@ -151,8 +152,31 @@
 
   body {
     @apply bg-background text-foreground;
-    /* font-feature-settings: "rlig" 1, "calt" 1; */
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
+    
+    /* Add retro CRT effect to the entire site */
+    @apply after:fixed after:pointer-events-none after:inset-0 after:z-[9999] after:bg-scan-lines after:bg-[size:100%_2px] after:opacity-20;
+    
+    /* Add subtle pixel noise */
+    @apply before:fixed before:pointer-events-none before:inset-0 before:z-[9998] before:bg-pixel-grid before:bg-[size:2px_2px] before:opacity-5;
+  }
+  
+  /* Make text pixelated and less smooth for retro feel */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display leading-tight tracking-wider uppercase text-transparent bg-clip-text;
+    -webkit-font-smoothing: none;
+    text-shadow: 0.05em 0.05em 0 rgba(0,0,0,0.75);
+  }
+  
+  /* Pixelate images for retro feel */
+  img {
+    image-rendering: pixelated;
+  }
+  
+  /* Add glowing effect to buttons */
+  .btn, button, [type="button"], [type="submit"] {
+    @apply hover:animate-none active:translate-y-0.5 transition-all;
+    text-shadow: 0 0 5px currentColor;
   }
 }
