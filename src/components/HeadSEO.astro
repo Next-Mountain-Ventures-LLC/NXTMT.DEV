@@ -31,18 +31,23 @@ const { title, description, ogImage } = Astro.props;
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+<meta name="keywords" content="web design, creative studio, web agency, digital experiences, branding, development, digital marketing" />
+<meta name="author" content="COSMIC Studio" />
+<meta name="theme-color" content="#7e22ce" />
 
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="COSMIC Studio" />
 
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={ogImage} />
+<meta property="twitter:creator" content="@cosmicstudio" />
 
 <!-- DO NOT REMOVE - Plausible Analytics must always be enabled -->
 <script is:inline>

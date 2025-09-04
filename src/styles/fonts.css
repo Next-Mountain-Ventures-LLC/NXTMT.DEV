@@ -1,1 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+/* 
+Import fonts - Outfit for display (headers) and Poppins for body text
+*/
+
+/* Outfit - Display Font */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* Poppins - Body Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
