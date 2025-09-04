@@ -39,7 +39,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ title, excerpt, date, category, ind
           </span>
         </div>
         
-        <h3 className="font-display font-bold text-xl mb-2 group-hover:text-primary transition-colors duration-300">{title}</h3>
+        <h3 className="font-[Press_Start_2P] font-bold text-xl mb-2 group-hover:text-primary transition-colors duration-300">{title}</h3>
         <p className="text-muted-foreground text-sm mb-4">{excerpt}</p>
         
         <Button 
@@ -89,7 +89,7 @@ export default function BlogSection() {
               <span>Our Blog</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 md:mb-0 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-4 md:mb-0 leading-tight">
               Latest Insights
             </h2>
           </div>

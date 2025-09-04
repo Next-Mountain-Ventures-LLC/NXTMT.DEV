@@ -156,15 +156,23 @@
     text-rendering: optimizeLegibility;
     
     /* Add retro CRT effect to the entire site */
-    @apply after:fixed after:pointer-events-none after:inset-0 after:z-[9999] after:bg-scan-lines after:bg-[size:100%_2px] after:opacity-20;
+    @apply after:fixed after:pointer-events-none after:inset-0 after:z-[9999] after:opacity-20;
+    &::after {
+      background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) 1px, transparent 1px, transparent 2px);
+      background-size: 100% 2px;
+    }
     
     /* Add subtle pixel noise */
-    @apply before:fixed before:pointer-events-none before:inset-0 before:z-[9998] before:bg-pixel-grid before:bg-[size:2px_2px] before:opacity-5;
+    @apply before:fixed before:pointer-events-none before:inset-0 before:z-[9998] before:opacity-5;
+    &::before {
+      background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.11) 1px, transparent 1px, transparent 2px);
+      background-size: 2px 2px;
+    }
   }
   
   /* Make text pixelated and less smooth for retro feel */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display leading-tight tracking-wider uppercase text-transparent bg-clip-text;
+    @apply font-["Press_Start_2P"] leading-tight tracking-wider uppercase text-transparent bg-clip-text;
     -webkit-font-smoothing: none;
     text-shadow: 0.05em 0.05em 0 rgba(0,0,0,0.75);
   }

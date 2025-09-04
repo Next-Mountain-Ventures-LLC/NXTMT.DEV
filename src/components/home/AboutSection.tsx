@@ -17,7 +17,7 @@ export default function AboutSection() {
               <span>About Our Studio</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold font-display mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-6 leading-tight">
               Creating digital experiences that 
               <span className="text-primary"> transcend </span> 
               ordinary boundaries
@@ -51,15 +51,15 @@ export default function AboutSection() {
             
             <div className="flex gap-8">
               <div>
-                <p className="text-4xl font-bold font-display text-primary">7+</p>
+                <p className="text-4xl font-bold font-[Press_Start_2P] text-primary">7+</p>
                 <p className="text-muted-foreground text-sm">Years Experience</p>
               </div>
               <div>
-                <p className="text-4xl font-bold font-display text-primary">120+</p>
+                <p className="text-4xl font-bold font-[Press_Start_2P] text-primary">120+</p>
                 <p className="text-muted-foreground text-sm">Projects Completed</p>
               </div>
               <div>
-                <p className="text-4xl font-bold font-display text-primary">98%</p>
+                <p className="text-4xl font-bold font-[Press_Start_2P] text-primary">98%</p>
                 <p className="text-muted-foreground text-sm">Client Satisfaction</p>
               </div>
             </div>

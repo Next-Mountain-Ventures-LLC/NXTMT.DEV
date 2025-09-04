@@ -43,7 +43,7 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({ category, title, index })
       
       <div className="mt-4">
         <span className="text-xs text-primary font-medium">{category}</span>
-        <h3 className="text-lg font-bold font-display mt-1 group-hover:text-primary transition-colors duration-300">{title}</h3>
+        <h3 className="text-lg font-bold font-[Press_Start_2P] mt-1 group-hover:text-primary transition-colors duration-300">{title}</h3>
       </div>
     </div>
   );
@@ -71,7 +71,7 @@ export default function PortfolioSection() {
               <span>Our Work</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 md:mb-0 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-4 md:mb-0 leading-tight">
               Featured Projects
             </h2>
           </div>

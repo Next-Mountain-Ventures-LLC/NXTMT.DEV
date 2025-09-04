@@ -40,10 +40,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['VT323', 'monospace'],
-        display: ['"Press Start 2P"', 'cursive'],
-        mono: ['"Source Code Pro"', 'monospace'],
-        retro: ['VT323', 'monospace'],
+        'sans': ['VT323', 'monospace'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+        'retro': ['VT323', 'monospace'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

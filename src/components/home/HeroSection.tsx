@@ -31,7 +31,7 @@ export default function HeroSection() {
         </div>
 
         <div className="mb-6 animate-crt-on">
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl">
+          <h1 className="font-[Press_Start_2P] text-4xl md:text-6xl lg:text-7xl">
             <div className="mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text">
               <span className="animate-flicker inline-block text-foreground" 
                   style={{ textShadow: '0 0 5px #FF33A8, 0 0 10px #FF33A8' }}>

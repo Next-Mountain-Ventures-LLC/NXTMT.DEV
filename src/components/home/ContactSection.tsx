@@ -15,7 +15,7 @@ export default function ContactSection() {
               <span>Get In Touch</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold font-display mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-6 leading-tight">
               Ready to Start Your Digital Journey?
             </h2>
             

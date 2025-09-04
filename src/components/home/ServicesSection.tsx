@@ -25,7 +25,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, col
       <div className={`w-12 h-12 rounded-lg ${color} flex items-center justify-center mb-4 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(147,51,234,0.3)]`}>
         {icon}
       </div>
-      <h3 className="text-xl font-bold font-display mb-2">{title}</h3>
+      <h3 className="text-xl font-bold font-[Press_Start_2P] mb-2">{title}</h3>
       <p className="text-muted-foreground text-sm">{description}</p>
     </div>
     
@@ -92,7 +92,7 @@ export default function ServicesSection() {
             <span>Our Expertise</span>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 leading-tight">
+          <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-4 leading-tight">
             Comprehensive Digital Services
           </h2>
           

@@ -74,7 +74,7 @@ export default function TestimonialsSection() {
             <span>Testimonials</span>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 leading-tight">
+          <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-4 leading-tight">
             What Our Clients Say
           </h2>
           
