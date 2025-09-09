@@ -94,50 +94,50 @@
 
 @layer base {
   :root {
-    /* Retro gaming theme colors */
-    --background: 240 75% 5%; /* Deep blue-black background */
+    /* Retro gaming theme colors with red tint */
+    --background: 0 75% 5%; /* Deep red-black background */
     --foreground: 0 0% 95%; /* Off-white text for retro feel */
     
-    --card: 240 70% 8%; /* Slightly lighter than background */
+    --card: 0 70% 8%; /* Slightly lighter than background */
     --card-foreground: 0 0% 95%;
     
-    --popover: 240 70% 8%;
+    --popover: 0 70% 8%;
     --popover-foreground: 0 0% 95%;
     
-    /* Primary: Neon pink */
-    --primary: 330 100% 60%;
+    /* Primary: Bright Red from logo */
+    --primary: 0 100% 55%;
     --primary-foreground: 0 0% 100%;
     
-    /* Secondary: Neon yellow */
-    --secondary: 50 100% 60%;
+    /* Secondary: Bright Yellow from logo */
+    --secondary: 48 100% 50%;
     --secondary-foreground: 240 75% 15%; /* Darker text on yellow for better readability and contrast */
     
     --muted: 240 60% 15%;
     --muted-foreground: 0 0% 80%;
     
-    /* Accent: Neon cyan */
-    --accent: 180 100% 60%;
-    --accent-foreground: 0 0% 100%; /* Changed to white for better contrast */
+    /* Accent: Vibrant Red-Orange as a complementary accent */
+    --accent: 20 100% 55%;
+    --accent-foreground: 0 0% 100%; /* White for better contrast */
     
-    /* Success: Neon green */
-    --success: 135 100% 60%;
+    /* Success: Golden Yellow as a variant */
+    --success: 40 100% 50%;
     --success-foreground: 240 75% 15%; /* Darker for better contrast */
     
-    /* Destructive: Neon red */
-    --destructive: 0 100% 60%;
+    /* Destructive: Deep Red */
+    --destructive: 0 100% 45%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 240 60% 20%;
-    --input: 240 60% 20%;
-    --ring: 330 100% 60%;
+    --border: 0 60% 20%;
+    --input: 0 60% 20%;
+    --ring: 0 100% 55%; /* Updated to match primary red */
     
     --radius: 0; /* Sharp corners for pixel-perfect retro look */
     
-    --chart-1: 330 100% 60%; /* Neon pink */
-    --chart-2: 50 100% 60%; /* Neon yellow */
-    --chart-3: 180 100% 60%; /* Neon cyan */
-    --chart-4: 135 100% 60%; /* Neon green */
-    --chart-5: 270 100% 60%; /* Neon purple */
+    --chart-1: 0 100% 55%; /* Bright Red */
+    --chart-2: 48 100% 50%; /* Bright Yellow */
+    --chart-3: 20 100% 55%; /* Vibrant Red-Orange */
+    --chart-4: 40 100% 50%; /* Golden Yellow */
+    --chart-5: 0 85% 45%; /* Deeper Red */
   }
 }
 
