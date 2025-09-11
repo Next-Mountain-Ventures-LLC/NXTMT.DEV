@@ -27,7 +27,7 @@ export default function HeroSection() {
       <div className="container relative z-10 px-4 py-32 mx-auto text-center">
         <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/40 border border-primary/50 text-primary-foreground backdrop-blur-sm">
           <Star className="w-3.5 h-3.5 mr-1.5" />
-          <span className="drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]">Creative Studio & Web Agency</span>
+          <span className="drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]">Next Mountain Creative Studio</span>
         </div>
 
         <div className="mb-6 animate-crt-on">
@@ -61,7 +61,7 @@ export default function HeroSection() {
                 }}>
                   INSPIRE
                 </span>
-                <span className="absolute -bottom-1 left-0 w-full h-1.5 bg-nxtmt-gradient rounded-sm"></span>
+                <span className="absolute -bottom-1 left-0 w-full h-1.5 bg-nxtmt-gradient rounded-sm"></span> {/* Using the gradient defined in tailwind config */}
               </span>
               <span className="text-foreground inline-block" 
                   style={{ textShadow: '0 0 5px currentColor' }}>
