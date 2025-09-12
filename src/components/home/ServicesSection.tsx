@@ -1,117 +1,113 @@
 import React from 'react';
 import { 
-  Monitor, 
-  PenTool, 
+  Rocket, 
   Code, 
+  Globe, 
   Smartphone, 
-  Megaphone, 
-  BarChart3
+  Paintbrush, 
+  ArrowRight
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface ServiceCardProps {
   title: string;
   description: string;
   icon: React.ReactNode;
-  color: string;
-  delay: string;
+  index: number;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, color, delay }) => (
+const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, index }) => (
   <div 
-    className="group relative p-1 rounded-xl bg-gradient-to-br from-transparent to-transparent hover:from-primary/20 hover:to-accent/20 transition-all duration-500"
-    style={{ transitionDelay: delay }}
+    className="group bg-card hover:bg-card/80 border border-border rounded-lg p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 animate-fade-in-up"
+    style={{ animationDelay: `${index * 100}ms` }}
   >
-    <div className="relative p-6 h-full rounded-lg bg-card/30 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-500 group-hover:translate-y-[-5px]">
-      <div className={`w-12 h-12 rounded-lg ${color} flex items-center justify-center mb-4 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(147,51,234,0.3)]`}>
+    <div className="mb-4">
+      <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center text-primary">
         {icon}
       </div>
-      <h3 className="text-xl font-bold font-[Press_Start_2P] mb-2">{title}</h3>
-      <p className="text-muted-foreground text-sm">{description}</p>
     </div>
     
-    {/* Glowing effect on hover */}
-    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 bg-gradient-to-r from-primary/10 to-accent/10 blur-xl transition-opacity duration-500"></div>
+    <h3 className="text-xl font-serif font-semibold mb-3">{title}</h3>
+    <p className="text-muted-foreground mb-4">{description}</p>
+    
+    <a href="#" className="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors">
+      Learn more <ArrowRight className="ml-2 h-4 w-4" />
+    </a>
   </div>
 );
 
 export default function ServicesSection() {
   const services = [
     {
-      title: "Web Design",
-      description: "Creating responsive, intuitive, and visually stunning websites that engage and convert visitors.",
-      icon: <Monitor className="h-6 w-6 text-white" />,
-      color: "bg-primary",
-      delay: "0ms"
+      title: "Product Strategy",
+      description: "We help you identify opportunities, define your vision, and create a roadmap for your digital product.",
+      icon: <Rocket className="h-6 w-6" />
     },
     {
-      title: "Branding",
-      description: "Developing cohesive brand identities that communicate your values and resonate with your audience.",
-      icon: <PenTool className="h-6 w-6 text-white" />,
-      color: "bg-secondary",
-      delay: "50ms"
+      title: "Web Development",
+      description: "Building modern, fast, and scalable web applications with the latest technologies and best practices.",
+      icon: <Code className="h-6 w-6" />
     },
     {
-      title: "Development",
-      description: "Building robust, scalable applications and websites with clean, efficient code and modern technologies.",
-      icon: <Code className="h-6 w-6 text-white" />,
-      color: "bg-accent",
-      delay: "100ms"
+      title: "UX/UI Design",
+      description: "Creating intuitive, engaging user experiences and beautiful interfaces that align with your brand.",
+      icon: <Paintbrush className="h-6 w-6" />
     },
     {
-      title: "Mobile Apps",
-      description: "Crafting native and cross-platform mobile applications with intuitive UX and seamless performance.",
-      icon: <Smartphone className="h-6 w-6 text-white" />,
-      color: "bg-primary",
-      delay: "150ms"
+      title: "Mobile Development",
+      description: "Crafting native and cross-platform mobile applications with seamless performance and user experience.",
+      icon: <Smartphone className="h-6 w-6" />
     },
     {
-      title: "Digital Marketing",
-      description: "Implementing strategic campaigns that increase visibility, engagement, and conversion across platforms.",
-      icon: <Megaphone className="h-6 w-6 text-white" />,
-      color: "bg-secondary",
-      delay: "200ms"
-    },
-    {
-      title: "Analytics",
-      description: "Providing data-driven insights and optimization strategies to maximize your digital performance.",
-      icon: <BarChart3 className="h-6 w-6 text-white" />,
-      color: "bg-accent",
-      delay: "250ms"
+      title: "Growth Strategy",
+      description: "Developing strategies to acquire users, boost engagement, and scale your digital product.",
+      icon: <Globe className="h-6 w-6" />
     }
   ];
 
   return (
-    <section id="services" className="py-24 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute top-1/3 right-0 w-1/2 h-1/2 bg-gradient-to-l from-primary/10 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-r from-accent/10 to-transparent rounded-full blur-3xl"></div>
+    <section id="services" className="py-24 md:py-32 relative overflow-hidden bg-muted/30">
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-dots-pattern bg-[size:20px_20px] z-0 opacity-50"></div>
       
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-accent/40 border border-accent/50 text-accent-foreground backdrop-blur-sm">
-            <span className="drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]">Our Expertise</span>
+      <div className="container relative z-10 mx-auto px-4 md:px-8">
+        <div className="max-w-5xl mx-auto">
+          {/* Two-column layout */}
+          <div className="flex flex-col lg:flex-row gap-16 mb-16">
+            {/* Left column - Heading */}
+            <div className="w-full lg:w-1/3">
+              <div className="text-primary font-medium mb-3">Our Services</div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
+                How we help you build great products
+              </h2>
+            </div>
+            
+            {/* Right column - Description */}
+            <div className="w-full lg:w-2/3">
+              <p className="text-lg text-muted-foreground mb-6">
+                Our team brings expertise across the entire product development lifecycle. 
+                From initial strategy to design, development, and growth, we help you create 
+                digital products that solve real problems.
+              </p>
+              <Button variant="outline" className="inline-flex items-center gap-2">
+                View all services
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-4 leading-tight">
-            Comprehensive Digital Services
-          </h2>
-          
-          <p className="text-muted-foreground">
-            We offer a full spectrum of digital services to elevate your brand and create meaningful connections with your audience.
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
-            <ServiceCard 
-              key={index}
-              title={service.title}
-              description={service.description}
-              icon={service.icon}
-              color={service.color}
-              delay={service.delay}
-            />
-          ))}
+          {/* Services grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {services.map((service, index) => (
+              <ServiceCard 
+                key={index}
+                title={service.title}
+                description={service.description}
+                icon={service.icon}
+                index={index}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,12 +1,12 @@
 /* 
-Import fonts - Press Start 2P for display (retro gaming headers) and VT323 for body text
+Import fonts from IBM Plex family - Serif for headings, Sans for body text, and Mono for code
 */
 
-/* Press Start 2P - Retro Gaming Display Font */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* IBM Plex Serif - For headings */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600;700&display=swap');
 
-/* VT323 - Retro Terminal/Gaming Body Font */
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+/* IBM Plex Sans - For body text */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
 
-/* Source Code Pro - Retro Terminal Alternative */
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap');
+/* IBM Plex Mono - For code and monospace content */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap');
