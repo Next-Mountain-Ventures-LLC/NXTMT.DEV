@@ -1,12 +1,9 @@
 /* 
-Import fonts from IBM Plex family - Serif for headings, Sans for body text, and Mono for code
+Import fonts - Outfit for display (headers) and Poppins for body text
 */
 
-/* IBM Plex Serif - For headings */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600;700&display=swap');
+/* Outfit - Display Font */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
-/* IBM Plex Sans - For body text */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
-
-/* IBM Plex Mono - For code and monospace content */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap');
+/* Poppins - Body Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');

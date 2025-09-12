@@ -1,95 +1,69 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, ArrowDown } from 'lucide-react';
+import { Rocket, Star, ChevronDown } from 'lucide-react';
 
 export default function HeroSection() {
   return (
-    <section id="home" className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-hero-pattern z-0 opacity-50"></div>
-      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-blue-gradient/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-secondary/5 rounded-full blur-3xl"></div>
-      
-      <div className="container relative z-10 mx-auto px-4 md:px-8">
-        <div className="max-w-5xl mx-auto">
-          {/* Main content */}
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
-            <div className="w-full md:w-3/5 space-y-8 animate-fade-in-up">
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
-                <span className="text-primary">Building</span> great products. <br />
-                <span className="relative">
-                  On repeat.
-                  <span className="absolute -bottom-2 left-0 w-16 h-1 bg-secondary"></span>
-                </span>
-              </h1>
-              
-              <p className="text-lg md:text-xl text-muted-foreground max-w-xl">
-                We help innovative companies design and develop 
-                <span className="text-foreground font-medium"> digital products </span> 
-                that make an impact.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button 
-                  size="lg" 
-                  className="bg-primary hover:bg-primary/90 transition-all duration-300 font-medium"
-                >
-                  Let's Talk
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="border-2 hover:bg-secondary/10 text-foreground transition-all duration-300"
-                >
-                  See Our Work
-                </Button>
-              </div>
-            </div>
-            
-            {/* Hero image */}
-            <div className="w-full md:w-2/5 relative mt-8 md:mt-0 animate-fade-in">
-              <div className="relative rounded-lg overflow-hidden shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1658967136188-415466c22b9c?w=1200&h=600&auto=format&fit=crop&q=80" 
-                  alt="Digital product design" 
-                  className="w-full h-auto"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
-              </div>
-              
-              {/* Stats overlay */}
-              <div className="absolute -bottom-4 -right-4 bg-card shadow-lg rounded-lg p-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-                <div className="text-2xl font-serif font-bold text-primary">50+</div>
-                <div className="text-sm">Happy Clients</div>
-              </div>
-              
-              <div className="absolute -top-4 -left-4 bg-card shadow-lg rounded-lg p-4 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-                <div className="text-2xl font-serif font-bold text-secondary">100+</div>
-                <div className="text-sm">Projects Delivered</div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Client logos */}
-          <div className="mt-20 md:mt-32 text-center">
-            <div className="text-sm uppercase tracking-wider text-muted-foreground mb-6">Trusted by innovative companies</div>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-70">
-              {/* Company logos would go here */}
-              <div className="h-6 w-24 bg-foreground/20 rounded"></div>
-              <div className="h-6 w-24 bg-foreground/20 rounded"></div>
-              <div className="h-6 w-24 bg-foreground/20 rounded"></div>
-              <div className="h-6 w-24 bg-foreground/20 rounded"></div>
-            </div>
-          </div>
-        </div>
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Animated background with stars */}
+      <div 
+        className="absolute inset-0 bg-cosmic-gradient bg-hero-stars bg-[size:50px_50px] z-0"
+        style={{ backgroundSize: '50px 50px' }}
+      >
+        {/* Animated floating elements */}
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full animate-star-twinkle" style={{ animationDelay: '0s' }}></div>
+        <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-secondary rounded-full animate-star-twinkle" style={{ animationDelay: '0.5s' }}></div>
+        <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-accent rounded-full animate-star-twinkle" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-2/3 right-1/4 w-2 h-2 bg-primary rounded-full animate-star-twinkle" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute bottom-1/4 right-1/2 w-1 h-1 bg-accent rounded-full animate-star-twinkle" style={{ animationDelay: '2s' }}></div>
         
+        {/* Larger glowing elements */}
+        <div className="absolute top-1/4 right-1/4 w-24 h-24 bg-primary/20 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-1/3 left-1/4 w-32 h-32 bg-accent/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-2/3 right-1/3 w-40 h-40 bg-secondary/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '3s' }}></div>
+      </div>
+
+      <div className="container relative z-10 px-4 py-32 mx-auto text-center">
+        <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/20 border border-primary/30 text-primary-foreground backdrop-blur-sm">
+          <Star className="w-3.5 h-3.5 mr-1.5" />
+          <span>Creative Studio & Web Agency</span>
+        </div>
+
+        <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tighter md:text-6xl lg:text-7xl font-display">
+          <span className="block">We Build Digital Experiences</span>
+          <span className="relative">
+            That 
+            <span className="relative inline-block ml-4 text-transparent bg-clip-text bg-nxtmt-gradient animate-cosmic-glow">
+              Inspire
+              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-nxtmt-gradient"></span>
+            </span>
+          </span>
+        </h1>
+
+        <p className="max-w-lg mx-auto mb-8 text-lg text-muted-foreground md:text-xl">
+          We craft stunning websites, powerful brands, and innovative digital solutions that help businesses stand out in the digital cosmos.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <Button 
+            size="lg" 
+            className="bg-primary/90 hover:bg-primary shadow-[0_0_15px_rgba(239,68,68,0.5)] hover:shadow-[0_0_20px_rgba(239,68,68,0.8)] transition-all duration-300 font-medium rounded-full px-6 py-4 text-sm"
+          >
+            Start Your Project
+            <Rocket className="ml-2 h-4 w-4" />
+          </Button>
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="border-primary/50 bg-background/50 hover:bg-background/80 backdrop-blur-sm text-foreground transition-all duration-300 font-medium rounded-full px-6 py-4 text-sm"
+          >
+            See Our Work
+          </Button>
+        </div>
+
         {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:block">
-          <a href="#services" className="flex flex-col items-center text-muted-foreground hover:text-primary transition-colors">
-            <span className="text-xs mb-2">Scroll to explore</span>
-            <ArrowDown className="w-4 h-4" />
-          </a>
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+          <ChevronDown className="w-6 h-6 text-foreground/70" />
         </div>
       </div>
     </section>

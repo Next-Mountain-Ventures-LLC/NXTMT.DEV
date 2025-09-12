@@ -70,11 +70,11 @@ export default function TestimonialsSection() {
       
       <div className="container mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-secondary/40 border border-secondary/50 text-secondary-foreground backdrop-blur-sm">
-            <span className="drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]">Testimonials</span>
+          <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-secondary/20 border border-secondary/30 text-secondary-foreground backdrop-blur-sm">
+            <span>Testimonials</span>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-4 leading-tight">
+          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 leading-tight">
             What Our Clients Say
           </h2>
           

@@ -12,12 +12,12 @@ export default function AboutSection() {
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Left column - Text content */}
           <div className="w-full lg:w-1/2">
-            <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-secondary/40 border border-secondary/50 text-secondary backdrop-blur-sm drop-shadow-sm">
+            <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-secondary/20 border border-secondary/30 text-secondary backdrop-blur-sm">
               <Telescope className="w-3.5 h-3.5 mr-1.5" />
-              <span className="drop-shadow-sm">About Our Studio</span>
+              <span>About Our Studio</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold font-display mb-6 leading-tight">
               Creating digital experiences that 
               <span className="text-primary"> transcend </span> 
               ordinary boundaries
@@ -51,15 +51,15 @@ export default function AboutSection() {
             
             <div className="flex gap-8">
               <div>
-                <p className="text-4xl font-bold font-[Press_Start_2P] text-primary">7+</p>
+                <p className="text-4xl font-bold font-display text-primary">7+</p>
                 <p className="text-muted-foreground text-sm">Years Experience</p>
               </div>
               <div>
-                <p className="text-4xl font-bold font-[Press_Start_2P] text-primary">120+</p>
+                <p className="text-4xl font-bold font-display text-primary">120+</p>
                 <p className="text-muted-foreground text-sm">Projects Completed</p>
               </div>
               <div>
-                <p className="text-4xl font-bold font-[Press_Start_2P] text-primary">98%</p>
+                <p className="text-4xl font-bold font-display text-primary">98%</p>
                 <p className="text-muted-foreground text-sm">Client Satisfaction</p>
               </div>
             </div>

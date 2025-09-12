@@ -5,69 +5,63 @@ import logoImage from '../assets/logo_nw_ae1e53ab.webp';
 ---
 
 <header
-  class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4"
-  id="header"
+  class="bg-background/70 supports-[backdrop-filter]:bg-background/40 sticky top-0 z-50 w-full border-b border-white/10 backdrop-blur-cosmic"
 >
-  <div class="container mx-auto px-4 md:px-8">
-    <div class="flex items-center justify-between">
-      <!-- Logo -->
-      <a href="/" class="flex items-center space-x-3 group">
-        <Image 
-          src={logoImage} 
-          alt="Next Mountain Logo" 
-          width={40} 
-          height={40} 
-          class="h-10 w-10 transition-transform group-hover:scale-110 duration-300" 
-        />
-        <span class="text-lg md:text-xl font-serif font-semibold tracking-tight">
-          Next Mountain
-        </span>
+  <div
+    class="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0"
+  >
+    <div class="flex gap-6 md:gap-10">
+      <a href="/" class="flex items-center space-x-2 group">
+        <Image src={logoImage} alt="NXTMT Logo" class="h-8 w-8 transition-transform group-hover:scale-110 duration-300" />
+        <span class="inline-block font-display font-bold text-lg tracking-tight">NXTMT</span>
       </a>
-      
-      <!-- Desktop Navigation -->
-      <nav class="hidden lg:flex items-center space-x-1">
+    </div>
+    <div class="flex flex-1 items-center justify-end space-x-4">
+      <nav class="hidden md:flex items-center space-x-1">
         <a
-          href="/#work"
-          class="text-sm font-medium px-4 py-2 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+          href="/#home"
+          class="text-sm font-medium px-4 py-2 transition-colors hover:text-primary"
         >
-          Work
-        </a>
-        <a
-          href="/#services"
-          class="text-sm font-medium px-4 py-2 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-        >
-          Services
+          Home
         </a>
         <a
           href="/#about"
-          class="text-sm font-medium px-4 py-2 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+          class="text-sm font-medium px-4 py-2 transition-colors hover:text-primary"
         >
           About
         </a>
         <a
-          href="/#insights"
-          class="text-sm font-medium px-4 py-2 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+          href="/#services"
+          class="text-sm font-medium px-4 py-2 transition-colors hover:text-primary"
         >
-          Insights
+          Services
+        </a>
+        <a
+          href="/#portfolio"
+          class="text-sm font-medium px-4 py-2 transition-colors hover:text-primary"
+        >
+          Portfolio
+        </a>
+        <a
+          href="/#blog"
+          class="text-sm font-medium px-4 py-2 transition-colors hover:text-primary"
+        >
+          Blog
         </a>
         <a
           href="/#contact"
           class={buttonVariants({ 
             variant: 'default', 
             size: 'sm',
-            class: 'ml-4 bg-primary hover:bg-primary/90 transition-all duration-300'
+            class: 'ml-2 bg-primary/90 hover:bg-primary transition-all duration-300 shadow-[0_0_15px_rgba(239,68,68,0.5)] hover:shadow-[0_0_20px_rgba(239,68,68,0.8)]'
           })}
         >
-          Let's Talk
+          Contact
         </a>
       </nav>
-
-      <!-- Mobile Menu Button -->
-      <button 
-        class="lg:hidden flex items-center justify-center p-2 rounded-md hover:bg-muted/20 transition-colors"
-        aria-label="Toggle menu"
-        id="menu-toggle"
-      >
+      <!-- Mobile menu button - to be implemented with JavaScript later -->
+      <button class="md:hidden p-2 rounded-md hover:bg-primary/20">
+        <span class="sr-only">Open menu</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="4" x2="20" y1="12" y2="12"></line>
           <line x1="4" x2="20" y1="6" y2="6"></line>
@@ -76,65 +70,4 @@ import logoImage from '../assets/logo_nw_ae1e53ab.webp';
       </button>
     </div>
   </div>
-  
-  <!-- Mobile Menu (Hidden by default) -->
-  <div class="fixed inset-0 bg-background z-40 transform translate-x-full transition-transform duration-300 lg:hidden" id="mobile-menu">
-    <div class="flex flex-col h-full">
-      <div class="flex justify-end p-6">
-        <button class="p-2 rounded-md hover:bg-muted/20" id="close-menu">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-      <nav class="flex flex-col space-y-4 p-6">
-        <a href="/#work" class="text-2xl font-medium py-2">Work</a>
-        <a href="/#services" class="text-2xl font-medium py-2">Services</a>
-        <a href="/#about" class="text-2xl font-medium py-2">About</a>
-        <a href="/#insights" class="text-2xl font-medium py-2">Insights</a>
-        <a href="/#contact" class="text-2xl font-medium py-2">Contact</a>
-      </nav>
-    </div>
-  </div>
 </header>
-
-<script>
-  // Header scroll behavior
-  const header = document.getElementById('header');
-  let lastScrollY = window.scrollY;
-  
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      header.classList.add('bg-background/80', 'backdrop-blur-md', 'shadow-sm', 'py-2');
-      header.classList.remove('py-4');
-      
-      // Hide on scroll down, show on scroll up
-      if (window.scrollY > lastScrollY) {
-        header.classList.add('-translate-y-full');
-      } else {
-        header.classList.remove('-translate-y-full');
-      }
-    } else {
-      header.classList.remove('bg-background/80', 'backdrop-blur-md', 'shadow-sm', '-translate-y-full', 'py-2');
-      header.classList.add('py-4');
-    }
-    
-    lastScrollY = window.scrollY;
-  });
-  
-  // Mobile menu functionality
-  const menuToggle = document.getElementById('menu-toggle');
-  const closeMenu = document.getElementById('close-menu');
-  const mobileMenu = document.getElementById('mobile-menu');
-  
-  menuToggle.addEventListener('click', () => {
-    mobileMenu.classList.remove('translate-x-full');
-    document.body.classList.add('overflow-hidden');
-  });
-  
-  closeMenu.addEventListener('click', () => {
-    mobileMenu.classList.add('translate-x-full');
-    document.body.classList.remove('overflow-hidden');
-  });
-</script>
