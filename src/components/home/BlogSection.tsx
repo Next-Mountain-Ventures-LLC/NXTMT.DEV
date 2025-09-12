@@ -32,7 +32,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ title, excerpt, date, category, ind
       
       <div className="p-4">
         <div className="flex items-center space-x-3 mb-2">
-          <span className="text-xs px-2 py-1 rounded-full bg-primary/20 text-primary-foreground">{category}</span>
+          <span className="text-xs px-2 py-1 rounded-full bg-primary/40 text-primary-foreground drop-shadow-sm">{category}</span>
           <span className="text-xs text-muted-foreground flex items-center">
             <Calendar className="h-3 w-3 mr-1" />
             {date}
@@ -85,8 +85,8 @@ export default function BlogSection() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
           <div>
-            <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-accent/20 border border-accent/30 text-accent backdrop-blur-sm">
-              <span>Our Blog</span>
+            <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-accent/40 border border-accent/50 text-accent backdrop-blur-sm drop-shadow-sm">
+              <span className="drop-shadow-sm">Our Blog</span>
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-4 md:mb-0 leading-tight">

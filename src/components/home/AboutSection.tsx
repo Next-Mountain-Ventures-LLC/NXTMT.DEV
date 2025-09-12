@@ -12,9 +12,9 @@ export default function AboutSection() {
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Left column - Text content */}
           <div className="w-full lg:w-1/2">
-            <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-secondary/20 border border-secondary/30 text-secondary backdrop-blur-sm">
+            <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-secondary/40 border border-secondary/50 text-secondary backdrop-blur-sm drop-shadow-sm">
               <Telescope className="w-3.5 h-3.5 mr-1.5" />
-              <span>About Our Studio</span>
+              <span className="drop-shadow-sm">About Our Studio</span>
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold font-[Press_Start_2P] mb-6 leading-tight">
