@@ -98,8 +98,9 @@
         
         <div class="mt-8">
           <h3 class="font-serif font-semibold text-lg mb-4">Newsletter</h3>
-          <form class="flex gap-2">
-            <input type="email" placeholder="Your email" class="bg-card border border-border rounded-md px-3 py-2 text-sm w-full focus:outline-none focus:ring-1 focus:ring-primary" />
+          <form class="flex gap-2" action="https://api.new.website/api/submit-form/" method="POST">
+            <input type="hidden" name="form_name" value="Newsletter Signup" />
+            <input type="email" name="email" placeholder="Your email" class="bg-card border border-border rounded-md px-3 py-2 text-sm w-full focus:outline-none focus:ring-1 focus:ring-primary" required />
             <button type="submit" class="bg-primary hover:bg-primary/90 text-white rounded-md px-3 py-2 text-sm transition-colors">
               Subscribe
             </button>
