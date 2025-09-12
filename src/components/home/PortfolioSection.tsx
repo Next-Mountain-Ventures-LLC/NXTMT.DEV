@@ -62,45 +62,59 @@ const PortfolioItem: React.FC<PortfolioItemProps> = ({ category, title, descript
 export default function PortfolioSection() {
   const portfolioItems = [
     { 
-      category: "Legal Website", 
-      title: "Weitz & Luxenberg",
-      description: "Personal injury law firm specializing in complex litigation across multiple practice areas.",
-      imageUrl: "https://images.unsplash.com/photo-1650784854945-264d5b0b6b07?w=600&h=600&auto=format&fit=crop&q=80",
-      link: "https://www.weitzlux.com"
-    },
-    { 
-      category: "Golf Course Website", 
-      title: "The Green Jacket Golf",
-      description: "Premium golf course website showcasing facilities, membership options and booking services.",
-      imageUrl: "https://images.unsplash.com/photo-1605144884288-49eb7f9bb447?w=600&h=600&auto=format&fit=crop&q=80",
-      link: "https://thegreenjacketgolf.com"
-    },
-    { 
-      category: "Legal Services", 
-      title: "Berri Azakir Law",
-      description: "Law firm specializing in personal injury, civil rights, and business litigation with the tagline 'Your Path to Justice Starts Here'.",
-      imageUrl: "https://images.unsplash.com/photo-1618896748593-7828f28c03d2?w=600&h=600&auto=format&fit=crop&q=80",
-      link: "https://berriazakirlaw.com"
-    },
-    { 
-      category: "Medical Website", 
-      title: "Advanced Healthcare Partners",
-      description: "Medical practice group website showcasing specialized healthcare services and patient resources.",
-      imageUrl: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=600&auto=format&fit=crop&q=80",
+      category: "Healthcare", 
+      title: "Express Care",
+      description: "Medical services provider website with online appointment booking, patient portal, and healthcare resources.",
+      imageUrl: "https://images.unsplash.com/photo-1631507623121-eaaba8d4e7dc?w=600&h=600&auto=format&fit=crop&q=80",
       link: "#"
     },
     { 
-      category: "Education Platform", 
-      title: "Learning Horizons Academy",
-      description: "Online education platform offering courses in technology, business, and creative fields.",
-      imageUrl: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&h=600&auto=format&fit=crop&q=80",
+      category: "Construction", 
+      title: "Patriot Roofer",
+      description: "Roofing contractor website featuring service details, project gallery, and client testimonials.",
+      imageUrl: "https://images.unsplash.com/photo-1640476750068-72c645e653cd?w=600&h=600&auto=format&fit=crop&q=80",
       link: "#"
     },
     { 
-      category: "E-commerce", 
-      title: "Artisan Marketplace",
-      description: "Online marketplace connecting artisan crafters with customers looking for unique handmade products.",
-      imageUrl: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&h=600&auto=format&fit=crop&q=80",
+      category: "Home Services", 
+      title: "Milam Plumbing",
+      description: "Plumbing services website with emergency booking, service area maps, and maintenance tips.",
+      imageUrl: "https://images.unsplash.com/photo-1687184464107-3804b88644c9?w=600&h=600&auto=format&fit=crop&q=80",
+      link: "#"
+    },
+    { 
+      category: "Real Estate", 
+      title: "Welcome Lane",
+      description: "Property management website with listing search, virtual tours, and neighborhood information.",
+      imageUrl: "https://images.unsplash.com/photo-1652878530627-cc6f063e3947?w=600&h=600&auto=format&fit=crop&q=80",
+      link: "#"
+    },
+    { 
+      category: "Business Services", 
+      title: "The Entrepreneurs Source",
+      description: "Business coaching platform offering entrepreneurship resources, consultation services, and success stories.",
+      imageUrl: "https://images.unsplash.com/photo-1752118464988-2914fb27d0f0?w=600&h=600&auto=format&fit=crop&q=80",
+      link: "#"
+    },
+    { 
+      category: "Pet Services", 
+      title: "GoDoghq",
+      description: "Dog training and pet services website with appointment scheduling, training resources, and success stories.",
+      imageUrl: "https://images.unsplash.com/photo-1562400972-7b2955ee2d10?w=600&h=600&auto=format&fit=crop&q=80",
+      link: "#"
+    },
+    { 
+      category: "Home Improvement", 
+      title: "Mehrs Garage Doors",
+      description: "Garage door installation and repair website with service catalog, warranty information, and emergency services.",
+      imageUrl: "https://images.unsplash.com/photo-1657490017761-381bdf660ff4?w=600&h=600&auto=format&fit=crop&q=80",
+      link: "#"
+    },
+    { 
+      category: "Hospitality", 
+      title: "Wrightsville Ave",
+      description: "Restaurant website featuring menu offerings, reservation system, and special events calendar.",
+      imageUrl: "https://images.unsplash.com/photo-1745211212207-54b6eadd26c1?w=600&h=600&auto=format&fit=crop&q=80",
       link: "#"
     }
   ];
@@ -131,7 +145,7 @@ export default function PortfolioSection() {
           </Button>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {portfolioItems.map((item, index) => (
             <PortfolioItem 
               key={index}
