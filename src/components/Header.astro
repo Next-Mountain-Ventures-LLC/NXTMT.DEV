@@ -76,11 +76,13 @@ import logoImage from '../assets/44318aa0-1ebb-46fc-bcf0-dc41c47feb2b_nw_2ec94e4
   
   window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
-      header.classList.add('w-full', 'mt-0', 'rounded-none');
-      header.classList.remove('w-[95%]', 'mt-4', 'rounded-full');
+      header.classList.add('shadow-xl');
+      header.classList.remove('mt-4');
+      header.classList.add('mt-2');
     } else {
-      header.classList.remove('w-full', 'mt-0', 'rounded-none');
-      header.classList.add('w-[95%]', 'mt-4', 'rounded-full');
+      header.classList.remove('shadow-xl');
+      header.classList.remove('mt-2');
+      header.classList.add('mt-4');
     }
     
     lastScrollY = window.scrollY;
