@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Rocket, Star, ChevronDown } from 'lucide-react';
-import SolarSystem from './SolarSystem';
 
 export default function HeroSection() {
   return (
@@ -61,9 +60,6 @@ export default function HeroSection() {
             See Our Work
           </Button>
         </div>
-
-        {/* Solar System */}
-        <SolarSystem />
 
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
