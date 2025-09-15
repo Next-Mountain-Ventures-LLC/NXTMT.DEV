@@ -42,14 +42,15 @@ const BlogPost: React.FC<BlogPostProps> = ({ title, excerpt, date, category, ind
         <h3 className="font-display font-bold text-xl mb-2 group-hover:text-primary transition-colors duration-300">{title}</h3>
         <p className="text-muted-foreground text-sm mb-4">{excerpt}</p>
         
-        <Button 
-          variant="ghost" 
-          size="sm"
-          className="p-0 text-primary group-hover:text-primary/90"
+        <a 
+          href={`https://nxtmt.bloom.io/get-started-18?blog=${encodeURIComponent(title.toLowerCase().replace(/\s+/g, '-'))}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center p-0 text-primary group-hover:text-primary/90 text-sm font-medium"
         >
           Read more
           <ArrowRight className="ml-1 h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
-        </Button>
+        </a>
       </div>
     </article>
   );
@@ -94,13 +95,15 @@ export default function BlogSection() {
             </h2>
           </div>
           
-          <Button 
-            variant="ghost" 
-            className="group text-foreground hover:text-primary"
+          <a 
+            href="https://nxtmt.bloom.io/get-started-18?blog=all-articles"
+            target="_blank"
+            rel="noopener noreferrer" 
+            className="inline-flex items-center group text-foreground hover:text-primary px-4 py-2 text-sm font-medium transition-colors"
           >
             View All Articles
             <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </Button>
+          </a>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
