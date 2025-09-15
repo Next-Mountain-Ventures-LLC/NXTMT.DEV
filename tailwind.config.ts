@@ -48,6 +48,13 @@ export default {
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'cosmic-glow': 'cosmic-glow 8s infinite',
         'star-twinkle': 'star-twinkle 3s ease-in-out infinite',
+        'orbit': 'orbit 20s linear infinite',
+        'orbit-reverse': 'orbit 25s linear infinite reverse',
+        'orbit-slow': 'orbit 30s linear infinite',
+        'orbit-slower': 'orbit 40s linear infinite',
+        'orbit-slowest': 'orbit 50s linear infinite',
+        'bounce-on-hover': 'bounce 0.5s ease-in-out',
+        'fade-in': 'fadeIn 0.3s ease-in-out',
       },
       keyframes: {
         float: {
@@ -61,6 +68,14 @@ export default {
         'star-twinkle': {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.5' },
+        },
+        'orbit': {
+          '0%': { transform: 'rotate(0deg) translateX(var(--orbit-radius, 100px)) rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg) translateX(var(--orbit-radius, 100px)) rotate(-360deg)' },
+        },
+        'fadeIn': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
       },
       backgroundImage: {
