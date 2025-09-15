@@ -21,6 +21,24 @@ const BlogPost: React.FC<BlogPostProps> = ({ title, excerpt, date, category, ind
     return gradients[idx % gradients.length];
   };
 
+  // Handle click to call webhook and then redirect
+  const handleBlogClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault(); // Prevent default link behavior temporarily
+    
+    const blogParam = encodeURIComponent(title.toLowerCase().replace(/\s+/g, '-'));
+    const redirectUrl = `https://nxtmt.bloom.io/get-started-18?blog=${blogParam}`;
+    
+    // Call the FlowXO webhook with the blog parameter
+    fetch(`https://flowxo.com/hooks/a/4rk75d8a?blog=${blogParam}`, {
+      method: 'GET',
+      mode: 'no-cors' // Required for cross-origin requests without CORS
+    })
+    .finally(() => {
+      // Redirect after the webhook call, regardless of response
+      window.open(redirectUrl, '_blank', 'noopener,noreferrer');
+    });
+  };
+
   return (
     <article className="group rounded-xl overflow-hidden transition-all duration-300 hover:translate-y-[-5px]">
       {/* Image placeholder - in a real site this would be an actual image */}
@@ -44,8 +62,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ title, excerpt, date, category, ind
         
         <a 
           href={`https://nxtmt.bloom.io/get-started-18?blog=${encodeURIComponent(title.toLowerCase().replace(/\s+/g, '-'))}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={handleBlogClick}
           className="inline-flex items-center p-0 text-primary group-hover:text-primary/90 text-sm font-medium"
         >
           Read more
@@ -57,6 +74,20 @@ const BlogPost: React.FC<BlogPostProps> = ({ title, excerpt, date, category, ind
 };
 
 export default function BlogSection() {
+  // Handle click for View All Articles
+  const handleViewAllClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault(); // Prevent default link behavior temporarily
+    
+    // Call the FlowXO webhook with the blog parameter
+    fetch('https://flowxo.com/hooks/a/4rk75d8a?blog=all-articles', {
+      method: 'GET',
+      mode: 'no-cors' // Required for cross-origin requests without CORS
+    })
+    .finally(() => {
+      // Redirect after the webhook call, regardless of response
+      window.open('https://nxtmt.bloom.io/get-started-18?blog=all-articles', '_blank', 'noopener,noreferrer');
+    });
+  };
   const blogPosts = [
     {
       title: "10 Web Design Trends Shaping the Digital Universe in 2023",
@@ -97,8 +128,7 @@ export default function BlogSection() {
           
           <a 
             href="https://nxtmt.bloom.io/get-started-18?blog=all-articles"
-            target="_blank"
-            rel="noopener noreferrer" 
+            onClick={handleViewAllClick}
             className="inline-flex items-center group text-foreground hover:text-primary px-4 py-2 text-sm font-medium transition-colors"
           >
             View All Articles
