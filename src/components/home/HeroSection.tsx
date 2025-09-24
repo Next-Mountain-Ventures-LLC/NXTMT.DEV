@@ -26,7 +26,7 @@ export default function HeroSection() {
       <div className="container relative z-10 px-4 py-32 mx-auto text-center">
         <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/20 border border-primary/30 text-primary-foreground backdrop-blur-sm">
           <Star className="w-3.5 h-3.5 mr-1.5" />
-          <span>Creative Studio & Web Agency</span>
+          <span>Venture Studio & Web Agency</span>
         </div>
 
         <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tighter md:text-6xl lg:text-7xl font-display">
