@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import signMeImg from '@/assets/img_4108_nw_092480fd.jpeg';
+import signMeImg from '@/assets/img_4110_nw_d534e0f5.jpeg';
 
 interface WorkItemProps {
   image: string;
@@ -29,7 +29,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ image, title, category, offset = 'n
       <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
         <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/80 text-white
           backdrop-blur-sm inline-block mb-2">{category}</span>
-        <h3 className="text-white text-lg font-bold font-display">{title}</h3>
+        <h3 className="text-white text-base font-bold font-display">{title}</h3>
       </div>
     </div>
   );
