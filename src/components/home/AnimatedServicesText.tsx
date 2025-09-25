@@ -53,21 +53,12 @@ const AnimatedServicesText: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-12 overflow-hidden bg-gradient-to-b from-background/90 to-background relative">
+    <section className="pt-0 pb-12 overflow-hidden bg-gradient-to-b from-background/90 to-background relative">
       {/* Background accents */}
       <div className="absolute top-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-primary/5 to-transparent rounded-full blur-3xl"></div>
       <div className="absolute bottom-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-secondary/5 to-transparent rounded-full blur-3xl"></div>
       
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/20 border border-primary/30 text-primary-foreground backdrop-blur-sm">
-            <span>Our Services</span>
-          </div>
-          
-          <h2 className="text-3xl md:text-4xl font-bold font-display mb-6 leading-tight">
-            What We Do
-          </h2>
-        </div>
 
         <div className="overflow-hidden max-w-6xl mx-auto">
           {/* First line of services */}
