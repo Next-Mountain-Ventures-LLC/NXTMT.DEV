@@ -63,12 +63,12 @@ const WorkItem: React.FC<WorkItemComponentProps> = ({
           />
           {isHovered && (
             <div className="absolute top-4 right-4 px-2 py-1 bg-primary/80 text-white text-xs rounded-md z-20 shadow-lg">
-              After
+              Before
             </div>
           )}
           {!isHovered && isActive && (
             <div className="absolute top-4 right-4 px-2 py-1 bg-black/80 text-white text-xs rounded-md z-20 shadow-lg">
-              Before
+              After
             </div>
           )}
         </>
@@ -163,8 +163,8 @@ export default function WorkCarousel() {
       services: ['Industrial Design', 'Hardware Prototyping', 'PCB Design', 'Manufacturing']
     },
     {
-      image: twistBeforeImg.src,
-      hoverImage: twistAfterImg.src,
+      image: twistAfterImg.src,
+      hoverImage: twistBeforeImg.src,
       title: 'Twist N\'Turn Dryer Vent',
       category: 'Website Redesign',
       offset: 'none',
