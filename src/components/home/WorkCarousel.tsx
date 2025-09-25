@@ -1,9 +1,12 @@
 import React, { useRef, useState } from 'react';
 import signMeImg from '@/assets/img_4110_nw_d534e0f5.jpeg';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import twistAfterImg from '@/assets/img_6920_nw_8e13ea06.png';
+import twistBeforeImg from '@/assets/img_6913_nw_fd8ed4ae.png';
 
 interface WorkItemProps {
   image: string;
+  hoverImage?: string; // Optional hover image for before/after effect
   title: string;
   category: string;
   offset?: 'up' | 'down' | 'none';
@@ -20,6 +23,7 @@ interface WorkItemComponentProps extends WorkItemProps {
 
 const WorkItem: React.FC<WorkItemComponentProps> = ({ 
   image, 
+  hoverImage, 
   title, 
   category, 
   offset = 'none', 
@@ -27,12 +31,18 @@ const WorkItem: React.FC<WorkItemComponentProps> = ({
   isActive,
   ...rest
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
   const offsetClass = 
     offset === 'up' ? '-translate-y-4' : 
     offset === 'down' ? 'translate-y-4' : '';
 
   const handleMouseEnter = () => {
-    onHover({ image, title, category, offset, ...rest });
+    setIsHovered(true);
+    onHover({ image, hoverImage, title, category, offset, ...rest });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
   };
 
   return (
@@ -40,14 +50,35 @@ const WorkItem: React.FC<WorkItemComponentProps> = ({
       className={`flex-shrink-0 w-56 h-64 mx-5 ${offsetClass} transition-all duration-300 
       group rounded-xl overflow-hidden relative ${isActive ? 'ring-2 ring-primary scale-105' : ''}`}
       onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 opacity-70"></div>
       
-      <img 
-        src={image} 
-        alt={title}
-        className="w-full h-full object-cover object-center transition-transform duration-500"
-      />
+      {hoverImage ? (
+        <>
+          <img 
+            src={isHovered ? hoverImage : image} 
+            alt={title}
+            className="w-full h-full object-cover object-center transition-all duration-500"
+          />
+          {isHovered && (
+            <div className="absolute top-4 right-4 px-2 py-1 bg-primary/80 text-white text-xs rounded-md z-20 shadow-lg">
+              After
+            </div>
+          )}
+          {!isHovered && isActive && (
+            <div className="absolute top-4 right-4 px-2 py-1 bg-black/80 text-white text-xs rounded-md z-20 shadow-lg">
+              Before
+            </div>
+          )}
+        </>
+      ) : (
+        <img 
+          src={image} 
+          alt={title}
+          className="w-full h-full object-cover object-center transition-transform duration-500"
+        />
+      )}
       
       <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
         <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/80 text-white
@@ -132,14 +163,15 @@ export default function WorkCarousel() {
       services: ['Industrial Design', 'Hardware Prototyping', 'PCB Design', 'Manufacturing']
     },
     {
-      image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?q=80&w=1024',
-      title: 'Tech Startup Branding',
-      category: 'Branding & Identity',
+      image: twistBeforeImg.src,
+      hoverImage: twistAfterImg.src,
+      title: 'Twist N\'Turn Dryer Vent',
+      category: 'Website Redesign',
       offset: 'none',
-      description: 'We created a complete brand identity for a tech startup entering the competitive SaaS market. The branding included logo design, color palette, typography, and a comprehensive style guide to ensure consistent brand application.',
-      client: 'SkyData Technologies',
-      year: '2022',
-      services: ['Logo Design', 'Brand Strategy', 'Visual Identity', 'Style Guidelines']
+      description: 'Twist N\'Turn is a leading dryer vent cleaning company based in Tulsa, Oklahoma. We redesigned their website from the ground up, creating a modern, responsive design that highlights their services. We moved them to a faster, more secure WordPress hosting platform, saving them money while improving performance. We also added blog capabilities to help them establish themselves as industry leaders through content and training materials.',
+      client: 'Twist N\'Turn Dryer Vent',
+      year: '2025',
+      services: ['Website Redesign', 'Mockup Creation', 'WordPress Development', 'Fast Hosting with Backup & Security', 'Blog Capabilities', 'Search Engine Optimization', 'Content Management']
     },
     {
       image: 'https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?q=80&w=1024',
