@@ -5,21 +5,41 @@ const serviceLines = [
   [
     "Custom Web Development", 
     "Brand New Website Builds", 
-    "Brand Story and Design", 
+    "Brand Story", 
     "Logo Design", 
     "Custom Mobile Apps", 
     "Brand Creation", 
-    "Customer Portals"
+    "Customer Portals",
+    "Brand Strategy",
+    "Customer Review Gathering",
+    "Industry Positioning",
+    "Social Media Management",
+    "Website Redesigns",
+    "Employee Portals",
+    "CRM Solutions",
+    "Brand Colors and Fonts",
+    "Consultation",
+    "Coaching",
+    "Mobile Optimization"
   ],
   [
-    "Online Scheduling", 
-    "Invoicing", 
+    "Online Scheduling Systems", 
+    "Custom Payment & Invoicing Solutions", 
     "E-commerce Stores", 
     "Service Company Websites", 
     "Employee Management Solutions", 
     "Search Engine Optimization", 
     "Google Local Services", 
-    "Custom GPT Creation"
+    "Custom GPT Creation",
+    "Product Prototyping",
+    "Product Packaging",
+    "Shipping & Fulfillment Solutions",
+    "Email Marketing Lists",
+    "Email Marketing Campaigns",
+    "Custom SMS Development",
+    "Mass Text Marketing",
+    "LLC Filing & Company Formation",
+    "Launch Sites"
   ]
 ];
 
@@ -58,9 +78,9 @@ const AnimatedServicesText: React.FC = () => {
       <div className="absolute top-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-primary/5 to-transparent rounded-full blur-3xl"></div>
       <div className="absolute bottom-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-secondary/5 to-transparent rounded-full blur-3xl"></div>
       
-      <div className="container mx-auto px-4">
+      <div className="w-full px-4">
 
-        <div className="overflow-hidden max-w-6xl mx-auto">
+        <div className="overflow-hidden w-full">
           {/* First line of services */}
           <div 
             ref={line1Ref}
@@ -78,6 +98,15 @@ const AnimatedServicesText: React.FC = () => {
             {serviceLines[0].map((service, index) => (
               <div 
                 key={`dup-${index}`} 
+                className="flex-shrink-0 px-4 py-2 bg-primary/10 text-primary-foreground rounded-lg border border-primary/20 backdrop-blur-sm font-medium whitespace-nowrap"
+              >
+                {service}
+              </div>
+            ))}
+            {/* Second duplicate set for wider screens */}
+            {serviceLines[0].map((service, index) => (
+              <div 
+                key={`dup2-${index}`} 
                 className="flex-shrink-0 px-4 py-2 bg-primary/10 text-primary-foreground rounded-lg border border-primary/20 backdrop-blur-sm font-medium whitespace-nowrap"
               >
                 {service}
@@ -107,6 +136,15 @@ const AnimatedServicesText: React.FC = () => {
                 {service}
               </div>
             ))}
+            {/* Second duplicate set for wider screens */}
+            {serviceLines[1].map((service, index) => (
+              <div 
+                key={`dup2-${index}`} 
+                className="flex-shrink-0 px-4 py-2 bg-secondary/10 text-secondary-foreground rounded-lg border border-secondary/20 backdrop-blur-sm font-medium whitespace-nowrap"
+              >
+                {service}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -116,20 +154,20 @@ const AnimatedServicesText: React.FC = () => {
         .animate-in {
           opacity: 1;
           transform: translateX(0);
-          animation: scroll-right 30s linear infinite;
+          animation: scroll-right 40s linear infinite;
         }
         
         .animate-in + div {
-          animation: scroll-left 30s linear infinite;
+          animation: scroll-left 40s linear infinite;
         }
         
         @keyframes scroll-right {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(calc(-50% - 1rem)); }
         }
         
         @keyframes scroll-left {
-          0% { transform: translateX(-50%); }
+          0% { transform: translateX(calc(-50% - 1rem)); }
           100% { transform: translateX(0); }
         }
       `}</style>
