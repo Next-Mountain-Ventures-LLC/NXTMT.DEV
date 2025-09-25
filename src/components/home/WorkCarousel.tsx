@@ -14,7 +14,7 @@ const WorkItem: React.FC<WorkItemProps> = ({ image, title, category, offset = 'n
 
   return (
     <div 
-      className={`flex-shrink-0 w-72 h-80 mx-3 ${offsetClass} transition-transform duration-300 
+      className={`flex-shrink-0 w-56 h-64 mx-5 ${offsetClass} transition-transform duration-300 
       group hover:scale-105 rounded-xl overflow-hidden relative`}
     >
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 opacity-70
@@ -38,7 +38,6 @@ const WorkItem: React.FC<WorkItemProps> = ({ image, title, category, offset = 'n
 };
 
 export default function WorkCarousel() {
-  const [isPaused, setIsPaused] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   
   // Sample work items - replace with actual content
@@ -108,36 +107,7 @@ export default function WorkCarousel() {
   // Duplicate the items to create a smooth infinite effect
   const allItems = [...workItems, ...workItems];
   
-  // Setup the animation
-  useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-    
-    let animationId: number;
-    let startTime: number;
-    const duration = 40000; // 40 seconds for one full cycle
-    const totalWidth = carousel.scrollWidth / 2; // Width of one set of items
-    
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = (elapsed % duration) / duration;
-      
-      if (!isPaused) {
-        carousel.scrollLeft = totalWidth * progress;
-      }
-      
-      animationId = requestAnimationFrame(animate);
-    };
-    
-    animationId = requestAnimationFrame(animate);
-    
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  }, [isPaused]);
+  // Using CSS animations instead of JS for smoother performance
   
   return (
     <section id="work-showcase" className="py-16 relative overflow-hidden bg-gradient-to-b from-background to-background/80">
@@ -163,12 +133,10 @@ export default function WorkCarousel() {
       
       <div 
         className="relative w-full overflow-hidden"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
       >
         <div 
           ref={carouselRef}
-          className="flex py-8 transition-all duration-500"
+          className="flex py-8 animate-carousel-scroll-left hover:animate-none transition-all duration-500"
           style={{ width: 'fit-content' }}
         >
           {allItems.map((item, index) => (

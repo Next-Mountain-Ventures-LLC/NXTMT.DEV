@@ -49,6 +49,7 @@ export default {
         'cosmic-glow': 'cosmic-glow 8s infinite',
         'star-twinkle': 'star-twinkle 3s ease-in-out infinite',
         'carousel-scroll': 'carousel-scroll 40s linear infinite',
+        'carousel-scroll-left': 'carousel-scroll-left 30s linear infinite',
       },
       keyframes: {
         float: {
@@ -66,6 +67,10 @@ export default {
         'carousel-scroll': {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        'carousel-scroll-left': {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
         },
       },
       backgroundImage: {
