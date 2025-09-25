@@ -28,9 +28,9 @@ const PartnershipTier: React.FC<PartnershipTierProps> = ({
       <div className={`p-6 ${primaryColor}`}>
         <div className="flex items-center gap-3 mb-4">
           {icon}
-          <h3 className="text-2xl font-bold font-display text-white">{title}</h3>
+          <h3 className="text-2xl font-bold font-display text-white drop-shadow-sm">{title}</h3>
         </div>
-        <p className="text-white/90">{description}</p>
+        <p className="text-white drop-shadow-sm">{description}</p>
       </div>
       
       <div className={`flex-grow p-6 bg-card/50 ${secondaryColor}`}>
