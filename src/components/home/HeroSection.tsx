@@ -30,7 +30,7 @@ export default function HeroSection() {
         </div>
 
         <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tighter md:text-6xl lg:text-7xl font-display">
-          <span className="block">Bootstrapping just got an upgrade.</span>
+          <span className="block">Bootstrapping Upgraded.</span>
           <span className="relative">
             A New Kind of 
             <span className="relative inline-block ml-4 font-bold text-primary animate-pulse-slow">
