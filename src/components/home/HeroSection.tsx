@@ -34,7 +34,7 @@ export default function HeroSection() {
           <span className="relative">
             A New Kind of 
             <span className="relative inline-block ml-4 font-bold text-primary animate-pulse-slow">
-              Venture Studio
+              Inspire
               <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary"></span>
             </span>
           </span>
