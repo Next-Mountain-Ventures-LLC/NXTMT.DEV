@@ -42,7 +42,7 @@ export default function WorkCarousel() {
   const workItems: WorkItemProps[] = [
     {
       image: signMeImg.src,
-      title: 'SignMe™ Digital Smart Sign',
+      title: 'SignMe™ Smart Sign',
       category: 'Product Prototyping',
       offset: 'up'
     },
