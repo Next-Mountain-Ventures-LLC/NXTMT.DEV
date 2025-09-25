@@ -1,6 +1,16 @@
 import React from 'react';
-import { MessageSquare } from 'lucide-react';
 import astroLogo from '../../assets/img_0562_nw_e507d3a0.png';
+import acuityLogo from '../../assets/img_0554_nw_162f879e.png';
+import twilioLogo from '../../assets/img_0558_nw_a452dfbf.png';
+import stripeLogo from '../../assets/img_0553_nw_b750080b.png';
+import squareLogo from '../../assets/img_0555_nw_531214a0.png';
+import chatgptLogo from '../../assets/img_0556_nw_85450984.png';
+import wordpressLogo from '../../assets/img_0559_nw_3d59bc4b.png';
+import elementorLogo from '../../assets/img_0567_nw_b8fb2713.png';
+import woocommerceLogo from '../../assets/img_0564_nw_e35222cf.png';
+import bloomLogo from '../../assets/img_0568_nw_423e856c.jpeg';
+import pressableLogo from '../../assets/img_0569_nw_4fd13c49.jpeg';
+import css5Logo from '../../assets/img_0563_nw_b242d7cf.jpeg';
 
 interface LogoItemProps {
   name: string;
@@ -22,51 +32,93 @@ const LogoItem: React.FC<LogoItemProps> = ({ name, icon, delay }) => {
   );
 };
 
-// Custom icons for each company/service
+// Logo components for each company/service
 const AcuityIcon = () => (
-  <div className="w-8 h-8 rounded-md bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-xs">
-    Ac
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={acuityLogo.src} alt="Acuity" className="w-6 h-6 object-contain" />
   </div>
 );
 
 const TwilioIcon = () => (
-  <div className="w-8 h-8 rounded-md bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center text-white font-bold text-xs">
-    Tw
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={twilioLogo.src} alt="Twilio" className="w-6 h-6 object-contain" />
   </div>
 );
 
 const StripeIcon = () => (
-  <div className="w-8 h-8 rounded-md bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs">
-    St
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={stripeLogo.src} alt="Stripe" className="w-6 h-6 object-contain" />
   </div>
 );
 
 const SquareIcon = () => (
-  <div className="w-8 h-8 rounded-md bg-gradient-to-br from-black to-gray-700 flex items-center justify-center text-white font-bold text-xs">
-    Sq
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={squareLogo.src} alt="Square" className="w-6 h-6 object-contain" />
   </div>
 );
 
-const GPTIcon = () => (
-  <div className="w-8 h-8 rounded-md bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
-    <MessageSquare className="w-4 h-4 text-white" />
+const ChatGPTIcon = () => (
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={chatgptLogo.src} alt="ChatGPT" className="w-6 h-6 object-contain" />
   </div>
 );
 
 const AstroIcon = () => (
-  <div className="w-8 h-8 rounded-md bg-gradient-to-br from-blue-900 to-black flex items-center justify-center">
-    <img src={astroLogo.src} alt="Astro" width={16} height={16} className="w-5 h-5 object-contain" />
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={astroLogo.src} alt="Astro" className="w-6 h-6 object-contain" />
+  </div>
+);
+
+const WordPressIcon = () => (
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={wordpressLogo.src} alt="WordPress" className="w-6 h-6 object-contain" />
+  </div>
+);
+
+const ElementorIcon = () => (
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={elementorLogo.src} alt="Elementor" className="w-6 h-6 object-contain" />
+  </div>
+);
+
+const WooCommerceIcon = () => (
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={woocommerceLogo.src} alt="WooCommerce" className="w-6 h-6 object-contain" />
+  </div>
+);
+
+const BloomIcon = () => (
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={bloomLogo.src} alt="Bloom.io" className="w-6 h-6 object-contain" />
+  </div>
+);
+
+const PressableIcon = () => (
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={pressableLogo.src} alt="Pressable" className="w-6 h-6 object-contain" />
+  </div>
+);
+
+const CSS5Icon = () => (
+  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
+    <img src={css5Logo.src} alt="CSS5" className="w-6 h-6 object-contain" />
   </div>
 );
 
 const CompanyLogosSection: React.FC = () => {
   const logos: LogoItemProps[] = [
     { name: 'Acuity Scheduling', icon: <AcuityIcon />, delay: 0 },
-    { name: 'Twilio API', icon: <TwilioIcon />, delay: 100 },
-    { name: 'Stripe Payments', icon: <StripeIcon />, delay: 200 },
-    { name: 'Square Payments', icon: <SquareIcon />, delay: 300 },
-    { name: 'Custom GPT Creation', icon: <GPTIcon />, delay: 400 },
-    { name: 'Astro Framework', icon: <AstroIcon />, delay: 500 }
+    { name: 'Twilio API', icon: <TwilioIcon />, delay: 50 },
+    { name: 'Stripe Payments', icon: <StripeIcon />, delay: 100 },
+    { name: 'Square Payments', icon: <SquareIcon />, delay: 150 },
+    { name: 'ChatGPT', icon: <ChatGPTIcon />, delay: 200 },
+    { name: 'Astro Framework', icon: <AstroIcon />, delay: 250 },
+    { name: 'WordPress', icon: <WordPressIcon />, delay: 300 },
+    { name: 'Elementor', icon: <ElementorIcon />, delay: 350 },
+    { name: 'WooCommerce', icon: <WooCommerceIcon />, delay: 400 },
+    { name: 'Bloom.io', icon: <BloomIcon />, delay: 450 },
+    { name: 'Pressable', icon: <PressableIcon />, delay: 500 },
+    { name: 'CSS5', icon: <CSS5Icon />, delay: 550 }
   ];
 
   return (
@@ -84,15 +136,15 @@ const CompanyLogosSection: React.FC = () => {
           </div>
           
           <h2 className="text-2xl md:text-3xl font-bold font-display mb-3 leading-tight text-white">
-            Companies We Develop With
+            Technologies We Partner With
           </h2>
           
           <p className="text-white/80 text-sm">
-            We leverage industry-leading tools and platforms to create powerful, integrated solutions, including the high-performance Astro framework.
+            We leverage these industry-leading tools and platforms to create powerful, integrated solutions for your business needs.
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto logos-container">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 max-w-6xl mx-auto logos-container">
           {logos.map((logo, index) => (
             <LogoItem
               key={index}
