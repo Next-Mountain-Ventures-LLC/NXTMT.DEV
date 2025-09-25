@@ -11,13 +11,13 @@ interface LogoItemProps {
 const LogoItem: React.FC<LogoItemProps> = ({ name, icon, delay }) => {
   return (
     <div 
-      className="flex items-center bg-card/40 backdrop-blur-sm border border-border/50 rounded-lg p-3 gap-3 transform hover:scale-105 transition-all duration-300"
+      className="flex items-center bg-card/80 backdrop-blur-sm border border-border/50 rounded-lg p-3 gap-3 transform hover:scale-105 transition-all duration-300"
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="flex-shrink-0">
         {icon}
       </div>
-      <div className="font-medium text-sm">{name}</div>
+      <div className="font-medium text-sm text-foreground">{name}</div>
     </div>
   );
 };
@@ -74,6 +74,7 @@ const CompanyLogosSection: React.FC = () => {
       {/* Background accents */}
       <div className="absolute top-1/2 left-1/4 w-48 h-48 bg-accent/10 rounded-full blur-3xl opacity-50"></div>
       <div className="absolute bottom-0 right-1/4 w-36 h-36 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
+      <div className="absolute inset-0 bg-background/90 backdrop-blur-md -z-10"></div>
       
       <div className="container mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-8">
