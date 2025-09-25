@@ -41,7 +41,7 @@ export default function HeroSection() {
         </h1>
 
         <p className="max-w-lg mx-auto mb-8 text-lg text-muted-foreground md:text-xl">
-          For a new breed of Entrepreneurs
+          Bootstrapping just got an upgrade…
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
