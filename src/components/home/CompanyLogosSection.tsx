@@ -1,5 +1,6 @@
 import React from 'react';
 import { MessageSquare } from 'lucide-react';
+import astroLogo from '../../assets/img_0562_nw_e507d3a0.png';
 
 interface LogoItemProps {
   name: string;
@@ -52,13 +53,20 @@ const GPTIcon = () => (
   </div>
 );
 
+const AstroIcon = () => (
+  <div className="w-8 h-8 rounded-md bg-gradient-to-br from-blue-900 to-black flex items-center justify-center">
+    <img src={astroLogo.src} alt="Astro" width={16} height={16} className="w-5 h-5 object-contain" />
+  </div>
+);
+
 const CompanyLogosSection: React.FC = () => {
   const logos: LogoItemProps[] = [
     { name: 'Acuity Scheduling', icon: <AcuityIcon />, delay: 0 },
     { name: 'Twilio API', icon: <TwilioIcon />, delay: 100 },
     { name: 'Stripe Payments', icon: <StripeIcon />, delay: 200 },
     { name: 'Square Payments', icon: <SquareIcon />, delay: 300 },
-    { name: 'Custom GPT Creation', icon: <GPTIcon />, delay: 400 }
+    { name: 'Custom GPT Creation', icon: <GPTIcon />, delay: 400 },
+    { name: 'Astro Framework', icon: <AstroIcon />, delay: 500 }
   ];
 
   return (
@@ -78,11 +86,11 @@ const CompanyLogosSection: React.FC = () => {
           </h2>
           
           <p className="text-muted-foreground text-sm">
-            We leverage industry-leading tools and platforms to create powerful, integrated solutions.
+            We leverage industry-leading tools and platforms to create powerful, integrated solutions, including the high-performance Astro framework.
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-5xl mx-auto logos-container">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto logos-container">
           {logos.map((logo, index) => (
             <LogoItem
               key={index}
