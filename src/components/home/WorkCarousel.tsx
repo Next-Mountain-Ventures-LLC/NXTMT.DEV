@@ -16,20 +16,17 @@ const WorkItem: React.FC<WorkItemProps> = ({ image, title, category, offset = 'n
   return (
     <div 
       className={`flex-shrink-0 w-56 h-64 mx-5 ${offsetClass} transition-transform duration-300 
-      group hover:scale-105 rounded-xl overflow-hidden relative`}
+      group rounded-xl overflow-hidden relative`}
     >
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 opacity-70
-        group-hover:opacity-90 transition-opacity duration-300"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 opacity-70"></div>
       
       <img 
         src={image} 
         alt={title}
-        className="w-full h-full object-cover object-center transition-transform duration-500
-        group-hover:scale-110"
+        className="w-full h-full object-cover object-center"
       />
       
-      <div className="absolute bottom-0 left-0 right-0 p-4 z-20 transform translate-y-2
-        group-hover:translate-y-0 transition-transform duration-300">
+      <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
         <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/80 text-white
           backdrop-blur-sm inline-block mb-2">{category}</span>
         <h3 className="text-white text-lg font-bold font-display">{title}</h3>
@@ -137,8 +134,8 @@ export default function WorkCarousel() {
       >
         <div 
           ref={carouselRef}
-          className="flex py-8 animate-carousel-scroll-left hover:animate-none"
-          style={{ width: 'fit-content', animationDuration: '30s', animationTimingFunction: 'linear', animationIterationCount: 'infinite' }}
+          className="flex py-8 animate-carousel-scroll-left"
+          style={{ width: 'fit-content', animationDuration: '25s', animationTimingFunction: 'linear', animationIterationCount: 'infinite' }}
         >
           {allItems.map((item, index) => (
             <WorkItem 
