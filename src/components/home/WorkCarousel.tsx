@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import signMeImg from '@/assets/img_4110_nw_d534e0f5.jpeg';
 
 interface WorkItemProps {
@@ -37,12 +37,13 @@ const WorkItem: React.FC<WorkItemProps> = ({ image, title, category, offset = 'n
 
 export default function WorkCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
   
   // Sample work items - replace with actual content
   const workItems: WorkItemProps[] = [
     {
       image: signMeImg.src,
-      title: 'SignMe™ Smart Sign',
+      title: 'SignMe™',
       category: 'Product Prototyping',
       offset: 'up'
     },
@@ -105,7 +106,15 @@ export default function WorkCarousel() {
   // Duplicate the items to create a smooth infinite effect
   const allItems = [...workItems, ...workItems];
   
-  // Using CSS animations instead of JS for smoother performance
+  // Handle scroll events to control animation speed
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
   return (
     <section id="work-showcase" className="py-16 relative overflow-hidden bg-gradient-to-b from-background to-background/80">
@@ -134,8 +143,12 @@ export default function WorkCarousel() {
       >
         <div 
           ref={carouselRef}
-          className="flex py-8 animate-carousel-scroll-left"
-          style={{ width: 'fit-content', animationDuration: '25s', animationTimingFunction: 'linear', animationIterationCount: 'infinite' }}
+          className="flex py-8"
+          style={{ 
+            width: 'fit-content',
+            transform: `translateX(${-scrollPosition * 0.2}px)`,
+            transition: 'transform 0.1s linear'
+          }}
         >
           {allItems.map((item, index) => (
             <WorkItem 
