@@ -1,0 +1,46 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogPostDetail from "@/components/wordpress/BlogPostDetail.astro";
+import { getPostBySlug, getPosts } from "@/utils/wordpress";
+
+export async function getStaticPaths() {
+  // Fetch all posts to generate static pages
+  const { posts } = await getPosts({ per_page: 100 });
+  
+  // Create a path for each post
+  return posts.map((post: any) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+// This prop comes from getStaticPaths
+const { post } = Astro.props;
+
+// Extract title and meta description from post
+const title = post.title.rendered;
+// Create a meta description from excerpt, removing HTML tags
+const metaDescription = post.excerpt.rendered
+  ? post.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 160)
+  : 'Read our latest blog post.';
+---
+
+<BaseLayout
+  title={`${title} | NXTMT Blog`}
+  description={metaDescription}
+>
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto px-4">
+      <BlogPostDetail post={post} />
+      
+      <div class="mt-16 border-t border-border/40 pt-8 flex justify-between">
+        <a 
+          href="/blog" 
+          class="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
+        >
+          ← Back to all posts
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

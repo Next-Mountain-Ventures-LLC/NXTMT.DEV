@@ -1,0 +1,78 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogPostCard from "@/components/wordpress/BlogPostCard";
+import { getPosts } from "@/utils/wordpress";
+
+// Fetch WordPress posts
+const { posts, totalPosts, totalPages } = await getPosts({
+  per_page: 9,
+  page: 1
+});
+
+// Calculate pagination
+const currentPage = 1;
+const hasNextPage = currentPage < totalPages;
+const hasPrevPage = currentPage > 1;
+---
+
+<BaseLayout
+  title="Blog | NXTMT - Creative Studio & Web Agency"
+  description="Explore our latest insights and articles on web design, development, and digital marketing."
+>
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/20 border border-primary/30 text-primary-foreground backdrop-blur-sm">
+          <span>Our Blog</span>
+        </div>
+        
+        <h1 class="text-3xl md:text-4xl font-bold font-display mb-4 leading-tight">
+          Latest Insights
+        </h1>
+        
+        <p class="text-muted-foreground">
+          Explore our thoughts, ideas, and insights about web design, development, and digital marketing.
+        </p>
+      </div>
+      
+      {posts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {posts.map((post: any) => (
+            <BlogPostCard post={post} client:load />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-muted-foreground">No posts found. Please check back later.</p>
+        </div>
+      )}
+      
+      {/* Pagination */}
+      {(hasNextPage || hasPrevPage) && (
+        <div class="flex justify-center mt-12">
+          <div class="flex space-x-2">
+            {hasPrevPage && (
+              <a
+                href={`/blog${currentPage - 1 === 1 ? "" : `/${currentPage - 1}`}`}
+                class="px-4 py-2 rounded-md bg-card hover:bg-primary hover:text-white transition-colors"
+                aria-label="Previous page"
+              >
+                Previous
+              </a>
+            )}
+            
+            {hasNextPage && (
+              <a
+                href={`/blog/${currentPage + 1}`}
+                class="px-4 py-2 rounded-md bg-card hover:bg-primary hover:text-white transition-colors"
+                aria-label="Next page"
+              >
+                Next
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
