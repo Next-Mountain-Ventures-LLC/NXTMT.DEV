@@ -30,7 +30,7 @@ export default function HeroSection() {
         </div>
 
         <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tighter md:text-6xl lg:text-7xl font-display">
-          <span className="block text-white">A new kind of</span>
+          <span className="block text-white">We Build Businesses</span>
           <span className="block font-bold text-primary animate-pulse-slow">
             Venture Studio
             <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary"></span>
