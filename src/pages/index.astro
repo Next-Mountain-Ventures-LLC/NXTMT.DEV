@@ -4,11 +4,13 @@ import HeroSection from "@/components/home/HeroSection";
 import WorkCarousel from "@/components/home/WorkCarousel";
 import AboutSection from "@/components/home/AboutSection";
 import ServicesSection from "@/components/home/ServicesSection";
-import PartnershipSectionHorizontal from "@/components/home/PartnershipSectionHorizontal";
+import PartnershipSectionSimplified from "@/components/home/PartnershipSectionSimplified";
 import PortfolioSection from "@/components/home/PortfolioSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import BlogSection from "@/components/home/BlogSection";
 import ContactSection from "@/components/home/ContactSection";
+import AnimatedServicesText from "@/components/home/AnimatedServicesText";
+import CompanyLogosSection from "@/components/home/CompanyLogosSection";
 ---
 
 <BaseLayout
@@ -16,8 +18,10 @@ import ContactSection from "@/components/home/ContactSection";
   description="We build digital experiences that inspire. NXTMT is a creative studio and web agency specializing in web design, branding, development, and digital marketing."
 >
   <HeroSection client:load />
+  <AnimatedServicesText client:load />
+  <CompanyLogosSection client:load />
   <WorkCarousel client:load />
-  <PartnershipSectionHorizontal client:load />
+  <PartnershipSectionSimplified client:load />
   <AboutSection client:load />
   <ServicesSection client:load />
   <PortfolioSection client:load />

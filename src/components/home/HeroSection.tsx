@@ -23,7 +23,7 @@ export default function HeroSection() {
         <div className="absolute top-2/3 right-1/3 w-40 h-40 bg-secondary/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '3s' }}></div>
       </div>
 
-      <div className="container relative z-10 px-4 py-32 mx-auto text-center">
+      <div className="container relative z-10 px-4 py-28 mx-auto text-center">
         <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/20 border border-primary/30 text-primary-foreground backdrop-blur-sm">
           <Star className="w-3.5 h-3.5 mr-1.5" />
           <span>Building Businesses Together</span>

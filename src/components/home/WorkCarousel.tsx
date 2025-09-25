@@ -258,7 +258,7 @@ export default function WorkCarousel() {
   };
 
   return (
-    <section id="work-showcase" className="py-16 relative overflow-hidden bg-gradient-to-b from-background to-background/80">
+    <section id="work-showcase" className="py-12 relative overflow-hidden bg-gradient-to-b from-background to-background/80">
       {/* Background accents */}
       <div className="absolute top-0 left-1/4 w-48 h-48 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-accent/10 rounded-full blur-3xl opacity-50"></div>
@@ -270,11 +270,11 @@ export default function WorkCarousel() {
           </div>
           
           <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 leading-tight">
-            Showcasing Our Creative Work
+            Brands We've Helped Launch
           </h2>
           
           <p className="text-muted-foreground">
-            From digital products to brand identities, explore our diverse portfolio of successful projects.
+            From web development and brand design to mobile apps and custom solutions, we deliver diverse services tailored to help businesses thrive in the digital landscape.
           </p>
         </div>
       </div>
