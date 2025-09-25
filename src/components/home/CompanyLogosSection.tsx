@@ -21,13 +21,16 @@ interface LogoItemProps {
 const LogoItem: React.FC<LogoItemProps> = ({ name, icon, delay }) => {
   return (
     <div 
-      className="flex items-center bg-black backdrop-blur-sm border border-primary/40 rounded-lg p-3 gap-3 transform hover:scale-105 transition-all duration-300"
-      style={{ animationDelay: `${delay}ms` }}
+      className="flex items-center bg-gradient-to-r from-primary/30 to-primary/20 backdrop-blur-sm border border-primary/60 rounded-lg p-3 gap-3 transform hover:scale-105 transition-all duration-300"
+      style={{ 
+        animationDelay: `${delay}ms`,
+        textShadow: '0 0 1px rgba(255,255,255,0.5)'
+      }}
     >
       <div className="flex-shrink-0">
         {icon}
       </div>
-      <div className="font-bold text-sm text-white">{name}</div>
+      <div className="font-bold text-sm text-white" style={{ filter: 'brightness(1.2)' }}>{name}</div>
     </div>
   );
 };
@@ -118,11 +121,11 @@ const CompanyLogosSection: React.FC = () => {
     { name: 'WooCommerce', icon: <WooCommerceIcon />, delay: 400 },
     { name: 'Bloom.io', icon: <BloomIcon />, delay: 450 },
     { name: 'Pressable', icon: <PressableIcon />, delay: 500 },
-    { name: 'CSS5', icon: <CSS5Icon />, delay: 550 }
+    { name: 'CSS5', icon: <CSS5Icon />, delay: 550 } // This has specific styling with strong contrast
   ];
 
   return (
-    <section className="py-10 relative overflow-hidden bg-black">
+    <section className="py-10 relative overflow-hidden bg-black border-t border-b border-primary/20">
       {/* Background accents */}
       <div className="absolute top-1/2 left-1/4 w-48 h-48 bg-accent/10 rounded-full blur-3xl opacity-50"></div>
       <div className="absolute bottom-0 right-1/4 w-36 h-36 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
