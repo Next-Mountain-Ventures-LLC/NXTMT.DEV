@@ -63,12 +63,12 @@ const WorkItem: React.FC<WorkItemComponentProps> = ({
           />
           {isHovered && (
             <div className="absolute top-4 right-4 px-2 py-1 bg-primary/80 text-white text-xs rounded-md z-20 shadow-lg">
-              Before
+              After
             </div>
           )}
           {!isHovered && isActive && (
             <div className="absolute top-4 right-4 px-2 py-1 bg-black/80 text-white text-xs rounded-md z-20 shadow-lg">
-              After
+              Before
             </div>
           )}
         </>
