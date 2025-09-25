@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import signMeImg from '@/assets/img_4110_nw_d534e0f5.jpeg';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface WorkItemProps {
   image: string;
@@ -102,10 +103,27 @@ export default function WorkCarousel() {
     },
   ];
   
-  // Duplicate the items to create a smooth infinite effect
-  const allItems = [...workItems, ...workItems];
+  // We don't need to duplicate items anymore since we're using a scrollable container
+  const allItems = workItems;
   
-  // Using CSS animations for continuous scrolling
+  // Scroll handling functions
+  const scrollLeft = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: -300,
+        behavior: 'smooth'
+      });
+    }
+  };
+  
+  const scrollRight = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: 300,
+        behavior: 'smooth'
+      });
+    }
+  };
   
   return (
     <section id="work-showcase" className="py-16 relative overflow-hidden bg-gradient-to-b from-background to-background/80">
@@ -129,33 +147,48 @@ export default function WorkCarousel() {
         </div>
       </div>
       
-      <div 
-        className="relative w-full overflow-hidden"
-      >
+      <div className="relative w-full">
+        {/* Scroll buttons */}
+        <button 
+          onClick={scrollLeft}
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-primary/80 p-2 rounded-full text-white transition-colors duration-300"
+          aria-label="Scroll left"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        
+        <button 
+          onClick={scrollRight}
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-primary/80 p-2 rounded-full text-white transition-colors duration-300"
+          aria-label="Scroll right"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+        
+        {/* Scrollable container */}
         <div 
           ref={carouselRef}
-          className="flex py-8 animate-carousel-scroll-left"
+          className="no-scrollbar flex py-8 overflow-x-auto snap-x snap-mandatory scroll-pl-6 px-6"
           style={{ 
-            width: 'fit-content',
-            animationDuration: '30s',
-            animationTimingFunction: 'linear',
-            animationIterationCount: 'infinite'
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
           }}
         >
           {allItems.map((item, index) => (
-            <WorkItem 
-              key={index}
-              image={item.image}
-              title={item.title}
-              category={item.category}
-              offset={item.offset}
-            />
+            <div key={index} className="snap-center">
+              <WorkItem 
+                image={item.image}
+                title={item.title}
+                category={item.category}
+                offset={item.offset}
+              />
+            </div>
           ))}
         </div>
         
         {/* Gradient fades at the edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent pointer-events-none z-10"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none z-10"></div>
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent pointer-events-none z-10"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent pointer-events-none z-10"></div>
       </div>
     </section>
   );

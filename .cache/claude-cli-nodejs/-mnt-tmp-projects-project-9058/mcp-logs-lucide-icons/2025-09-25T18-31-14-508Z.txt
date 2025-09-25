@@ -1,0 +1,56 @@
+[
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-09-25T18:31:14.730Z",
+    "sessionId": "bdf09897-072d-4bf1-bc0b-7dbeb053ad38",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-09-25T18:31:14.813Z",
+    "sessionId": "bdf09897-072d-4bf1-bc0b-7dbeb053ad38",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-09-25T18:31:14.840Z",
+    "sessionId": "bdf09897-072d-4bf1-bc0b-7dbeb053ad38",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-09-25T18:31:14.841Z",
+    "sessionId": "bdf09897-072d-4bf1-bc0b-7dbeb053ad38",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-09-25T18:31:14.842Z",
+    "sessionId": "bdf09897-072d-4bf1-bc0b-7dbeb053ad38",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-09-25T18:31:14.842Z",
+    "sessionId": "bdf09897-072d-4bf1-bc0b-7dbeb053ad38",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "Calling MCP tool: search_icons",
+    "timestamp": "2025-09-25T18:31:39.180Z",
+    "sessionId": "bdf09897-072d-4bf1-bc0b-7dbeb053ad38",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-09-25T18:31:39.180Z",
+    "sessionId": "bdf09897-072d-4bf1-bc0b-7dbeb053ad38",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "Tool call succeeded: {\"content\":[{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"ArrowRight\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"ArrowLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"ArrowDownLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"ArrowDownRight\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"ArrowUpLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"ArrowRightLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"ArrowLeftRight\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"SquareArrowLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"SquareArrowRight\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"SquareArrowUpLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"MoveDownLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"SquareArrowOutUpLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"SquareArrowOutDownLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"ArrowUpRight\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"ArrowLeftToLine\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"SquareArrowOutDownRight\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\",\\n    \\\"Navigation\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"MoveDownRight\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"MoveLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"MoveRight\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\"\\n  ]\\n}\"},{\"type\":\"text\",\"text\":\"{\\n  \\\"name\\\": \\\"MoveUpLeft\\\",\\n  \\\"categories\\\": [\\n    \\\"Arrows\\\"\\n  ]\\n}\"}],\"isError\":false,\"structuredContent\":{\"result\":[{\"name\":\"ArrowRight\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"ArrowLeft\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"ArrowDownLeft\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"ArrowDownRight\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"ArrowUpLeft\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"ArrowRightLeft\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"ArrowLeftRight\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"SquareArrowLeft\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"SquareArrowRight\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"SquareArrowUpLeft\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"MoveDownLeft\",\"categories\":[\"Arrows\"]},{\"name\":\"SquareArrowOutUpLeft\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"SquareArrowOutDownLeft\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"ArrowUpRight\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"ArrowLeftToLine\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"SquareArrowOutDownRight\",\"categories\":[\"Arrows\",\"Navigation\"]},{\"name\":\"MoveDownRight\",\"categories\":[\"Arrows\"]},{\"name\":\"MoveLeft\",\"categories\":[\"Arrows\"]},{\"name\":\"MoveRight\",\"categories\":[\"Arrows\"]},{\"name\":\"MoveUpLeft\",\"categories\":[\"Arrows\"]}]}}",
+    "timestamp": "2025-09-25T18:31:39.206Z",
+    "sessionId": "bdf09897-072d-4bf1-bc0b-7dbeb053ad38",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  }
+]
