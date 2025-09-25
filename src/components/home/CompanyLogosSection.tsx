@@ -21,13 +21,13 @@ interface LogoItemProps {
 const LogoItem: React.FC<LogoItemProps> = ({ name, icon, delay }) => {
   return (
     <div 
-      className="flex items-center bg-primary/10 backdrop-blur-sm border border-primary/30 rounded-lg p-3 gap-3 transform hover:scale-105 transition-all duration-300"
+      className="flex items-center bg-black backdrop-blur-sm border border-primary/40 rounded-lg p-3 gap-3 transform hover:scale-105 transition-all duration-300"
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="flex-shrink-0">
         {icon}
       </div>
-      <div className="font-semibold text-sm text-white">{name}</div>
+      <div className="font-bold text-sm text-white">{name}</div>
     </div>
   );
 };
@@ -122,12 +122,11 @@ const CompanyLogosSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-10 relative overflow-hidden bg-background">
+    <section className="py-10 relative overflow-hidden bg-black">
       {/* Background accents */}
       <div className="absolute top-1/2 left-1/4 w-48 h-48 bg-accent/10 rounded-full blur-3xl opacity-50"></div>
       <div className="absolute bottom-0 right-1/4 w-36 h-36 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background/95 backdrop-blur-md -z-10"></div>
-      <div className="absolute inset-0 bg-black/40 -z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-black/95 backdrop-blur-md -z-10"></div>
       
       <div className="container mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-8">
