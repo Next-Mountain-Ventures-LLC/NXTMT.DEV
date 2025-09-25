@@ -69,8 +69,8 @@ export default {
           '100%': { transform: 'translateX(-50%)' },
         },
         'carousel-scroll-left': {
-          '0%': { transform: 'translateX(-50%)' },
-          '100%': { transform: 'translateX(0)' },
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
         },
       },
       backgroundImage: {

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
+import signMeImg from '@/assets/img_4108_nw_092480fd.jpeg';
 
 interface WorkItemProps {
   image: string;
@@ -43,9 +44,9 @@ export default function WorkCarousel() {
   // Sample work items - replace with actual content
   const workItems: WorkItemProps[] = [
     {
-      image: 'https://images.unsplash.com/photo-1551739440-5dd934d3a94a?q=80&w=1024',
-      title: 'Modern E-commerce Platform',
-      category: 'Web Development',
+      image: signMeImg.src,
+      title: 'SignMe™ Digital Smart Sign',
+      category: 'Product Prototyping',
       offset: 'up'
     },
     {
@@ -136,8 +137,8 @@ export default function WorkCarousel() {
       >
         <div 
           ref={carouselRef}
-          className="flex py-8 animate-carousel-scroll-left hover:animate-none transition-all duration-500"
-          style={{ width: 'fit-content' }}
+          className="flex py-8 animate-carousel-scroll-left hover:animate-none"
+          style={{ width: 'fit-content', animationDuration: '30s', animationTimingFunction: 'linear', animationIterationCount: 'infinite' }}
         >
           {allItems.map((item, index) => (
             <WorkItem 
