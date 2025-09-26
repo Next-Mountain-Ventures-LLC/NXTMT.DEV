@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import HeroSection from "@/components/home/HeroSection";
+import SimpleWorkCarousel from "@/components/home/SimpleWorkCarousel";
+import AboutSection from "@/components/home/AboutSection";
+import ServicesSection from "@/components/home/ServicesSection";
+import PartnershipSectionSimplified from "@/components/home/PartnershipSectionSimplified";
+import PortfolioSection from "@/components/home/PortfolioSection";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
+import BlogSection from "@/components/home/BlogSection";
+import ContactSection from "@/components/home/ContactSection";
+import AnimatedServicesText from "@/components/home/AnimatedServicesText";
+import CompanyLogosSection from "@/components/home/CompanyLogosSection";
+---
+
+<BaseLayout
+  title="NXTMT - Creative Studio & Web Agency"
+  description="We build digital experiences that inspire. NXTMT is a creative studio and web agency specializing in web design, branding, development, and digital marketing."
+>
+  <HeroSection client:load />
+  <AnimatedServicesText client:load />
+  <CompanyLogosSection client:load />
+  <SimpleWorkCarousel client:load />
+  <PartnershipSectionSimplified client:load />
+  <AboutSection client:load />
+  <ServicesSection client:load />
+  <PortfolioSection client:load />
+  <TestimonialsSection client:load />
+  <BlogSection client:load />
+  <ContactSection client:load />
+  
+  <!-- DO NOT REMOVE - Necessary for making visual edits via new.website! -->
+  <script src="https://api.new.website/static/new-website.js"></script>
+</BaseLayout>
