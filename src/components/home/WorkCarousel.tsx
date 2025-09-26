@@ -163,8 +163,8 @@ export default function WorkCarousel() {
       services: ['Industrial Design', 'Hardware Prototyping', 'PCB Design', 'Manufacturing']
     },
     {
-      image: twistAfterImg.src,
-      hoverImage: twistBeforeImg.src,
+      image: twistBeforeImg.src,
+      hoverImage: twistAfterImg.src,
       title: 'Twist N\'Turn Dryer Vent',
       category: 'Website Redesign',
       offset: 'none',
