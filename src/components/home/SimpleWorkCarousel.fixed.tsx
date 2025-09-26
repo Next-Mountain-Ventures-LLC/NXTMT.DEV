@@ -20,6 +20,11 @@ export default function SimpleWorkCarousel() {
       hoverImage: twistAfterImg.src
     },
     {
+      image: twistBeforeImg.src,
+      title: 'Tech Startup Branding',
+      category: 'Branding & Identity'
+    },
+    {
       image: 'https://images.unsplash.com/photo-1611328573001-13cf452dd8a9?w=1024&h=768&fit=crop&q=80',
       title: 'Mobile App for Fitness',
       category: 'App Development'
@@ -112,7 +117,8 @@ export default function SimpleWorkCarousel() {
           <p className="text-muted-foreground">
             {activeIndex === 0 && "SignMe™ is a digital smart sign featuring a scrolling LED matrix display in a sleek wooden enclosure."}
             {activeIndex === 1 && "Twist N'Turn is a leading dryer vent cleaning company based in Tulsa, Oklahoma. We redesigned their website with modern features."}
-            {activeIndex === 2 && "A cutting-edge fitness application that tracks workouts and provides personalized training plans."}
+            {activeIndex === 2 && "We created a complete brand identity for a tech startup entering the competitive SaaS market, including logo design, color palette, and typography."}
+            {activeIndex === 3 && "A cutting-edge fitness application that tracks workouts and provides personalized training plans."}
           </p>
         </div>
       </div>
