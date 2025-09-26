@@ -49,7 +49,7 @@ export default function HeroSection() {
             size="lg" 
             className="bg-primary/90 hover:bg-primary shadow-[0_0_15px_rgba(239,68,68,0.5)] hover:shadow-[0_0_20px_rgba(239,68,68,0.8)] transition-all duration-300 font-medium rounded-full px-6 py-4 text-sm"
           >
-            Start Your Project
+            Launch Your Business
             <Rocket className="ml-2 h-4 w-4" />
           </Button>
           <Button 
