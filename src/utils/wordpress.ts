@@ -6,7 +6,7 @@
  */
 
 // The base URL of your WordPress site
-const WORDPRESS_API_URL = 'https://your-wordpress-site.com/wp-json/wp/v2';
+const WORDPRESS_API_URL = 'https://www.nextmt.com/wp-json/wp/v2';
 
 /**
  * Fetches posts from WordPress
