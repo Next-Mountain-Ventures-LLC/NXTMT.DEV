@@ -173,3 +173,82 @@ export function sanitizeContent(content: string) {
   
   return sanitized;
 }
+
+/**
+ * Fetches products from WordPress
+ * 
+ * @param {Object} options - Query parameters
+ * @param {number} options.page - Page number
+ * @param {number} options.per_page - Products per page
+ * @param {Array} options.categories - Category IDs to filter by
+ * @param {string} options.search - Search term
+ * @returns {Promise<Array>} - WordPress products
+ */
+export async function getProducts(options = {}) {
+  const queryParams = new URLSearchParams();
+  
+  // Add options to query parameters
+  Object.entries(options).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      // Handle arrays like categories
+      queryParams.append(key, value.join(','));
+    } else if (value !== undefined) {
+      queryParams.append(key, value.toString());
+    }
+  });
+
+  // Add _embed to include featured images and author info
+  queryParams.append('_embed', 'true');
+  
+  try {
+    const response = await fetch(`${WORDPRESS_API_URL}/product?${queryParams}`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch products: ${response.statusText}`);
+    }
+    
+    // Parse the WordPress products
+    const products = await response.json();
+    
+    // Extract the total products and pages from headers
+    const totalProducts = parseInt(response.headers.get('X-WP-Total') || '0', 10);
+    const totalPages = parseInt(response.headers.get('X-WP-TotalPages') || '0', 10);
+    
+    return {
+      products,
+      totalProducts,
+      totalPages
+    };
+  } catch (error) {
+    console.error('Error fetching WordPress products:', error);
+    return {
+      products: [],
+      totalProducts: 0,
+      totalPages: 0
+    };
+  }
+}
+
+/**
+ * Fetches a single product by slug
+ * 
+ * @param {string} slug - The product slug
+ * @returns {Promise<Object|null>} - WordPress product
+ */
+export async function getProductBySlug(slug: string) {
+  try {
+    const response = await fetch(`${WORDPRESS_API_URL}/product?slug=${slug}&_embed=true`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch product: ${response.statusText}`);
+    }
+    
+    const products = await response.json();
+    
+    // Return the first product (slug should be unique)
+    return products.length > 0 ? products[0] : null;
+  } catch (error) {
+    console.error(`Error fetching WordPress product by slug ${slug}:`, error);
+    return null;
+  }
+}
