@@ -263,7 +263,7 @@ export default function WorkCarousel() {
     if (workItems.length > 0 && !activeProject) {
       setActiveProject(workItems[0]);
     }
-  }, []);
+  }, [workItems, activeProject]);
   
   // Scroll handling functions
   const scrollLeft = () => {

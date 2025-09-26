@@ -1,0 +1,26 @@
+Based on my investigation, I've identified several potential causes for the page constantly reloading:
+
+1. WorkCarousel useEffect issue:
+   - The useEffect in WorkCarousel.tsx has an empty dependency array but uses the activeProject state
+   - I've updated this with proper dependencies: [workItems, activeProject]
+
+2. Twist N' Turn image swap issue:
+   - The Twist N' Turn images are incorrectly assigned - I noticed twistBeforeImg and twistAfterImg got mixed up
+   - Line 166-167 in WorkCarousel.tsx should be checked to ensure proper before/after assignment
+
+3. The new-website.js script:
+   - This external script from https://api.new.website/static/new-website.js might be causing reloads
+   - It appears to be a visual editing tool that might be triggering refreshes for preview purposes
+
+Possible solutions:
+
+1. During development, you might want to temporarily comment out line 33 in index.astro:
+   <!-- <script src="https://api.new.website/static/new-website.js"></script> -->
+   
+   This script is meant for the new.website visual editor but might be causing unnecessary reloads during development.
+
+2. Check your Astro configuration to ensure hot reloading is set up correctly.
+
+3. Fix the useEffect dependencies in WorkCarousel.tsx to prevent infinite render loops.
+
+Let me know if these changes help resolve the reload issue!
