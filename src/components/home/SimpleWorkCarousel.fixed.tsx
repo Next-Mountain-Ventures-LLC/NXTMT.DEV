@@ -30,87 +30,84 @@ export default function SimpleWorkCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   
-  // Simple scroll functions
+  // Simple scroll functions without animations
   const scrollLeft = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+      carouselRef.current.scrollLeft -= 300;
     }
   };
   
   const scrollRight = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+      carouselRef.current.scrollLeft += 300;
     }
   };
 
   return (
-    <section className="py-12 relative overflow-hidden bg-gradient-to-b from-background to-background/80">
+    <section className="py-12 bg-background">
       {/* Section title */}
       <div className="container mx-auto px-4 mb-8">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/20 border border-primary/30 text-primary-foreground backdrop-blur-sm">
+          <div className="inline-block px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/20 border border-primary/30 text-primary-foreground">
             <span>Our Portfolio</span>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 leading-tight">
+          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4">
             Brands We've Helped Launch
           </h2>
           
           <p className="text-muted-foreground">
-            From web development and brand design to mobile apps and custom solutions, we deliver diverse services tailored to help businesses thrive.
+            From web development and brand design to mobile apps and custom solutions, we deliver diverse services.
           </p>
         </div>
       </div>
       
-      {/* Simple carousel */}
+      {/* Simple carousel without animations */}
       <div className="relative w-full mb-10">
         <button 
           onClick={scrollLeft}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-primary/80 p-2 rounded-full text-white transition-colors duration-300"
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/50 p-2 rounded-full text-white"
         >
           <ChevronLeft className="h-6 w-6" />
         </button>
         
         <button 
           onClick={scrollRight}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-primary/80 p-2 rounded-full text-white transition-colors duration-300"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/50 p-2 rounded-full text-white"
         >
           <ChevronRight className="h-6 w-6" />
         </button>
         
         <div 
           ref={carouselRef}
-          className="no-scrollbar flex py-8 overflow-x-auto snap-x snap-mandatory scroll-pl-6 px-6"
+          className="flex py-8 overflow-x-auto px-6"
           style={{ scrollbarWidth: 'none' }}
         >
           {projects.map((project, index) => (
-            <div key={index} className="snap-center">
+            <div key={index}>
               <div 
-                className="flex-shrink-0 w-56 h-64 mx-5 transition-all duration-300 group rounded-xl overflow-hidden relative"
+                className="flex-shrink-0 w-56 h-64 mx-5 rounded-xl overflow-hidden relative"
                 onClick={() => setActiveIndex(index)}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 opacity-70"></div>
+                <div className="absolute inset-0 bg-black/50 opacity-70"></div>
                 <img 
                   src={project.image} 
                   alt={project.title}
                   className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
-                  <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/80 text-white backdrop-blur-sm inline-block mb-2">{project.category}</span>
+                  <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/80 text-white inline-block mb-2">{project.category}</span>
                   <h3 className="text-white text-base font-bold font-display">{project.title}</h3>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        
-        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent pointer-events-none z-10"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent pointer-events-none z-10"></div>
       </div>
       
-      {/* Simple project details */}
+      {/* Simple project details without animations */}
       <div className="container mx-auto px-4 max-w-4xl mb-16">
-        <div className="bg-card/30 backdrop-blur-sm p-6 rounded-xl border border-border/40">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <h3 className="text-2xl font-bold font-display mb-4">{projects[activeIndex].title}</h3>
           <p className="text-muted-foreground">
             {activeIndex === 0 && "SignMe™ is a digital smart sign featuring a scrolling LED matrix display in a sleek wooden enclosure."}
