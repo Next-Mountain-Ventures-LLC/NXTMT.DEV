@@ -1,0 +1,29 @@
+To update the fitness app image in the work carousel, please make the following change in /src/components/home/WorkCarousel.tsx:
+
+Find this line (around line 177):
+```javascript
+      image: 'https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?q=80&w=1024',
+      title: 'Mobile App for Fitness',
+```
+
+And replace it with one of these high-quality fitness app images:
+
+Option 1 (person using fitness app on phone):
+```javascript
+      image: 'https://images.unsplash.com/photo-1611328573001-13cf452dd8a9?w=1024&h=768&fit=crop&q=80',
+      title: 'Mobile App for Fitness',
+```
+
+Option 2 (fitness app interface):
+```javascript
+      image: 'https://images.unsplash.com/photo-1580983561252-463dca6ad904?w=1024&h=768&fit=crop&q=80',
+      title: 'Mobile App for Fitness',
+```
+
+Option 3 (fitness tracking device):
+```javascript
+      image: 'https://images.unsplash.com/photo-1598717873798-1b78ebe04fc2?w=1024&h=768&fit=crop&q=80',
+      title: 'Mobile App for Fitness',
+```
+
+All these images are high-quality photos related to fitness apps and tracking that will look great in your work carousel.
