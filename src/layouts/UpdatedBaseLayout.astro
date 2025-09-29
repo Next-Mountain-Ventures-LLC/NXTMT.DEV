@@ -1,0 +1,29 @@
+---
+import UpdatedHeadSEO from "@/components/UpdatedHeadSEO.astro";
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+
+interface Props {
+  title?: string | undefined;
+  description?: string | undefined;
+  ogImage?: URL | undefined;
+}
+
+const { title, description, ogImage } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <UpdatedHeadSEO title={title} description={description} ogImage={ogImage} />
+    <script is:inline src="/scripts/prevent-reload.js"></script>
+  </head>
+  <body class="bg-background min-h-screen font-sans antialiased">
+    <div class="relative flex min-h-screen flex-col">
+      <Header />
+      <main class="flex-auto">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>
