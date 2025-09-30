@@ -1,0 +1,71 @@
+---
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import HeadSEO from "@/components/HeadSEO.astro";
+import HeroSection from "@/components/home/HeroSection";
+import WorkCarousel from "@/components/home/WorkCarousel";
+import AboutSection from "@/components/home/AboutSection";
+import ServicesSection from "@/components/home/ServicesSection";
+import PartnershipSectionSimplified from "@/components/home/PartnershipSectionSimplified";
+import PortfolioSection from "@/components/home/PortfolioSection";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
+import BlogCarousel from "@/components/wordpress/BlogCarousel";
+import ProductCarousel from "@/components/wordpress/ProductCarousel";
+import ContactSection from "@/components/home/ContactSection";
+import AnimatedServicesText from "@/components/home/AnimatedServicesText";
+import CompanyLogosSection from "@/components/home/CompanyLogosSection";
+
+const title = "NXTMT - Creative Studio & Web Agency";
+const description = "We build digital experiences that inspire. NXTMT is a creative studio and web agency specializing in web design, branding, development, and digital marketing.";
+---
+
+<html lang="en">
+  <head>
+    <!-- Anti-reload script placed first, before anything else -->
+    <script is:inline src="/scripts/stop-all-reloads.js"></script>
+    
+    <HeadSEO title={title} description={description} />
+    
+    <!-- Other head content -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body class="bg-background min-h-screen font-sans antialiased">
+    <div class="relative flex min-h-screen flex-col">
+      <Header />
+      <main class="flex-auto">
+        <HeroSection client:load />
+        <AnimatedServicesText client:load />
+        <CompanyLogosSection client:load />
+        <WorkCarousel client:load />
+        <PartnershipSectionSimplified client:load />
+        <AboutSection client:load />
+        <ServicesSection client:load />
+        <PortfolioSection client:load />
+        <TestimonialsSection client:load />
+        <BlogCarousel client:load />
+        <ProductCarousel client:load />
+        <ContactSection client:load />
+      </main>
+      <Footer />
+    </div>
+    
+    <!-- Prevent new.website script from running -->
+    <script is:inline>
+      // Block any attempts to load new.website script
+      (function() {
+        const newWebsiteScript = document.querySelector('script[src*="new.website"]');
+        if (newWebsiteScript) {
+          console.warn('Removing new.website script');
+          newWebsiteScript.remove();
+        }
+        
+        // Create a dummy version to satisfy dependencies
+        window.newWebsite = {
+          init: function() { console.log('Dummy init'); },
+          reload: function() { console.log('Reload prevented'); return false; }
+        };
+      })();
+    </script>
+  </body>
+</html>
