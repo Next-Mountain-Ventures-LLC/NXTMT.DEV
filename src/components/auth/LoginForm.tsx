@@ -18,7 +18,13 @@ const LoginForm: React.FC = () => {
       return;
     }
 
-    await login({ username, password });
+    console.log('Login form submitting with:', { username });
+    try {
+      await login({ username, password });
+      console.log('Login form submission completed');
+    } catch (error) {
+      console.error('Login form submission error:', error);
+    }
   };
 
   return (

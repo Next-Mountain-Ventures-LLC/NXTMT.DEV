@@ -34,39 +34,58 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Check for existing authentication on component mount
     const checkAuth = async () => {
+      setIsLoading(true);
+      console.log('Checking authentication status...');
+      
       try {
         const storedUser = localStorage.getItem('wordpressUser');
+        console.log('Stored user found:', !!storedUser);
         
         if (storedUser) {
-          const parsedUser = JSON.parse(storedUser) as UserProfile;
-          
-          // Validate the stored token
-          const isValid = await validateToken(parsedUser.token);
-          
-          if (isValid) {
-            // Get fresh user data
-            const currentUser = await getCurrentUser(parsedUser.token);
-            if (currentUser) {
-              setUser(currentUser);
+          try {
+            const parsedUser = JSON.parse(storedUser) as UserProfile;
+            console.log('Parsed user:', { username: parsedUser.username });
+            
+            // Validate the stored token
+            console.log('Validating token...');
+            const isValid = await validateToken(parsedUser.token);
+            console.log('Token validation result:', isValid);
+            
+            if (isValid) {
+              // Get fresh user data
+              console.log('Fetching current user data...');
+              const currentUser = await getCurrentUser(parsedUser.token);
+              if (currentUser) {
+                console.log('User data fetched successfully');
+                setUser(currentUser);
+              } else {
+                // Token is valid but user fetch failed, clear storage
+                console.log('User data fetch failed, clearing storage');
+                localStorage.removeItem('wordpressUser');
+              }
             } else {
-              // Token is valid but user fetch failed, clear storage
+              // Token is invalid, clear storage
+              console.log('Token is invalid, clearing storage');
               localStorage.removeItem('wordpressUser');
             }
-          } else {
-            // Token is invalid, clear storage
+          } catch (parseError) {
+            console.error('Error parsing stored user:', parseError);
             localStorage.removeItem('wordpressUser');
           }
+        } else {
+          console.log('No stored user found');
         }
       } catch (error) {
         console.error('Auth check error:', error);
       } finally {
         setIsLoading(false);
+        console.log('Authentication check completed');
       }
     };
 

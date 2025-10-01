@@ -3,7 +3,29 @@
  * Handles API calls to the WordPress JSON USER API for authentication
  */
 
-const API_URL = 'https://www.nxtmt.com/api';
+// Define base API URL
+const API_BASE = 'https://www.nxtmt.com/api';
+
+// WordPress REST API endpoints may vary depending on plugin implementation
+// These are common endpoint paths for different WordPress auth plugins
+const API_ENDPOINTS = {
+  // JSON USER API
+  login: [
+    '/user/v1/auth',
+    '/wp-json/jwt-auth/v1/token',
+    '/wp-json/simple-jwt-login/v1/auth'
+  ],
+  register: [
+    '/user/v1/users/register',
+    '/wp-json/wp/v2/users',
+    '/wp-json/simple-jwt-login/v1/users'
+  ],
+  me: [
+    '/user/v1/users/me',
+    '/wp-json/wp/v2/users/me'
+  ],
+  // Other endpoints...
+};
 
 export interface LoginCredentials {
   username: string;
@@ -32,9 +54,60 @@ export interface UserProfile {
 /**
  * Login a user with WordPress credentials
  */
+/**
+ * Try multiple API endpoints until one works
+ */
+async function tryEndpoints(endpoints: string[], method: string, body?: object, token?: string): Promise<Response> {
+  console.log(`Trying ${endpoints.length} possible endpoints for ${method} request`);
+  
+  const errors: string[] = [];
+  
+  // Try each endpoint until one succeeds
+  for (const endpoint of endpoints) {
+    try {
+      const url = `${API_BASE}${endpoint}`;
+      console.log(`Attempting request to: ${url}`);
+      
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
+      const response = await fetch(url, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : undefined,
+        credentials: 'include',
+      });
+      
+      console.log(`Response status from ${endpoint}: ${response.status}`);
+      
+      // Check if we got a successful response
+      if (response.ok) {
+        console.log(`Found working endpoint: ${endpoint}`);
+        return response;
+      }
+      
+      // Store error for debugging
+      const errorText = await response.text();
+      errors.push(`${endpoint} (${response.status}): ${errorText.substring(0, 100)}...`);
+    } catch (error) {
+      errors.push(`${endpoint} (network): ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+  
+  // If we get here, all endpoints failed
+  console.error('All endpoints failed:', errors);
+  throw new Error(`API request failed. Tried ${endpoints.length} endpoints. Errors: ${errors.join(' | ')}`);
+}
+
 export const loginUser = async (credentials: LoginCredentials): Promise<UserProfile> => {
+  console.log('Attempting login with:', { username: credentials.username, passwordLength: credentials.password.length });
   try {
-    const response = await fetch(`${API_URL}/login`, {
+    const response = await tryEndpoints(API_ENDPOINTS.login, 'POST', credentials);
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -69,8 +142,17 @@ export const loginUser = async (credentials: LoginCredentials): Promise<UserProf
  * Register a new WordPress user
  */
 export const registerUser = async (userData: SignupData): Promise<UserProfile> => {
+  console.log('Attempting registration with:', { username: userData.username, email: userData.email });
   try {
-    const response = await fetch(`${API_URL}/register`, {
+    const requestBody = {
+      username: userData.username,
+      email: userData.email,
+      password: userData.password,
+      first_name: userData.firstName,
+      last_name: userData.lastName
+    };
+    
+    const response = await tryEndpoints(API_ENDPOINTS.register, 'POST', requestBody);
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -110,8 +192,14 @@ export const registerUser = async (userData: SignupData): Promise<UserProfile> =
  * Logout the current user
  */
 export const logoutUser = async (): Promise<void> => {
+  console.log('Attempting logout');
   try {
-    const response = await fetch(`${API_URL}/logout`, {
+    // For logout, we just clear local storage since the WordPress API may not have a standard logout endpoint
+    localStorage.removeItem('wordpressUser');
+    return;
+    // Uncomment below to attempt server-side logout if needed
+    /*
+    const response = await fetch(`${API_BASE}/wp-json/simple-jwt-login/v1/auth/revoke`, {
       method: 'POST',
       credentials: 'include',
     });
@@ -134,8 +222,9 @@ export const logoutUser = async (): Promise<void> => {
  * Get the current logged in user's profile
  */
 export const getCurrentUser = async (token: string): Promise<UserProfile | null> => {
+  console.log('Fetching current user data with token');
   try {
-    const response = await fetch(`${API_URL}/me`, {
+    const response = await tryEndpoints(API_ENDPOINTS.me, 'GET', undefined, token);
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -171,8 +260,10 @@ export const getCurrentUser = async (token: string): Promise<UserProfile | null>
  * Update user profile
  */
 export const updateUserProfile = async (userId: number, profileData: Partial<UserProfile>, token: string): Promise<UserProfile> => {
+  console.log('Updating user profile:', profileData);
   try {
-    const response = await fetch(`${API_URL}/users/${userId}`, {
+    // WordPress JSON USER API typically uses /api/user/v1/users/{id}
+    const response = await fetch(`${API_URL}/v1/users/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -212,8 +303,18 @@ export const updateUserProfile = async (userId: number, profileData: Partial<Use
  * Validate authentication token
  */
 export const validateToken = async (token: string): Promise<boolean> => {
+  console.log('Validating token');
   try {
-    const response = await fetch(`${API_URL}/validate-token`, {
+    // Use the /me endpoint to validate the token
+    // If we can get the user info, the token is valid
+    try {
+      const userData = await getCurrentUser(token);
+      return !!userData;
+    } catch {
+      return false;
+    }
+    /*
+    const response = await fetch(`${API_BASE}/wp-json/jwt-auth/v1/token/validate`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,

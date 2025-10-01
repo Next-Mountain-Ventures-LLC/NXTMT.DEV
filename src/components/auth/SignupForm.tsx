@@ -37,18 +37,29 @@ const SignupForm: React.FC = () => {
     e.preventDefault();
     clearError();
     
+    console.log('Signup form submitting');
+    
     // Validation checks
     if (!formData.agreeTerms) {
+      console.warn('User must agree to terms');
       // You can handle this error in the UI
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
+      console.warn('Passwords do not match');
       setPasswordMatch(false);
       return;
     }
 
     try {
+      console.log('Attempting signup with:', { 
+        username: formData.username, 
+        email: formData.email,
+        hasFirstName: !!formData.firstName,
+        hasLastName: !!formData.lastName 
+      });
+      
       await signup({
         username: formData.username,
         email: formData.email,
@@ -56,6 +67,8 @@ const SignupForm: React.FC = () => {
         firstName: formData.firstName,
         lastName: formData.lastName
       });
+      
+      console.log('Signup form submission completed');
     } catch (error) {
       // Error is already handled in the context
       console.error('Signup error in component:', error);
