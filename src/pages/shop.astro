@@ -1,0 +1,49 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Image } from 'astro:assets';
+import HeroParticles from "@/components/shop/HeroParticles.tsx";
+import ShopHero from "@/components/shop/ShopHero.tsx";
+import ServiceCategoryShowcase from "@/components/shop/ServiceCategoryShowcase.tsx";
+import WebServiceCarousel from "@/components/shop/WebServiceCarousel.tsx";
+import IntegrationServices from "@/components/shop/IntegrationServices.tsx";
+import BrandingServices from "@/components/shop/BrandingServices.tsx";
+import ConsultationServices from "@/components/shop/ConsultationServices.tsx";
+import PremiumPackages from "@/components/shop/PremiumPackages.tsx";
+import ContactCTA from "@/components/shop/ContactCTA.tsx";
+---
+
+<BaseLayout
+  title="Shop - NXTMT Services"
+  description="Explore our premium web design, branding, and digital marketing services. Discover the perfect digital solution for your business."
+>
+  <div class="relative min-h-screen">
+    <HeroParticles client:load />
+    <ShopHero client:load />
+  </div>
+  
+  <ServiceCategoryShowcase client:load />
+  
+  <!-- Web Development Services -->
+  <WebServiceCarousel client:load />
+  
+  <!-- Integration Services -->
+  <IntegrationServices client:load />
+  
+  <!-- Branding Services -->
+  <BrandingServices client:load />
+  
+  <!-- Consultation Services -->
+  <ConsultationServices client:load />
+  
+  <!-- Premium Packages -->
+  <PremiumPackages client:load />
+  
+  <!-- Contact CTA -->
+  <ContactCTA client:load />
+</BaseLayout>
+
+<style>
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+</style>
