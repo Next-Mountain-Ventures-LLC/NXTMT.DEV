@@ -4,27 +4,30 @@
  */
 
 // Define base API URL
-const API_BASE = 'https://www.nxtmt.com/api';
+const API_BASE = 'https://nxtmt.com/api';
 
-// WordPress REST API endpoints may vary depending on plugin implementation
-// These are common endpoint paths for different WordPress auth plugins
+// WordPress API endpoints specific to nxtmt.com
 const API_ENDPOINTS = {
-  // JSON USER API
+  // User API endpoints
   login: [
-    '/user/v1/auth',
-    '/wp-json/jwt-auth/v1/token',
-    '/wp-json/simple-jwt-login/v1/auth'
+    '/users/login',
+    '/users/authenticate'
   ],
   register: [
-    '/user/v1/users/register',
-    '/wp-json/wp/v2/users',
-    '/wp-json/simple-jwt-login/v1/users'
+    '/users/create_user',
+    '/users/register'
   ],
   me: [
-    '/user/v1/users/me',
-    '/wp-json/wp/v2/users/me'
+    '/users/get_user',
+    '/users/current'
   ],
-  // Other endpoints...
+  validate: [
+    '/users/validate_token',
+    '/users/verify_token'
+  ],
+  update: [
+    '/users/update_user'
+  ]
 };
 
 export interface LoginCredentials {
@@ -107,23 +110,34 @@ async function tryEndpoints(endpoints: string[], method: string, body?: object, 
 export const loginUser = async (credentials: LoginCredentials): Promise<UserProfile> => {
   console.log('Attempting login with:', { username: credentials.username, passwordLength: credentials.password.length });
   try {
-    const response = await tryEndpoints(API_ENDPOINTS.login, 'POST', credentials);
+    // Format request body according to nxtmt.com API requirements
+    const requestBody = {
+      username: credentials.username,
+      password: credentials.password,
+      remember: true
+    };
+    
+    const response = await tryEndpoints(API_ENDPOINTS.login, 'POST', requestBody);
 
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'Login failed');
     }
 
-    const userData = await response.json();
+    const responseData = await response.json();
+    
+    // Handle possible response formats from nxtmt.com API
+    const userData = responseData.user || responseData.data || responseData;
+    
     return {
-      id: userData.id,
-      username: userData.username,
-      email: userData.email,
-      firstName: userData.first_name,
-      lastName: userData.last_name,
-      avatar: userData.avatar,
+      id: userData.id || userData.ID || 0,
+      username: userData.username || userData.user_login || '',
+      email: userData.email || userData.user_email || '',
+      firstName: userData.first_name || userData.user_firstname || '',
+      lastName: userData.last_name || userData.user_lastname || '',
+      avatar: userData.avatar || userData.user_avatar || '',
       roles: userData.roles || [],
-      token: userData.token,
+      token: userData.token || responseData.token || token,
     };
   } catch (error) {
     console.error('Login error:', error);
@@ -137,12 +151,14 @@ export const loginUser = async (credentials: LoginCredentials): Promise<UserProf
 export const registerUser = async (userData: SignupData): Promise<UserProfile> => {
   console.log('Attempting registration with:', { username: userData.username, email: userData.email });
   try {
+    // Format request body according to nxtmt.com API requirements
     const requestBody = {
       username: userData.username,
       email: userData.email,
       password: userData.password,
-      first_name: userData.firstName,
-      last_name: userData.lastName
+      first_name: userData.firstName || '',
+      last_name: userData.lastName || '',
+      send_welcome_email: true
     };
     
     const response = await tryEndpoints(API_ENDPOINTS.register, 'POST', requestBody);
@@ -152,16 +168,20 @@ export const registerUser = async (userData: SignupData): Promise<UserProfile> =
       throw new Error(errorData.message || 'Registration failed');
     }
 
-    const newUser = await response.json();
+    const responseData = await response.json();
+    
+    // Handle possible response formats from nxtmt.com API
+    const userData = responseData.user || responseData.data || responseData;
+    
     return {
-      id: newUser.id,
-      username: newUser.username,
-      email: newUser.email,
-      firstName: newUser.first_name,
-      lastName: newUser.last_name,
-      avatar: newUser.avatar,
-      roles: newUser.roles || [],
-      token: newUser.token,
+      id: userData.id || userData.ID || 0,
+      username: userData.username || userData.user_login || '',
+      email: userData.email || userData.user_email || '',
+      firstName: userData.first_name || userData.user_firstname || '',
+      lastName: userData.last_name || userData.user_lastname || '',
+      avatar: userData.avatar || userData.user_avatar || '',
+      roles: userData.roles || [],
+      token: userData.token || responseData.token || '',
     };
   } catch (error) {
     console.error('Registration error:', error);
@@ -207,7 +227,12 @@ export const logoutUser = async (): Promise<void> => {
 export const getCurrentUser = async (token: string): Promise<UserProfile | null> => {
   console.log('Fetching current user data with token');
   try {
-    const response = await tryEndpoints(API_ENDPOINTS.me, 'GET', undefined, token);
+    // For nxtmt.com, we need to send the token in the body for user data retrieval
+    const requestBody = {
+      token: token
+    };
+    
+    const response = await tryEndpoints(API_ENDPOINTS.me, 'POST', requestBody);
 
     if (!response.ok) {
       if (response.status === 401) {
@@ -239,36 +264,35 @@ export const getCurrentUser = async (token: string): Promise<UserProfile | null>
 export const updateUserProfile = async (userId: number, profileData: Partial<UserProfile>, token: string): Promise<UserProfile> => {
   console.log('Updating user profile:', profileData);
   try {
-    // For now, we'll use a direct fetch since we don't have this endpoint in our API_ENDPOINTS
-    const response = await fetch(`${API_BASE}/user/v1/users/${userId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        email: profileData.email,
-        first_name: profileData.firstName,
-        last_name: profileData.lastName,
-      }),
-      credentials: 'include',
-    });
+    const requestBody = {
+      user_id: userId,
+      email: profileData.email,
+      first_name: profileData.firstName,
+      last_name: profileData.lastName,
+      token: token
+    };
+    
+    const response = await tryEndpoints(API_ENDPOINTS.update, 'POST', requestBody, token);
 
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'Profile update failed');
     }
 
-    const updatedUser = await response.json();
+    const responseData = await response.json();
+    
+    // Handle possible response formats from nxtmt.com API
+    const userData = responseData.user || responseData.data || responseData;
+    
     return {
-      id: updatedUser.id,
-      username: updatedUser.username,
-      email: updatedUser.email,
-      firstName: updatedUser.first_name,
-      lastName: updatedUser.last_name,
-      avatar: updatedUser.avatar,
-      roles: updatedUser.roles || [],
-      token: token,
+      id: userData.id || userData.ID || 0,
+      username: userData.username || userData.user_login || '',
+      email: userData.email || userData.user_email || '',
+      firstName: userData.first_name || userData.user_firstname || '',
+      lastName: userData.last_name || userData.user_lastname || '',
+      avatar: userData.avatar || userData.user_avatar || '',
+      roles: userData.roles || [],
+      token: userData.token || responseData.token || token,
     };
   } catch (error) {
     console.error('Update profile error:', error);
@@ -282,18 +306,23 @@ export const updateUserProfile = async (userId: number, profileData: Partial<Use
 export const validateToken = async (token: string): Promise<boolean> => {
   console.log('Validating token');
   try {
-    // Use the /me endpoint to validate the token
-    // If we can get the user info, the token is valid
+    // Try to use the dedicated token validation endpoint
     try {
-      const userData = await getCurrentUser(token);
-      return !!userData;
+      const response = await tryEndpoints(API_ENDPOINTS.validate, 'POST', { token });
+      return response.ok;
     } catch {
-      return false;
+      // Fallback to getting user data to validate token
+      try {
+        const userData = await getCurrentUser(token);
+        return !!userData;
+      } catch {
+        return false;
+      }
     }
     
-    // Alternate implementation that could be used instead:
+    // Old implementation for reference:
     /*
-    const response = await fetch(`${API_BASE}/wp-json/jwt-auth/v1/token/validate`, {
+    const response = await fetch(`${API_BASE}/users/validate_token`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,

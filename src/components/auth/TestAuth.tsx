@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 const TestAuth: React.FC = () => {
   const [result, setResult] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const API_BASE_URL = 'https://www.nxtmt.com/api';
+  const API_BASE_URL = 'https://nxtmt.com/api';
 
   // Test function to check if the API is reachable
   const testApiConnection = async () => {
@@ -36,21 +36,27 @@ const TestAuth: React.FC = () => {
   // Test WordPress login API
   const testLogin = async () => {
     setIsLoading(true);
-    setResult('Testing WordPress login API...');
+    setResult('Testing WordPress login API for nxtmt.com...');
     
     try {
-      // Try different endpoint paths to find the correct one
+      // Try different endpoint paths based on the correct URL format
       const testEndpoints = [
-        '/user/v1/auth',
-        '/wp-json/jwt-auth/v1/token',
-        '/wp-json/api/v1/token',
-        '/wp-json/simple-jwt-login/v1/auth'
+        '/users/login',
+        '/users/authenticate',
+        '/users/create_user',
+        '/users/register',
+        '/users/get_user',
+        '/users/current',
+        '/users/validate_token',
+        '/users/verify_token',
+        '/users/update_user'
       ];
       
       // Test credential (never use in production)
       const testCreds = {
         username: 'test_user',
-        password: 'test_password'
+        password: 'test_password',
+        remember: true
       };
       
       let results = '';
@@ -90,12 +96,55 @@ const TestAuth: React.FC = () => {
     }
   };
   
+  // Test direct create user endpoint
+  const testCreateUser = async () => {
+    setIsLoading(true);
+    setResult('Testing direct create_user endpoint...');
+    
+    try {
+      // Test user data (never use in production)
+      const testUser = {
+        username: 'test_user_' + Date.now().toString().slice(-4),
+        email: `test${Date.now().toString().slice(-4)}@example.com`,
+        password: 'Test@password123',
+        first_name: 'Test',
+        last_name: 'User',
+        send_welcome_email: false
+      };
+      
+      const response = await fetch(`${API_BASE_URL}/users/create_user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(testUser),
+      });
+      
+      let resultText = `Status: ${response.status}\n`;
+      
+      // Try to parse response as JSON
+      try {
+        const data = await response.json();
+        resultText += `Response: ${JSON.stringify(data, null, 2)}`;
+      } catch {
+        const text = await response.text();
+        resultText += `Response Text: ${text}`;
+      }
+      
+      setResult(resultText);
+    } catch (error) {
+      setResult(`Error testing create_user: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   return (
     <div className="border border-white/10 p-4 rounded-lg bg-black/30 max-w-3xl mx-auto my-8">
-      <h2 className="text-xl font-bold mb-4">WordPress API Test</h2>
+      <h2 className="text-xl font-bold mb-4">NXTMT API Test</h2>
       
       <div className="space-y-4">
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <Button 
             onClick={testApiConnection}
             disabled={isLoading}
@@ -108,7 +157,15 @@ const TestAuth: React.FC = () => {
             disabled={isLoading}
             variant="secondary"
           >
-            Test Login Endpoints
+            Test All Endpoints
+          </Button>
+          
+          <Button 
+            onClick={testCreateUser}
+            disabled={isLoading}
+            variant="outline"
+          >
+            Test Create User
           </Button>
         </div>
         
