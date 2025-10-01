@@ -7,11 +7,11 @@
 const API_BASE = 'https://nxtmt.com/wp-json';
 
 // WordPress application password credentials
-const WP_USERNAME = 'josh@nextmountain.dev';
-const WP_APP_PASSWORD = 'zfOH QAHW dWVP QE0j z2c8 s2Os';
+export const WP_USERNAME = 'josh@nextmountain.dev';
+export const WP_APP_PASSWORD = 'zfOH QAHW dWVP QE0j z2c8 s2Os';
 
 // Create base64 encoded authentication string for HTTP Basic Auth
-const getAuthHeader = () => {
+export const getAuthHeader = () => {
   const credentials = `${WP_USERNAME}:${WP_APP_PASSWORD}`;
   const encodedCredentials = btoa(credentials);
   return `Basic ${encodedCredentials}`;

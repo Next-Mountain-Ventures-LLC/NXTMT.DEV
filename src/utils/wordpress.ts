@@ -201,7 +201,19 @@ export async function getProducts(options = {}) {
   queryParams.append('_embed', 'true');
   
   try {
-    const response = await fetch(`${WORDPRESS_API_URL}/product?${queryParams}`);
+    let response;
+    
+    // Try both endpoints: 'products' and 'product'
+    try {
+      response = await fetch(`${WORDPRESS_API_URL}/products?${queryParams}`);
+      if (!response.ok) {
+        console.log('Products endpoint failed, trying product endpoint');
+        response = await fetch(`${WORDPRESS_API_URL}/product?${queryParams}`);
+      }
+    } catch (err) {
+      console.log('Error with products endpoint, trying product endpoint');
+      response = await fetch(`${WORDPRESS_API_URL}/product?${queryParams}`);
+    }
     
     if (!response.ok) {
       throw new Error(`Failed to fetch products: ${response.statusText}`);
