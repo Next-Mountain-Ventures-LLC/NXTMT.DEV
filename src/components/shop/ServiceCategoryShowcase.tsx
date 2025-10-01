@@ -118,7 +118,7 @@ const ServiceCategoryShowcase: React.FC = () => {
       title: "SEO",
       description: "Optimize your online visibility and drive organic traffic to your digital platforms.",
       color: "border-green-500/40 hover:border-green-500/70",
-      link: "#premium-packages",
+      link: "#seo-services",
       delay: 400
     },
     {
@@ -126,7 +126,7 @@ const ServiceCategoryShowcase: React.FC = () => {
       title: "Development",
       description: "Custom software and application development tailored to your specific needs.",
       color: "border-amber-500/40 hover:border-amber-500/70",
-      link: "#web-services",
+      link: "#development-services",
       delay: 500
     },
     {
@@ -134,7 +134,7 @@ const ServiceCategoryShowcase: React.FC = () => {
       title: "API Solutions",
       description: "Connect your systems with powerful API integrations and development.",
       color: "border-teal-500/40 hover:border-teal-500/70",
-      link: "#integration-services",
+      link: "#api-solutions",
       delay: 600
     },
     {
@@ -150,7 +150,7 @@ const ServiceCategoryShowcase: React.FC = () => {
       title: "Support",
       description: "Ongoing technical support and maintenance for your digital assets.",
       color: "border-rose-500/40 hover:border-rose-500/70",
-      link: "#premium-packages",
+      link: "#support-services",
       delay: 800
     }
   ];

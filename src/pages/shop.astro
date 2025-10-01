@@ -5,9 +5,13 @@ import HeroParticles from "@/components/shop/HeroParticles.tsx";
 import ShopHero from "@/components/shop/ShopHero.tsx";
 import ServiceCategoryShowcase from "@/components/shop/ServiceCategoryShowcase.tsx";
 import WebServiceCarousel from "@/components/shop/WebServiceCarousel.tsx";
+import DevelopmentServices from "@/components/shop/DevelopmentServices.tsx";
 import IntegrationServices from "@/components/shop/IntegrationServices.tsx";
+import APISolutions from "@/components/shop/APISolutions.tsx";
 import BrandingServices from "@/components/shop/BrandingServices.tsx";
+import SEOServices from "@/components/shop/SEOServices.tsx";
 import ConsultationServices from "@/components/shop/ConsultationServices.tsx";
+import SupportServices from "@/components/shop/SupportServices.tsx";
 import PremiumPackages from "@/components/shop/PremiumPackages.tsx";
 import ContactCTA from "@/components/shop/ContactCTA.tsx";
 ---
@@ -26,14 +30,26 @@ import ContactCTA from "@/components/shop/ContactCTA.tsx";
   <!-- Web Development Services -->
   <WebServiceCarousel client:load />
   
+  <!-- Development Services -->
+  <DevelopmentServices client:load />
+  
+  <!-- API Solutions -->
+  <APISolutions client:load />
+  
   <!-- Integration Services -->
   <IntegrationServices client:load />
+  
+  <!-- SEO Services -->
+  <SEOServices client:load />
   
   <!-- Branding Services -->
   <BrandingServices client:load />
   
   <!-- Consultation Services -->
   <ConsultationServices client:load />
+  
+  <!-- Support Services -->
+  <SupportServices client:load />
   
   <!-- Premium Packages -->
   <PremiumPackages client:load />
