@@ -156,24 +156,20 @@ const ServiceCategoryShowcase: React.FC = () => {
   ];
 
   return (
-    <section id="service-categories" className="py-24 relative overflow-hidden">
+    <section id="service-categories" className="py-16 relative overflow-hidden backdrop-blur-sm bg-black/20 rounded-xl border border-white/10">
       {/* Background accents */}
       <div className="absolute top-0 right-1/4 w-48 h-48 bg-primary/10 rounded-full blur-3xl opacity-30"></div>
       <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl opacity-30"></div>
       
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-medium rounded-full bg-primary/20 border border-primary/30 text-primary-foreground backdrop-blur-sm">
-            <span>Service Categories</span>
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <div className="inline-flex items-center justify-center px-3 py-1 mb-4 text-xs font-medium rounded-full bg-primary/20 border border-primary/30 text-primary-foreground backdrop-blur-sm">
+            <span>Our Services</span>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 leading-tight">
-            Comprehensive Digital Solutions for Every Need
+          <h2 className="text-2xl md:text-3xl font-bold font-display mb-2 leading-tight">
+            Find The Perfect Digital Solution
           </h2>
-          
-          <p className="text-muted-foreground">
-            Browse our wide range of services designed to meet the diverse needs of businesses across industries.
-          </p>
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

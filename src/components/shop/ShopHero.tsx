@@ -28,7 +28,7 @@ const ShopHero: React.FC = () => {
   }, []);
 
   const handleScrollDown = () => {
-    const servicesSection = document.getElementById('service-categories');
+    const servicesSection = document.getElementById('web-services');
     if (servicesSection) {
       servicesSection.scrollIntoView({ behavior: 'smooth' });
     }
@@ -37,7 +37,7 @@ const ShopHero: React.FC = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative min-h-[90vh] flex items-center justify-center px-4 py-24 overflow-hidden"
+      className="relative min-h-[70vh] flex items-center justify-center px-4 pt-24 pb-36 overflow-hidden"
     >
       <div className="container mx-auto relative z-10 text-center">
         <div className="max-w-4xl mx-auto">
@@ -72,7 +72,7 @@ const ShopHero: React.FC = () => {
               onClick={handleScrollDown}
             >
               <ArrowDown className="mr-2 h-4 w-4 animate-bounce" />
-              See All Categories
+              See Services
             </Button>
           </div>
         </div>
