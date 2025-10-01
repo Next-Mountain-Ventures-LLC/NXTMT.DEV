@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import signMeImg from '@/assets/img_4110_nw_d534e0f5.jpeg';
 import tntImg1 from '@/assets/img_6913_nw_fd8ed4ae.png';
 import tntImg2 from '@/assets/img_6920_nw_8e13ea06.png';
+import prestigePianoImg from '@/assets/untitled-3_nw_67fd89f3.png';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface WorkItemProps {
@@ -121,7 +122,7 @@ export default function WorkCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeProject, setActiveProject] = useState<WorkItemProps | null>(null);
   
-  // Updated work items with TNT project
+  // Updated work items with TNT and Prestige Piano projects
   const workItems: WorkItemProps[] = [
     {
       image: signMeImg.src,
@@ -142,6 +143,16 @@ export default function WorkCarousel() {
       client: 'Twist & Turn Dryer Vent Cleaning',
       year: '2023',
       services: ['Website Redesign', 'Branding', 'WordPress Development', 'Hosting Migration', 'Security Upgrade']
+    },
+    {
+      image: prestigePianoImg.src,
+      title: 'Prestige Piano',
+      category: 'Web Application',
+      offset: 'up',
+      description: 'Developed comprehensive web portals for Prestige Piano, enhancing their customer experience and employee management. The solution includes a Customer Portal for service scheduling and music lesson management, and a Contractor/Employee Portal for staff to manage appointments, track hours, and access resources.',
+      client: 'Prestige Piano',
+      year: '2023',
+      services: ['Web Application Development', 'Customer Portal', 'Employee Portal', 'Responsive Design', 'User Experience Design']
     }
   ];
   
