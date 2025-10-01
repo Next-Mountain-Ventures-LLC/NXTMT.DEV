@@ -102,10 +102,13 @@
     }
   }, true);
 
-  // 5. Intercept all fetches to new.website
+  // 5. Intercept fetches to new.website EXCEPT for the form submission endpoint
   const originalFetch = window.fetch;
   window.fetch = function(resource, init) {
-    if (typeof resource === 'string' && resource.includes('new.website')) {
+    // Allow form submissions to go through
+    if (typeof resource === 'string' && 
+        resource.includes('new.website') && 
+        !resource.includes('/api/submit-form/')) {
       console.warn('🛑 Intercepted fetch to new.website:', resource);
       // Return a fake successful response
       return Promise.resolve(new Response(JSON.stringify({success: true, status: "ok"}), {
@@ -113,13 +116,16 @@
         headers: {'Content-Type': 'application/json'}
       }));
     }
+    // Let all other requests through, especially form submissions
     return originalFetch.apply(this, arguments);
   };
 
-  // 6. Intercept XMLHttpRequest to new.website
+  // 6. Intercept XMLHttpRequest to new.website except form submissions
   const originalXhrOpen = XMLHttpRequest.prototype.open;
   XMLHttpRequest.prototype.open = function(method, url, ...rest) {
-    if (typeof url === 'string' && url.includes('new.website')) {
+    if (typeof url === 'string' && 
+        url.includes('new.website') && 
+        !url.includes('/api/submit-form/')) {
       console.warn('🛑 Blocked XMLHttpRequest to new.website:', url);
       // Point to a non-existent endpoint that will fail silently
       url = 'about:blank';
