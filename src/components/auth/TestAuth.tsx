@@ -39,17 +39,22 @@ const TestAuth: React.FC = () => {
     setResult('Testing WordPress login API for nxtmt.com...');
     
     try {
-      // Try different endpoint paths based on the correct URL format
+      // Try endpoints based on the WordPress API screenshot
       const testEndpoints = [
         '/users/login',
-        '/users/authenticate',
+        '/users/logout',
+        '/users/is_user_logged_in',
         '/users/create_user',
-        '/users/register',
-        '/users/get_user',
-        '/users/current',
-        '/users/validate_token',
-        '/users/verify_token',
-        '/users/update_user'
+        '/users/add_user_meta',
+        '/users/update_user',
+        '/users/update_user_meta',
+        '/users/delete_user',
+        '/users/delete_user_meta',
+        '/users/get_userdata',
+        '/users/get_user_meta',
+        '/users/get_userinfo',
+        '/users/get_currentuserinfo',
+        '/users/validate_auth_cookie'
       ];
       
       // Test credential (never use in production)

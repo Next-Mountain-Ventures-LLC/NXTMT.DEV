@@ -6,27 +6,42 @@
 // Define base API URL
 const API_BASE = 'https://nxtmt.com/api';
 
-// WordPress API endpoints specific to nxtmt.com
+// WordPress API endpoints specific to nxtmt.com based on the provided screenshot
 const API_ENDPOINTS = {
   // User API endpoints
   login: [
-    '/users/login',
-    '/users/authenticate'
+    '/users/login'
+  ],
+  logout: [
+    '/users/logout'
   ],
   register: [
-    '/users/create_user',
-    '/users/register'
+    '/users/create_user'
   ],
   me: [
-    '/users/get_user',
-    '/users/current'
+    '/users/is_user_logged_in', 
+    '/users/get_userdata'
   ],
   validate: [
-    '/users/validate_token',
-    '/users/verify_token'
+    '/users/validate_auth_cookie'
   ],
   update: [
     '/users/update_user'
+  ],
+  meta: [
+    '/users/get_user_meta',
+    '/users/add_user_meta',
+    '/users/update_user_meta',
+    '/users/delete_user_meta'
+  ],
+  delete: [
+    '/users/delete_user'
+  ],
+  info: [
+    '/users/get_userinfo'
+  ],
+  current: [
+    '/users/get_currentuserinfo'
   ]
 };
 
