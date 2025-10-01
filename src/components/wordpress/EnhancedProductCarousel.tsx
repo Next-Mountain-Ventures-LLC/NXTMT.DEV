@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ArrowRight, ShoppingCart, Tag, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getProducts, getFeaturedImageUrl } from '@/utils/wordpress';
-import { generateProductImage, generateProductDescription, updateProductWithEnhancements } from '@/utils/productEnhancer';
+import { generateProductImage, generateProductDescription } from '@/utils/productEnhancer';
 
 interface Product {
   id: number;
@@ -24,11 +24,10 @@ interface EnhancedProductCarouselProps {
   title?: string;
   subtitle?: string;
   generatePlaceholders?: boolean;
-  updateWordPress?: boolean;
 }
 
 // Product card component
-const ProductCard = ({ product, isActive, onHover, isEnhanced, isEnhancing }) => {
+const ProductCard = ({ product, isActive, onHover }) => {
   const title = product.title.rendered || 'Untitled Product';
   
   // Get image URL from WordPress or generate one
@@ -68,14 +67,7 @@ const ProductCard = ({ product, isActive, onHover, isEnhanced, isEnhancing }) =>
             Sale
           </div>
         )}
-        {isEnhancing && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <div className="bg-black/80 text-white text-xs px-3 py-2 rounded-md flex items-center">
-              <span className="animate-spin mr-2 h-3 w-3 border-2 border-primary border-r-transparent rounded-full"></span>
-              Enhancing...
-            </div>
-          </div>
-        )}
+        {/* Enhancement indicator removed */}
       </div>
       
       <div className="p-5">
@@ -136,24 +128,21 @@ export default function EnhancedProductCarousel({
   showViewAll = true,
   title = "Featured Products",
   subtitle = "Discover our latest offerings",
-  generatePlaceholders = true,
-  updateWordPress = true
+  generatePlaceholders = true
 }: EnhancedProductCarouselProps) {
   const carouselRef = useRef(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeProduct, setActiveProduct] = useState(null);
   const [error, setError] = useState('');
-  const [enhancedProducts, setEnhancedProducts] = useState<Set<number>>(new Set());
-  const [enhancingProduct, setEnhancingProduct] = useState<number | null>(null);
-  const [enhancementStatus, setEnhancementStatus] = useState<string | null>(null);
+  // Enhancement states removed
   
-  // Fetch products from WordPress and enhance them automatically
+  // Fetch products from WordPress
   useEffect(() => {
-    const fetchAndEnhanceProducts = async () => {
+    const fetchProducts = async () => {
       setLoading(true);
       try {
-        // First, fetch the products
+        // Fetch the products
         const response = await getProducts({ per_page: productsPerPage });
         setProducts(response.products);
         
@@ -161,88 +150,18 @@ export default function EnhancedProductCarousel({
         if (response.products.length > 0) {
           setActiveProduct(response.products[0]);
         }
-        
-        // Automatically enhance products that need it
-        if (generatePlaceholders && updateWordPress && response.products.length > 0) {
-          console.log('Automatically enhancing products...');
-          
-          // Process products sequentially to avoid overwhelming the API
-          for (const product of response.products) {
-            // Check if this product needs enhancement
-            const hasContent = product.content?.rendered && product.content.rendered.length > 20;
-            const hasImage = !!getFeaturedImageUrl(product, 'medium');
-            
-            // Only enhance products that need it
-            if (!hasContent || !hasImage) {
-              await enhanceProduct(product);
-            }
-          }
-        }
       } catch (err) {
-        console.error('Error fetching or enhancing products:', err);
+        console.error('Error fetching products:', err);
         setError('Failed to load products. Please try again later.');
       } finally {
         setLoading(false);
       }
     };
     
-    fetchAndEnhanceProducts();
-  }, [productsPerPage, generatePlaceholders, updateWordPress]);
+    fetchProducts();
+  }, [productsPerPage]);
   
-  // Function to enhance a single product
-  const enhanceProduct = async (product: Product) => {
-    if (enhancedProducts.has(product.id) || enhancingProduct === product.id) {
-      return;
-    }
-    
-    setEnhancingProduct(product.id);
-    setEnhancementStatus(`Enhancing product: ${product.title.rendered}`);
-    
-    try {
-      // Generate image and description
-      const title = product.title.rendered;
-      const imageUrl = generateProductImage(title, 800, 600);
-      const description = generateProductDescription(title);
-      
-      // Update the product in WordPress
-      const updatedProduct = await updateProductWithEnhancements(
-        product.id,
-        imageUrl,
-        description
-      );
-      
-      if (updatedProduct) {
-        // Update local products array with the enhanced product
-        setProducts(prevProducts => 
-          prevProducts.map(p => 
-            p.id === product.id ? { ...p, ...updatedProduct } : p
-          )
-        );
-        
-        setEnhancementStatus(`Enhanced: ${title}`);
-        
-        // Add to enhanced products set
-        setEnhancedProducts(prev => new Set([...prev, product.id]));
-      } else {
-        console.error(`Failed to enhance product: ${title}`);
-        setEnhancementStatus(`Failed to enhance: ${title}`);
-      }
-    } catch (err) {
-      console.error('Error enhancing product:', err);
-      setEnhancementStatus(`Error enhancing: ${product.title.rendered}`);
-    } finally {
-      setTimeout(() => {
-        if (enhancementStatus?.includes(product.title.rendered)) {
-          setEnhancementStatus(null);
-        }
-      }, 3000);
-      
-      setEnhancingProduct(null);
-    }
-    
-    // Return a promise to allow sequential processing
-    return Promise.resolve();
-  };
+  // Product enhancement functionality removed
   
   
   // Scroll functions
@@ -331,15 +250,7 @@ export default function EnhancedProductCarousel({
           )}
         </div>
         
-        {/* Enhancement status message */}
-        {enhancementStatus && (
-          <div className="mb-6 flex justify-center">
-            <div className="bg-primary/10 border border-primary/30 text-primary-foreground px-4 py-2 rounded-md flex items-center">
-              <AlertCircle className="h-4 w-4 mr-2" />
-              {enhancementStatus}
-            </div>
-          </div>
-        )}
+        {/* Enhancement status message removed */}
         
         {/* Product carousel */}
         <div className="relative w-full mb-8">
@@ -375,8 +286,6 @@ export default function EnhancedProductCarousel({
                   product={product}
                   isActive={activeProduct?.id === product.id}
                   onHover={() => setActiveProduct(product)}
-                  isEnhanced={enhancedProducts.has(product.id)}
-                  isEnhancing={enhancingProduct === product.id}
                 />
               </div>
             ))}

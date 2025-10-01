@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getProducts, getFeaturedImageUrl } from '@/utils/wordpress';
-import { generateProductImage, generateProductDescription, updateProductWithEnhancements } from '@/utils/productEnhancer';
+import { generateProductImage, generateProductDescription } from '@/utils/productEnhancer';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -94,10 +94,10 @@ const ProductApiTester: React.FC = () => {
     }
   };
   
-  // Function to test updating a product
+  // Function to test updating a product (removed WordPress update functionality)
   const testProductUpdate = async (product: Product) => {
     setLoading(true);
-    addLog('info', `Testing product update for ID: ${product.id}`, product);
+    addLog('info', `Testing product generation for ID: ${product.id}`, product);
     
     try {
       // Generate image and description
@@ -108,51 +108,38 @@ const ProductApiTester: React.FC = () => {
         throw new Error('Failed to generate image or description');
       }
       
-      // Store the "before" state
-      const beforeState = {
+      // Store the current state
+      const productState = {
         content: product.content?.rendered || '',
         featured_media: product.featured_media || 0,
         imageUrl: getFeaturedImageUrl(product, 'medium')
       };
       
-      // Update the product
-      addLog('info', 'Attempting to update product in WordPress...', { 
+      addLog('info', 'Generated product enhancements (WordPress update functionality removed)', { 
         productId: product.id,
         imageUrl,
         description: description.substring(0, 100) + '...'
       });
       
-      const updatedProduct = await updateProductWithEnhancements(product.id, imageUrl, description);
-      
-      if (!updatedProduct) {
-        throw new Error('Product update returned null or undefined');
-      }
-      
-      // Store the "after" state
-      const afterState = {
-        content: updatedProduct.content?.rendered || '',
-        featured_media: updatedProduct.featured_media || 0,
-      };
-      
-      addLog('success', `Successfully updated product ID: ${product.id}`, updatedProduct);
+      addLog('success', `Successfully generated enhancements for product ID: ${product.id}`);
       
       // Update the enhancement results
       setEnhancementResults(prev => ({
         ...prev,
         [product.id]: {
           success: true,
-          message: 'Product successfully updated',
-          before: beforeState,
-          after: afterState
+          message: 'Generated product enhancements (WordPress update functionality removed)',
+          before: productState,
+          after: {
+            generatedDescription: description.substring(0, 100) + '...',
+            generatedImageUrl: imageUrl
+          }
         }
       }));
       
-      // Refresh the products list to show the updates
-      fetchProducts();
-      
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : String(err);
-      addLog('error', `Failed to update product ID: ${product.id}`, { error: errorMessage });
+      addLog('error', `Failed to generate enhancements for product ID: ${product.id}`, { error: errorMessage });
       
       // Update the enhancement results
       setEnhancementResults(prev => ({
@@ -167,20 +154,20 @@ const ProductApiTester: React.FC = () => {
     }
   };
   
-  // Function to test updating all products
+  // Function to test generating enhancements for all products
   const testBatchUpdate = async () => {
     setLoading(true);
-    addLog('info', `Starting batch update for ${products.length} products`);
+    addLog('info', `Starting batch enhancement generation for ${products.length} products`);
     
     try {
       for (const product of products) {
         await testProductUpdate(product);
       }
       
-      addLog('success', `Completed batch update for ${products.length} products`);
+      addLog('success', `Completed batch enhancement generation for ${products.length} products`);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : String(err);
-      addLog('error', 'Batch update failed', { error: errorMessage });
+      addLog('error', 'Batch enhancement generation failed', { error: errorMessage });
     } finally {
       setLoading(false);
     }
@@ -219,7 +206,7 @@ const ProductApiTester: React.FC = () => {
           variant="outline"
           className="flex items-center gap-2"
         >
-          Test Update Selected Product
+          Test Generate Enhancements
         </Button>
         
         <Button 
@@ -228,7 +215,7 @@ const ProductApiTester: React.FC = () => {
           variant="secondary"
           className="flex items-center gap-2"
         >
-          Test Batch Update All Products
+          Test Batch Generate Enhancements
         </Button>
       </div>
       
@@ -392,7 +379,7 @@ const ProductApiTester: React.FC = () => {
                       disabled={loading}
                       className="w-full"
                     >
-                      {loading ? 'Processing...' : 'Update This Product'}
+                      {loading ? 'Processing...' : 'Generate Enhancements'}
                     </Button>
                   )}
                 </CardFooter>
@@ -466,7 +453,7 @@ const ProductApiTester: React.FC = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>Debug Information</CardTitle>
-                  <CardDescription>Technical details and data</CardDescription>
+                  <CardDescription>Technical details and data (WordPress update functionality removed)</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -476,8 +463,8 @@ const ProductApiTester: React.FC = () => {
                         {`
 GET  https://nxtmt.com/wp-json/wp/v2/products?_embed=true
 GET  https://nxtmt.com/wp-json/wp/v2/product?_embed=true
-POST https://nxtmt.com/wp-json/wp/v2/media
-POST https://nxtmt.com/wp-json/wp/v2/product/{id}
+
+// WordPress update functionality removed
                         `}
                       </pre>
                     </div>

@@ -2,8 +2,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Image } from 'astro:assets';
 import logoImage from '../assets/44318aa0-1ebb-46fc-bcf0-dc41c47feb2b_nw_2ec94e47.png';
-import HeaderAuth from './auth/HeaderAuth';
-import AuthProvider from './auth/AuthProvider.astro';
 ---
 
 <header
@@ -67,11 +65,7 @@ import AuthProvider from './auth/AuthProvider.astro';
           Contact
         </a>
       </nav>
-      <div class="hidden md:flex items-center ml-4">
-        <AuthProvider>
-          <HeaderAuth client:load />
-        </AuthProvider>
-      </div>
+      <!-- Auth menu removed as requested -->
       <!-- Mobile menu button - to be implemented with JavaScript later -->
       <button class="md:hidden p-2 rounded-md hover:bg-primary/20">
         <span class="sr-only">Open menu</span>
