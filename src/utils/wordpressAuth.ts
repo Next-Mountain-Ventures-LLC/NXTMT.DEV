@@ -52,9 +52,6 @@ export interface UserProfile {
 }
 
 /**
- * Login a user with WordPress credentials
- */
-/**
  * Try multiple API endpoints until one works
  */
 async function tryEndpoints(endpoints: string[], method: string, body?: object, token?: string): Promise<Response> {
@@ -104,17 +101,13 @@ async function tryEndpoints(endpoints: string[], method: string, body?: object, 
   throw new Error(`API request failed. Tried ${endpoints.length} endpoints. Errors: ${errors.join(' | ')}`);
 }
 
+/**
+ * Login a user with WordPress credentials
+ */
 export const loginUser = async (credentials: LoginCredentials): Promise<UserProfile> => {
   console.log('Attempting login with:', { username: credentials.username, passwordLength: credentials.password.length });
   try {
     const response = await tryEndpoints(API_ENDPOINTS.login, 'POST', credentials);
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-      credentials: 'include',
-    });
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -153,18 +146,6 @@ export const registerUser = async (userData: SignupData): Promise<UserProfile> =
     };
     
     const response = await tryEndpoints(API_ENDPOINTS.register, 'POST', requestBody);
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: userData.username,
-        email: userData.email,
-        password: userData.password,
-        first_name: userData.firstName,
-        last_name: userData.lastName,
-      }),
-    });
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -197,6 +178,7 @@ export const logoutUser = async (): Promise<void> => {
     // For logout, we just clear local storage since the WordPress API may not have a standard logout endpoint
     localStorage.removeItem('wordpressUser');
     return;
+    
     // Uncomment below to attempt server-side logout if needed
     /*
     const response = await fetch(`${API_BASE}/wp-json/simple-jwt-login/v1/auth/revoke`, {
@@ -212,6 +194,7 @@ export const logoutUser = async (): Promise<void> => {
     localStorage.removeItem('wordpressUser');
     
     return await response.json();
+    */
   } catch (error) {
     console.error('Logout error:', error);
     throw error;
@@ -225,12 +208,6 @@ export const getCurrentUser = async (token: string): Promise<UserProfile | null>
   console.log('Fetching current user data with token');
   try {
     const response = await tryEndpoints(API_ENDPOINTS.me, 'GET', undefined, token);
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-      credentials: 'include',
-    });
 
     if (!response.ok) {
       if (response.status === 401) {
@@ -262,8 +239,8 @@ export const getCurrentUser = async (token: string): Promise<UserProfile | null>
 export const updateUserProfile = async (userId: number, profileData: Partial<UserProfile>, token: string): Promise<UserProfile> => {
   console.log('Updating user profile:', profileData);
   try {
-    // WordPress JSON USER API typically uses /api/user/v1/users/{id}
-    const response = await fetch(`${API_URL}/v1/users/${userId}`, {
+    // For now, we'll use a direct fetch since we don't have this endpoint in our API_ENDPOINTS
+    const response = await fetch(`${API_BASE}/user/v1/users/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -313,6 +290,8 @@ export const validateToken = async (token: string): Promise<boolean> => {
     } catch {
       return false;
     }
+    
+    // Alternate implementation that could be used instead:
     /*
     const response = await fetch(`${API_BASE}/wp-json/jwt-auth/v1/token/validate`, {
       method: 'POST',
@@ -322,6 +301,7 @@ export const validateToken = async (token: string): Promise<boolean> => {
     });
 
     return response.ok;
+    */
   } catch (error) {
     console.error('Token validation error:', error);
     return false;
