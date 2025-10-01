@@ -105,40 +105,95 @@ async function tryEndpoints(endpoints: string[], method: string, body?: object, 
       
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
+        'Accept': 'application/json'
       };
       
       if (useAuthHeader) {
         headers['Authorization'] = getAuthHeader();
+        console.log('Using HTTP Basic Auth with application password');
       } else if (token) {
         headers['Authorization'] = `Bearer ${token}`;
+        console.log('Using Bearer token authentication');
+      } else {
+        console.log('No authentication header provided');
       }
       
-      const response = await fetch(url, {
-        method,
-        headers,
-        body: body ? JSON.stringify(body) : undefined,
-        credentials: 'include',
-      });
+      console.log('Request headers:', headers);
+      console.log('Request body:', body ? JSON.stringify(body, null, 2) : 'none');
       
-      console.log(`Response status from ${endpoint}: ${response.status}`);
-      
-      // Check if we got a successful response
-      if (response.ok) {
-        console.log(`Found working endpoint: ${endpoint}`);
-        return response;
+      try {
+        const response = await fetch(url, {
+          method,
+          headers,
+          body: body ? JSON.stringify(body) : undefined,
+          credentials: 'include',
+          mode: 'cors'
+        });
+        
+        console.log(`Response from ${endpoint}:`, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: Object.fromEntries(response.headers.entries())
+        });
+        
+        // Check if we got a successful response
+        if (response.ok) {
+          console.log(`Found working endpoint: ${endpoint}`);
+          return response;
+        }
+        
+        // Store error for debugging
+        try {
+          const errorText = await response.text();
+          console.error(`Error from ${endpoint} (${response.status}):`, errorText);
+          
+          let errorMessage = `${endpoint} (${response.status}): ${errorText.substring(0, 150)}`;
+          
+          // Try to parse error as JSON if possible
+          try {
+            const errorJson = JSON.parse(errorText);
+            if (errorJson.message) {
+              errorMessage = `${endpoint} (${response.status}): ${errorJson.message}`;
+            } else if (errorJson.error) {
+              errorMessage = `${endpoint} (${response.status}): ${errorJson.error}`;
+            }
+          } catch (e) {
+            // Not JSON, use text error
+          }
+          
+          errors.push(errorMessage);
+        } catch (readError) {
+          errors.push(`${endpoint} (${response.status}): Could not read error response`);
+        }
+      } catch (fetchError) {
+        console.error(`Fetch error for ${endpoint}:`, fetchError);
+        errors.push(`${endpoint} (fetch): ${fetchError instanceof Error ? fetchError.message : String(fetchError)}`);
       }
-      
-      // Store error for debugging
-      const errorText = await response.text();
-      errors.push(`${endpoint} (${response.status}): ${errorText.substring(0, 100)}...`);
     } catch (error) {
-      errors.push(`${endpoint} (network): ${error instanceof Error ? error.message : String(error)}`);
+      console.error(`General error for ${endpoint}:`, error);
+      errors.push(`${endpoint} (general): ${error instanceof Error ? error.message : String(error)}`);
     }
   }
   
   // If we get here, all endpoints failed
-  console.error('All endpoints failed:', errors);
-  throw new Error(`API request failed. Tried ${endpoints.length} endpoints. Errors: ${errors.join(' | ')}`);
+  console.error('All endpoints failed. Detailed errors:', errors);
+  
+  // Create a detailed error message
+  const errorMessage = `Registration failed. Please try again later. (Reason: ${errors[0] || 'Unknown error'})`;
+  
+  // Create a mock response object with error information
+  const errorResponse = new Response(JSON.stringify({ 
+    error: true,
+    message: errorMessage
+  }), { 
+    status: 500, 
+    statusText: 'API Error',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  
+  return errorResponse;
 }
 
 /**
@@ -239,6 +294,8 @@ export const registerUser = async (userData: SignupData): Promise<UserProfile> =
         roles: ['subscriber']
       };
       
+      console.log('REST API request payload:', JSON.stringify(restApiBody, null, 2));
+      
       const response = await fetch(`${API_BASE}/wp/v2/users`, {
         method: 'POST',
         headers: {
@@ -250,20 +307,28 @@ export const registerUser = async (userData: SignupData): Promise<UserProfile> =
         credentials: 'include'
       });
       
+      console.log('REST API response status:', response.status);
+      const responseText = await response.text();
+      console.log('REST API response text:', responseText);
+      
       if (response.ok) {
-        const userData = await response.json();
-        console.log('WordPress REST API user creation successful', userData);
-        
-        return {
-          id: userData.id,
-          username: userData.name || userData.slug,
-          email: userData.email || '',
-          firstName: userData.first_name || '',
-          lastName: userData.last_name || '',
-          avatar: userData.avatar_urls?.['96'] || '',
-          roles: userData.roles || [],
-          token: 'wp_rest_api',
-        };
+        try {
+          const userData = JSON.parse(responseText);
+          console.log('WordPress REST API user creation successful', userData);
+          
+          return {
+            id: userData.id,
+            username: userData.name || userData.slug,
+            email: userData.email || '',
+            firstName: userData.first_name || '',
+            lastName: userData.last_name || '',
+            avatar: userData.avatar_urls?.['96'] || '',
+            roles: userData.roles || [],
+            token: 'wp_rest_api',
+          };
+        } catch (parseError) {
+          console.error('Error parsing REST API response:', parseError);
+        }
       }
       
       console.log('WordPress REST API user creation failed, trying JSON API');
@@ -282,30 +347,99 @@ export const registerUser = async (userData: SignupData): Promise<UserProfile> =
       send_welcome_email: true
     };
     
-    const response = await tryEndpoints(API_ENDPOINTS.register, 'POST', requestBody);
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Registration failed');
+    console.log('Legacy API request payload:', JSON.stringify(requestBody, null, 2));
+    
+    try {
+      console.log('Trying legacy API endpoints:', API_ENDPOINTS.register);
+      const response = await tryEndpoints(API_ENDPOINTS.register, 'POST', requestBody);
+      
+      // Check if the response was successful (our tryEndpoints now returns a Response even for errors)
+      if (!response.ok) {
+        console.error('Legacy API returned error status:', response.status);
+        const errorData = await response.json();
+        if (errorData && errorData.message) {
+          throw new Error(errorData.message);
+        } else {
+          throw new Error(`Registration failed with status ${response.status}`);
+        }
+      }
+      
+      console.log('Legacy API response status:', response.status);
+      const responseText = await response.text();
+      console.log('Legacy API response text:', responseText);
+      
+      if (!responseText || responseText.trim() === '') {
+        throw new Error('Empty response from API');
+      }
+      
+      try {
+        const responseData = JSON.parse(responseText);
+        console.log('Parsed response data:', responseData);
+        
+        // Check for error indicators in the response
+        if (responseData.error) {
+          console.error('API returned error object:', responseData.error);
+          throw new Error(typeof responseData.error === 'string' ? responseData.error : 'Registration failed');
+        }
+        
+        if (responseData.message && (
+          typeof responseData.message === 'string' && 
+          (responseData.message.toLowerCase().includes('error') || 
+          responseData.message.toLowerCase().includes('fail'))
+        )) {
+          console.error('API returned error message:', responseData.message);
+          throw new Error(responseData.message);
+        }
+        
+        // Handle possible response formats from nxtmt.com API
+        const user = responseData.user || responseData.data || responseData;
+        
+        if (!user || (typeof user === 'object' && Object.keys(user).length === 0)) {
+          console.error('API response missing user data:', responseData);
+          throw new Error('No user data returned from API');
+        }
+        
+        console.log('User registration successful with user data:', user);
+        
+        // Create a standardized user profile from the API response
+        const userProfile: UserProfile = {
+          id: user.id || user.ID || 0,
+          username: user.username || user.user_login || '',
+          email: user.email || user.user_email || '',
+          firstName: user.first_name || user.user_firstname || '',
+          lastName: user.last_name || user.user_lastname || '',
+          avatar: user.avatar || user.user_avatar || '',
+          roles: user.roles || [],
+          token: user.token || responseData.token || 'user_registered',
+        };
+        
+        console.log('Created user profile:', userProfile);
+        
+        // For debugging, manually log the user in
+        console.log('Auto-logging in newly created user');
+        try {
+          const loginResult = await loginUser({
+            username: userData.username,
+            password: userData.password
+          });
+          console.log('Auto-login successful:', loginResult);
+          // Return the login result as it has a valid token
+          return loginResult;
+        } catch (loginError) {
+          console.error('Auto-login failed:', loginError);
+          // Return the original profile if auto-login fails
+          return userProfile;
+        }
+      } catch (parseError) {
+        console.error('Error parsing legacy API response:', parseError);
+        throw new Error(`API returned invalid JSON: ${responseText.substring(0, 100)}...`);
+      }
+    } catch (apiError) {
+      console.error('Legacy API error:', apiError);
+      throw apiError;
     }
-
-    const responseData = await response.json();
-    
-    // Handle possible response formats from nxtmt.com API
-    const userData = responseData.user || responseData.data || responseData;
-    
-    return {
-      id: userData.id || userData.ID || 0,
-      username: userData.username || userData.user_login || '',
-      email: userData.email || userData.user_email || '',
-      firstName: userData.first_name || userData.user_firstname || '',
-      lastName: userData.last_name || userData.user_lastname || '',
-      avatar: userData.avatar || userData.user_avatar || '',
-      roles: userData.roles || [],
-      token: userData.token || responseData.token || '',
-    };
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error('Registration error:', error instanceof Error ? error.message : String(error));
     throw error;
   }
 };

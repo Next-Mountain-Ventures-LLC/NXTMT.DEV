@@ -45,24 +45,38 @@ const SignupForm: React.FC = () => {
     clearError();
     setIsSubmitted(true);
     
-    console.log('Signup form submitting');
+    console.log('Signup form submitting with data:', {
+      username: formData.username, 
+      email: formData.email,
+      passwordLength: formData.password?.length || 0,
+      confirmPasswordLength: formData.confirmPassword?.length || 0,
+      hasFirstName: !!formData.firstName,
+      hasLastName: !!formData.lastName,
+      agreeTerms: formData.agreeTerms
+    });
     
     // Validation checks
     if (!formData.agreeTerms) {
       console.warn('User must agree to terms');
-      // You can handle this error in the UI
+      setError('Please agree to the Terms of Service and Privacy Policy');
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
       console.warn('Passwords do not match');
       setPasswordMatch(false);
+      setError('Passwords do not match');
       return;
     }
     
     // If any required fields are missing, don't proceed
     if (!formData.email || !formData.password || !formData.username) {
-      console.warn('Required fields missing');
+      console.warn('Required fields missing:', {
+        hasEmail: !!formData.email,
+        hasPassword: !!formData.password,
+        hasUsername: !!formData.username
+      });
+      setError('Please fill in all required fields');
       return;
     }
 
@@ -74,7 +88,7 @@ const SignupForm: React.FC = () => {
         hasLastName: !!formData.lastName 
       });
       
-      await signup({
+      const result = await signup({
         username: formData.username,
         email: formData.email,
         password: formData.password,
@@ -82,10 +96,26 @@ const SignupForm: React.FC = () => {
         lastName: formData.lastName
       });
       
-      console.log('Signup form submission completed');
+      console.log('Signup form submission completed with result:', result);
+      
+      // Provide success feedback
+      alert('Account created successfully! You are now logged in.');
+      
+      // Optionally redirect to a welcome or dashboard page
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1500);
+      
     } catch (error) {
       // Error is already handled in the context
-      console.error('Signup error in component:', error);
+      console.error('Signup error in component:', error instanceof Error ? error.message : String(error));
+      
+      // Ensure the error is displayed to the user
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('Registration failed. Please try again later.');
+      }
     }
   };
 
@@ -103,7 +133,7 @@ const SignupForm: React.FC = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} data-form-type="utility">
+      <form onSubmit={handleSubmit}>
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
