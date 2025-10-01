@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import signMeImg from '@/assets/img_4110_nw_d534e0f5.jpeg';
+import tntImg1 from '@/assets/img_6913_nw_fd8ed4ae.png';
+import tntImg2 from '@/assets/img_6920_nw_8e13ea06.png';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface WorkItemProps {
@@ -119,7 +121,7 @@ export default function WorkCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeProject, setActiveProject] = useState<WorkItemProps | null>(null);
   
-  // Keep only the SignMe project as requested
+  // Updated work items with TNT project
   const workItems: WorkItemProps[] = [
     {
       image: signMeImg.src,
@@ -130,6 +132,16 @@ export default function WorkCarousel() {
       client: 'NXTMT Labs',
       year: '2023',
       services: ['Industrial Design', 'Hardware Prototyping', 'PCB Design', 'Manufacturing']
+    },
+    {
+      image: tntImg1.src,
+      title: 'Twist & Turn Dryer Vent Cleaning',
+      category: 'Website Redesign',
+      offset: 'down',
+      description: 'Complete website redesign for TNT (Twist & Turn), the leading dryer vent cleaning service in Tulsa, Oklahoma. We deployed new branding, upgraded hosting, and improved website security resulting in significantly faster page loads. The project included migrating from Wix to WordPress for better content management.',
+      client: 'Twist & Turn Dryer Vent Cleaning',
+      year: '2023',
+      services: ['Website Redesign', 'Branding', 'WordPress Development', 'Hosting Migration', 'Security Upgrade']
     }
   ];
   
@@ -187,21 +199,46 @@ export default function WorkCarousel() {
       </div>
       
       <div className="relative w-full mb-10">
+        {/* Scroll buttons */}
+        <button 
+          onClick={scrollLeft}
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-primary/80 p-2 rounded-full text-white transition-colors duration-300"
+          aria-label="Scroll left"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        
+        <button 
+          onClick={scrollRight}
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-primary/80 p-2 rounded-full text-white transition-colors duration-300"
+          aria-label="Scroll right"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+        
         {/* Scrollable container */}
         <div 
           ref={carouselRef}
-          className="no-scrollbar flex justify-center py-8 px-6"
+          className="no-scrollbar flex py-8 overflow-x-auto snap-x snap-mandatory scroll-pl-6 px-6"
+          style={{ 
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}
         >
           {workItems.map((item, index) => (
-            <div key={index} className="mx-auto">
+            <div key={index} className="snap-center">
               <WorkItem 
                 {...item}
                 onHover={handleProjectHover}
-                isActive={true}
+                isActive={activeProject?.title === item.title}
               />
             </div>
           ))}
         </div>
+        
+        {/* Gradient fades at the edges */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent pointer-events-none z-10"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent pointer-events-none z-10"></div>
       </div>
       
       {/* Project details section */}
