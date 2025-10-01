@@ -1,0 +1,97 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BloomEmbed from "@/components/BloomEmbed.astro";
+import BloomEmbedAlternative from "@/components/BloomEmbedAlternative.astro";
+---
+
+<BaseLayout
+  title="Bloom Form Test - NXTMT"
+  description="Testing Bloom form integration"
+>
+  <div class="min-h-screen bg-gray-900">
+    <div class="container mx-auto px-4 py-12">
+      <h1 class="text-4xl font-bold text-white text-center mb-8">Bloom Form Testing</h1>
+      
+      <!-- Method 1: Improved BloomEmbed -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-white mb-4">Method 1: Enhanced Script Loading</h2>
+        <BloomEmbed />
+      </div>
+      
+      <!-- Method 2: Alternative Embed -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-white mb-4">Method 2: Multiple Fallback Approaches</h2>
+        <BloomEmbedAlternative />
+      </div>
+      
+      <!-- Method 3: Simple Direct Embed -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-white mb-4">Method 3: Simple Direct Embed</h2>
+        <section class="py-12 bg-gradient-to-br from-blue-900 to-blue-800 rounded-lg">
+          <div class="container mx-auto px-4">
+            <div class="max-w-md mx-auto">
+              <div data-bloom-form-id="j469v68857e0q" style="width:100%; min-height: 200px;">
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Method 4: iframe Embed -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-white mb-4">Method 4: iframe Embed (if supported)</h2>
+        <section class="py-12 bg-gradient-to-br from-purple-900 to-purple-800 rounded-lg">
+          <div class="container mx-auto px-4">
+            <div class="max-w-md mx-auto">
+              <iframe 
+                src="https://app.bloom.io/forms/j469v68857e0q/embed" 
+                width="100%" 
+                height="400"
+                frameborder="0"
+                style="border: none; border-radius: 8px; background: white;">
+              </iframe>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Debug Info -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-white mb-4">Debug Information</h2>
+        <div class="bg-gray-800 rounded-lg p-6">
+          <div id="debug-info" class="text-gray-300 font-mono text-sm">
+            <div>Checking Bloom integration...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    window.bloomSettings = {
+      userId: "38kd520pldwvr",
+      profileId: "kxe70rqrq7o4z"
+    };
+    
+    // Debug information
+    function updateDebugInfo() {
+      const debugDiv = document.getElementById('debug-info');
+      if (!debugDiv) return;
+      
+      const info = [
+        `Page loaded: ${new Date().toISOString()}`,
+        `Window.bloomSettings: ${JSON.stringify(window.bloomSettings)}`,
+        `Bloom scripts in DOM: ${document.querySelectorAll('script[src*="bloom.io"]').length}`,
+        `Form containers: ${document.querySelectorAll('[data-bloom-form-id]').length}`,
+        `User Agent: ${navigator.userAgent}`,
+        `Location: ${window.location.href}`
+      ];
+      
+      debugDiv.innerHTML = info.map(line => `<div>${line}</div>`).join('');
+    }
+    
+    // Update debug info periodically
+    setInterval(updateDebugInfo, 2000);
+    updateDebugInfo();
+  </script>
+</BaseLayout>

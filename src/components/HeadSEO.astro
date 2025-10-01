@@ -67,24 +67,3 @@ const { title, description, ogImage } = Astro.props;
   })();
 </script>
 
-<!-- Load Bloom script only -->
-<script is:inline>
-  window.bloomSettings = {
-    userId: "38kd520pldwvr",
-    profileId: "kxe70rqrq7o4z"
-  };
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    var bloomScript = document.createElement("script");
-    bloomScript.async = true;
-    
-    fetch("https://code.bloom.io/version?t=" + Date.now())
-      .then(function(response) {
-        return response.text();
-      })
-      .then(function(version) {
-        bloomScript.src = "https://code.bloom.io/widget.js?v=" + version;
-        document.head.appendChild(bloomScript);
-      });
-  });
-</script>

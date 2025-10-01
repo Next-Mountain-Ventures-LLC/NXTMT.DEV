@@ -1,0 +1,112 @@
+---
+---
+
+<section class="py-12 bg-gradient-to-br from-gray-900 to-gray-800">
+  <div class="container mx-auto px-4">
+    <div class="max-w-2xl mx-auto text-center mb-8">
+      <h2 class="text-3xl font-bold text-white mb-4">Stay Connected</h2>
+      <p class="text-gray-300">Get updates on our latest projects and insights</p>
+    </div>
+    
+    <div class="max-w-md mx-auto">
+      <!-- Alternative 1: iframe embed -->
+      <div id="bloom-iframe-container" style="display: none;">
+        <iframe 
+          src="https://app.bloom.io/forms/j469v68857e0q/embed" 
+          width="100%" 
+          height="400"
+          frameborder="0"
+          style="border: none; border-radius: 8px;">
+        </iframe>
+      </div>
+      
+      <!-- Alternative 2: Direct script embed -->
+      <div data-bloom-form-id="j469v68857e0q" id="bloom-direct-embed" style="width:100%; min-height: 200px;">
+        <div id="bloom-loading-alt" class="flex items-center justify-center py-12">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <span class="ml-3 text-gray-300">Loading form...</span>
+        </div>
+      </div>
+      
+      <!-- Alternative 3: Fallback contact form -->
+      <div id="bloom-fallback" style="display: none;" class="bg-gray-800 rounded-lg p-6">
+        <form action="https://api.new.website/api/submit-form/" method="POST" class="space-y-4">
+          <input type="hidden" name="form_name" value="Newsletter Signup" />
+          <div>
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Enter your email"
+              class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+              required
+            />
+          </div>
+          <button 
+            type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Set Bloom settings globally
+  window.bloomSettings = {
+    userId: "38kd520pldwvr",
+    profileId: "kxe70rqrq7o4z"
+  };
+</script>
+
+<script src="https://code.bloom.io/widget.js" async onload="handleBloomLoad()" onerror="handleBloomError()"></script>
+
+<script is:inline>
+  let bloomLoadAttempts = 0;
+  const maxAttempts = 3;
+  
+  function handleBloomLoad() {
+    console.log('Bloom script loaded successfully');
+    document.getElementById('bloom-loading-alt')?.remove();
+  }
+  
+  function handleBloomError() {
+    console.warn('Bloom script failed to load, trying alternative methods');
+    bloomLoadAttempts++;
+    
+    if (bloomLoadAttempts < maxAttempts) {
+      // Try iframe approach
+      setTimeout(() => {
+        const iframeContainer = document.getElementById('bloom-iframe-container');
+        const directEmbed = document.getElementById('bloom-direct-embed');
+        
+        if (iframeContainer && directEmbed) {
+          directEmbed.style.display = 'none';
+          iframeContainer.style.display = 'block';
+        }
+      }, 1000);
+    } else {
+      // Show fallback form
+      setTimeout(() => {
+        const directEmbed = document.getElementById('bloom-direct-embed');
+        const fallback = document.getElementById('bloom-fallback');
+        
+        if (directEmbed && fallback) {
+          directEmbed.style.display = 'none';
+          fallback.style.display = 'block';
+        }
+      }, 2000);
+    }
+  }
+  
+  // Timeout fallback
+  setTimeout(() => {
+    const loading = document.getElementById('bloom-loading-alt');
+    if (loading && loading.style.display !== 'none') {
+      console.warn('Bloom form took too long to load, showing fallback');
+      handleBloomError();
+    }
+  }, 10000);
+</script>
