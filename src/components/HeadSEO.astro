@@ -67,7 +67,7 @@ const { title, description, ogImage } = Astro.props;
   })();
 </script>
 
-<!-- Bloom Form Embed -->
+<!-- Load Bloom script only -->
 <script is:inline>
   window.bloomSettings = {
     userId: "38kd520pldwvr",
@@ -85,21 +85,6 @@ const { title, description, ogImage } = Astro.props;
       .then(function(version) {
         bloomScript.src = "https://code.bloom.io/widget.js?v=" + version;
         document.head.appendChild(bloomScript);
-        
-        // Also create the container element
-        setTimeout(function() {
-          var bloomContainer = document.createElement('div');
-          bloomContainer.setAttribute('data-bloom-form-id', 'j469v68857e0q');
-          bloomContainer.style.width = '100%';
-          bloomContainer.style.margin = '30px 0';
-          
-          var footer = document.querySelector('footer');
-          if (footer) {
-            document.body.insertBefore(bloomContainer, footer);
-          } else {
-            document.body.appendChild(bloomContainer);
-          }
-        }, 1000); // Delay to ensure page is loaded
       });
   });
 </script>
