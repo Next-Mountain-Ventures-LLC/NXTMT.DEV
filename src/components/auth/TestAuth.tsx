@@ -10,12 +10,68 @@ const TestAuth: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const API_BASE_URL = 'https://nxtmt.com/wp-json';  // Base API URL for WordPress REST API
   
+  // WordPress application password credentials
+  const WP_USERNAME = 'admin'; // This should be the WordPress username
+  const WP_APP_PASSWORD = 'zfOH QAHW dWVP QE0j z2c8 s2Os'; // Application password provided
+  
+  // Create base64 encoded authentication string for HTTP Basic Auth
+  const getAuthHeader = () => {
+    const credentials = `${WP_USERNAME}:${WP_APP_PASSWORD}`;
+    const encodedCredentials = btoa(credentials);
+    return `Basic ${encodedCredentials}`;
+  };
+  
   // Display component mounted message on load
   useEffect(() => {
     console.log('TestAuth component mounted');
     setResult('TestAuth component mounted. Click a button to run tests.');
   }, []);
 
+  // Test authenticated API connection
+  const testAuthenticatedApiConnection = async () => {
+    setIsLoading(true);
+    setResult('Testing authenticated WordPress REST API connection...');
+    console.log('Testing authenticated connection to', API_BASE_URL);
+    
+    try {
+      const authHeader = getAuthHeader();
+      console.log('Using authentication header (credentials hidden)');
+      
+      // Try to fetch from the WordPress REST API with authentication
+      const response = await fetch(`${API_BASE_URL}/wp/v2/users/me`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': authHeader,
+          'Origin': window.location.origin,
+        },
+        mode: 'cors',
+        credentials: 'include',
+      });
+      
+      const status = response.status;
+      console.log('Authenticated API response status:', status);
+      
+      let responseText;
+      try {
+        const json = await response.json();
+        responseText = JSON.stringify(json, null, 2);
+        console.log('Authenticated API response:', json);
+      } catch (e) {
+        const text = await response.text();
+        responseText = text.substring(0, 500) + (text.length > 500 ? '...' : '');
+        console.log('Authenticated API text response:', responseText);
+      }
+      
+      setResult(`Authenticated API responded with status: ${status}\nEndpoint: ${API_BASE_URL}/wp/v2/users/me\nResponse:\n${responseText}`);
+    } catch (error) {
+      console.error('Authenticated API connection error:', error);
+      setResult(`Error connecting to authenticated API: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   // Test function to check if the API is reachable
   const testApiConnection = async () => {
     setIsLoading(true);
@@ -105,14 +161,23 @@ const TestAuth: React.FC = () => {
           const url = `${API_BASE_URL}${endpoint}`;
           console.log(`Request URL: ${url}`);
           
+          // Use authentication for WP REST API endpoints
+          const headers: HeadersInit = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json, text/plain, */*',
+            'Origin': window.location.origin,
+          };
+          
+          // Add authentication header for WordPress REST API endpoints
+          if (endpoint.startsWith('/wp/v2/')) {
+            headers['Authorization'] = getAuthHeader();
+            console.log('Using authentication for WordPress REST API endpoint');
+          }
+          
           const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json, text/plain, */*',
-              'Origin': window.location.origin,
-            },
-            body: JSON.stringify(testCreds),
+            method: endpoint.startsWith('/wp/v2/') ? 'GET' : 'POST',
+            headers,
+            body: endpoint.startsWith('/wp/v2/') ? undefined : JSON.stringify(testCreds),
             mode: 'cors',
             credentials: 'include',
           });
@@ -183,13 +248,22 @@ const TestAuth: React.FC = () => {
           console.log(`Trying URL: ${testUrl}`);
           finalResult += `Testing URL: ${testUrl}\n`;
           
+          // Use authentication for WP REST API endpoints
+          const headers: HeadersInit = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json, text/plain, */*',
+            'Origin': window.location.origin,
+          };
+          
+          // Add authentication header for WordPress REST API endpoints
+          if (testUrl.includes('/wp/v2/')) {
+            headers['Authorization'] = getAuthHeader();
+            console.log('Using authentication for WordPress REST API endpoint');
+          }
+          
           const response = await fetch(testUrl, {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json, text/plain, */*',
-              'Origin': window.location.origin,
-            },
+            headers,
             body: JSON.stringify(testUser),
             mode: 'cors',
             credentials: 'include',
@@ -227,13 +301,43 @@ const TestAuth: React.FC = () => {
       
       setResult(finalResult);
       return;
-      console.log('Making request to:', url);
+    } catch (error) {
+      console.error('create_user error:', error);
+      setResult(`Error testing create_user: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  // Test creating a user with authentication
+  const testAuthenticatedCreateUser = async () => {
+    setIsLoading(true);
+    setResult('Testing authenticated user creation...');
+    console.log('Testing authenticated user creation');
+    
+    try {
+      // Test user data
+      const uniqueSuffix = Date.now().toString().slice(-4);
+      const testUser = {
+        username: 'test_user_' + uniqueSuffix,
+        email: `test${uniqueSuffix}@example.com`,
+        password: 'Test@password123',
+        name: 'Test User',
+        roles: ['subscriber']
+      };
+      
+      console.log('Test user data:', { ...testUser, password: '[REDACTED]' });
+      
+      // Using the standard WordPress REST API endpoint with authentication
+      const url = `${API_BASE_URL}/wp/v2/users`;
+      console.log('Making authenticated request to:', url);
       
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json, text/plain, */*',
+          'Accept': 'application/json',
+          'Authorization': getAuthHeader(),
           'Origin': window.location.origin,
         },
         body: JSON.stringify(testUser),
@@ -241,7 +345,7 @@ const TestAuth: React.FC = () => {
         credentials: 'include',
       });
       
-      console.log('create_user status:', response.status);
+      console.log('Authenticated create user status:', response.status);
       let resultText = `Status: ${response.status}\n`;
       resultText += `Request URL: ${url}\n`;
       resultText += `Request Data: ${JSON.stringify({...testUser, password: '[REDACTED]'}, null, 2)}\n\n`;
@@ -249,19 +353,19 @@ const TestAuth: React.FC = () => {
       // Try to parse response as JSON
       try {
         const data = await response.json();
-        console.log('create_user response:', data);
+        console.log('Authenticated create user response:', data);
         resultText += `Response (JSON):\n${JSON.stringify(data, null, 2)}`;
       } catch (parseError) {
-        console.log('create_user response not JSON, reading text');
+        console.log('Response not JSON, reading text');
         const text = await response.text();
-        console.log('create_user text response:', text.substring(0, 200));
+        console.log('Text response:', text.substring(0, 200));
         resultText += `Response (Text):\n${text}`;
       }
       
       setResult(resultText);
     } catch (error) {
-      console.error('create_user error:', error);
-      setResult(`Error testing create_user: ${error instanceof Error ? error.message : String(error)}`);
+      console.error('Authenticated create user error:', error);
+      setResult(`Error testing authenticated create user: ${error instanceof Error ? error.message : String(error)}`);
     } finally {
       setIsLoading(false);
     }
@@ -284,6 +388,14 @@ const TestAuth: React.FC = () => {
           </Button>
           
           <Button 
+            onClick={testAuthenticatedApiConnection}
+            disabled={isLoading}
+            variant="outline"
+          >
+            Test Auth Connection
+          </Button>
+          
+          <Button 
             onClick={testLogin}
             disabled={isLoading}
             variant="secondary"
@@ -297,6 +409,15 @@ const TestAuth: React.FC = () => {
             variant="outline"
           >
             Test Create User
+          </Button>
+          
+          <Button 
+            onClick={testAuthenticatedCreateUser}
+            disabled={isLoading}
+            variant="default"
+            className="bg-green-700 hover:bg-green-800"
+          >
+            Create User (Auth)
           </Button>
         </div>
         
