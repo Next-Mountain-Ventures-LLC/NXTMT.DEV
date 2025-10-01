@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 const TestAuth: React.FC = () => {
   const [result, setResult] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const API_BASE_URL = 'https://nxtmt.com/api';  // Base API URL
+  const API_BASE_URL = 'https://nxtmt.com/wp-json';  // Base API URL for WordPress REST API
   
   // Display component mounted message on load
   useEffect(() => {
@@ -61,22 +61,31 @@ const TestAuth: React.FC = () => {
     console.log('Starting API endpoints test');
     
     try {
-      // Try endpoints based on the WordPress API screenshot
+      // Try WordPress REST API standard endpoints and custom endpoints
       const testEndpoints = [
-        '/users/login',
-        '/users/logout',
-        '/users/is_user_logged_in',
-        '/users/create_user',
-        '/users/add_user_meta',
-        '/users/update_user',
-        '/users/update_user_meta',
-        '/users/delete_user',
-        '/users/delete_user_meta',
-        '/users/get_userdata',
-        '/users/get_user_meta',
-        '/users/get_userinfo',
-        '/users/get_currentuserinfo',
-        '/users/validate_auth_cookie'
+        // Core WP REST API endpoints
+        '/wp/v2/users',
+        '/wp/v2/users/me',
+        
+        // WP JSON User API endpoints from the screenshot
+        '/json-user-api/v1/users/login',
+        '/json-user-api/v1/users/logout',
+        '/json-user-api/v1/users/is_user_logged_in',
+        '/json-user-api/v1/users/create_user',
+        '/json-user-api/v1/users/add_user_meta',
+        '/json-user-api/v1/users/update_user',
+        '/json-user-api/v1/users/update_user_meta',
+        '/json-user-api/v1/users/delete_user',
+        '/json-user-api/v1/users/delete_user_meta',
+        '/json-user-api/v1/users/get_userdata',
+        '/json-user-api/v1/users/get_user_meta',
+        '/json-user-api/v1/users/get_userinfo',
+        '/json-user-api/v1/users/get_currentuserinfo',
+        '/json-user-api/v1/users/validate_auth_cookie',
+        
+        // Try direct API endpoints as shown in screenshot
+        '/api/users/login',
+        '/api/users/create_user'
       ];
       
       // Test credential (never use in production)
@@ -159,7 +168,65 @@ const TestAuth: React.FC = () => {
       
       console.log('Test user data:', { ...testUser, password: '[REDACTED]' });
       
-      const url = `${API_BASE_URL}/users/create_user`;
+      // Try multiple possible URL patterns for user creation
+      const urls = [
+        `${API_BASE_URL}/wp/v2/users`,                   // Core WP API
+        `${API_BASE_URL}/json-user-api/v1/users/create_user`,  // Custom namespaced API
+        'https://nxtmt.com/api/users/create_user'             // Direct API
+      ];
+      
+      let url = urls[0]; // Default to first URL
+      let finalResult = '';
+      
+      for (const testUrl of urls) {
+        try {
+          console.log(`Trying URL: ${testUrl}`);
+          finalResult += `Testing URL: ${testUrl}\n`;
+          
+          const response = await fetch(testUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json, text/plain, */*',
+              'Origin': window.location.origin,
+            },
+            body: JSON.stringify(testUser),
+            mode: 'cors',
+            credentials: 'include',
+          });
+          
+          console.log(`${testUrl} status:`, response.status);
+          finalResult += `Status: ${response.status}\n`;
+          
+          // Try to parse response as JSON
+          try {
+            const data = await response.json();
+            console.log(`${testUrl} response:`, data);
+            finalResult += `Response: ${JSON.stringify(data, null, 2)}\n\n`;
+            
+            if (response.ok) {
+              // We found a working URL, store it for reference
+              url = testUrl;
+              break;
+            }
+          } catch (parseError) {
+            console.log(`${testUrl} response not JSON, reading text`);
+            const text = await response.text();
+            console.log(`${testUrl} text response:`, text.substring(0, 200));
+            finalResult += `Response (text): ${text.substring(0, 200)}${text.length > 200 ? '...' : ''}\n\n`;
+          }
+        } catch (err) {
+          console.error(`${testUrl} error:`, err);
+          finalResult += `Error with ${testUrl}: ${err instanceof Error ? err.message : String(err)}\n\n`;
+        }
+      }
+      
+      // Add a summary of all attempts
+      finalResult += `\nSummary: Attempted ${urls.length} different URL patterns for user creation\n`;
+      finalResult += `Most likely endpoint URL format: ${url}\n`;
+      
+      setResult(finalResult);
+      return;
       console.log('Making request to:', url);
       
       const response = await fetch(url, {
