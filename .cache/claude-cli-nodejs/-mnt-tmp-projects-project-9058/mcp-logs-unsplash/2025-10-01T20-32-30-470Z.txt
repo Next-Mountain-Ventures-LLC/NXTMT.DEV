@@ -1,0 +1,38 @@
+[
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-10-01T20:32:30.710Z",
+    "sessionId": "cb63b8a7-9985-4f5d-af82-cac9e8d8a492",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-10-01T20:32:30.823Z",
+    "sessionId": "cb63b8a7-9985-4f5d-af82-cac9e8d8a492",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-10-01T20:32:30.892Z",
+    "sessionId": "cb63b8a7-9985-4f5d-af82-cac9e8d8a492",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-10-01T20:32:30.893Z",
+    "sessionId": "cb63b8a7-9985-4f5d-af82-cac9e8d8a492",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-10-01T20:32:30.893Z",
+    "sessionId": "cb63b8a7-9985-4f5d-af82-cac9e8d8a492",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  },
+  {
+    "debug": "No token data found",
+    "timestamp": "2025-10-01T20:32:30.893Z",
+    "sessionId": "cb63b8a7-9985-4f5d-af82-cac9e8d8a492",
+    "cwd": "/mnt/tmp-projects/project-9058"
+  }
+]

@@ -1,0 +1,33 @@
+---
+// This component wraps content that needs access to the AuthContext
+---
+
+<script>
+  // Client-side script to set up the auth provider
+  import { AuthProvider as ReactAuthProvider } from '../../context/AuthContext';
+  import React from 'react';
+  import { createRoot } from 'react-dom/client';
+
+  // Find all AuthProvider instances on the page
+  document.addEventListener('DOMContentLoaded', () => {
+    const authProviders = document.querySelectorAll('.auth-provider-wrapper');
+    
+    authProviders.forEach((container) => {
+      const root = createRoot(container);
+      root.render(
+        React.createElement(
+          ReactAuthProvider,
+          null,
+          React.createElement('div', { 
+            className: 'auth-provider-content',
+            dangerouslySetInnerHTML: { __html: container.innerHTML }
+          })
+        )
+      );
+    });
+  });
+</script>
+
+<div class="auth-provider-wrapper">
+  <slot />
+</div>

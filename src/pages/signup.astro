@@ -1,0 +1,15 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SignupForm from "@/components/auth/SignupForm";
+import AuthProvider from "@/components/auth/AuthProvider.astro";
+---
+
+<BaseLayout title="Create Account | NXTMT" description="Join our community to access exclusive content, services, and special offers.">
+  <AuthProvider>
+    <div class="min-h-[calc(100vh-200px)] flex items-center justify-center py-16 px-4">
+      <div class="w-full max-w-md">
+        <SignupForm client:load />
+      </div>
+    </div>
+  </AuthProvider>
+</BaseLayout>

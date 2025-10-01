@@ -1,0 +1,23 @@
+---
+// This component handles redirects for authenticated routes
+---
+
+<script>
+  // Client-side script to check authentication
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check if user is logged in by looking for token in localStorage
+    const storedUser = localStorage.getItem('wordpressUser');
+    
+    if (!storedUser) {
+      // User is not authenticated, redirect to login
+      window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
+    } else {
+      // User is authenticated, show content
+      document.querySelector('.protected-content')?.classList.remove('hidden');
+    }
+  });
+</script>
+
+<div class="protected-content hidden">
+  <slot />
+</div>
