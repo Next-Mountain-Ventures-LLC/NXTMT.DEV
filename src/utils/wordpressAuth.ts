@@ -4,44 +4,64 @@
  */
 
 // Define base API URL
-const API_BASE = 'https://nxtmt.com/api';
+const API_BASE = 'https://nxtmt.com/wp-json';
 
-// WordPress API endpoints specific to nxtmt.com based on the provided screenshot
+// WordPress application password credentials
+const WP_USERNAME = 'josh@nextmountain.dev';
+const WP_APP_PASSWORD = 'zfOH QAHW dWVP QE0j z2c8 s2Os';
+
+// Create base64 encoded authentication string for HTTP Basic Auth
+const getAuthHeader = () => {
+  const credentials = `${WP_USERNAME}:${WP_APP_PASSWORD}`;
+  const encodedCredentials = btoa(credentials);
+  return `Basic ${encodedCredentials}`;
+};
+
+// WordPress API endpoints for both REST API and custom API
 const API_ENDPOINTS = {
-  // User API endpoints
+  // WordPress REST API endpoints
+  rest: {
+    // Users
+    users: '/wp/v2/users',
+    me: '/wp/v2/users/me',
+    createUser: '/wp/v2/users'
+  },
+  
+  // WordPress API endpoints specific to nxtmt.com from the provided screenshot
+  // Legacy API endpoints - keeping for compatibility
   login: [
-    '/users/login'
+    '/api/users/login'
   ],
   logout: [
-    '/users/logout'
+    '/api/users/logout'
   ],
   register: [
-    '/users/create_user'
+    '/api/users/create_user'
   ],
   me: [
-    '/users/is_user_logged_in', 
-    '/users/get_userdata'
+    '/api/users/is_user_logged_in', 
+    '/api/users/get_userdata'
   ],
   validate: [
-    '/users/validate_auth_cookie'
+    '/api/users/validate_auth_cookie'
   ],
   update: [
-    '/users/update_user'
+    '/api/users/update_user'
   ],
   meta: [
-    '/users/get_user_meta',
-    '/users/add_user_meta',
-    '/users/update_user_meta',
-    '/users/delete_user_meta'
+    '/api/users/get_user_meta',
+    '/api/users/add_user_meta',
+    '/api/users/update_user_meta',
+    '/api/users/delete_user_meta'
   ],
   delete: [
-    '/users/delete_user'
+    '/api/users/delete_user'
   ],
   info: [
-    '/users/get_userinfo'
+    '/api/users/get_userinfo'
   ],
   current: [
-    '/users/get_currentuserinfo'
+    '/api/users/get_currentuserinfo'
   ]
 };
 
@@ -72,7 +92,7 @@ export interface UserProfile {
 /**
  * Try multiple API endpoints until one works
  */
-async function tryEndpoints(endpoints: string[], method: string, body?: object, token?: string): Promise<Response> {
+async function tryEndpoints(endpoints: string[], method: string, body?: object, token?: string, useAuthHeader: boolean = false): Promise<Response> {
   console.log(`Trying ${endpoints.length} possible endpoints for ${method} request`);
   
   const errors: string[] = [];
@@ -87,7 +107,9 @@ async function tryEndpoints(endpoints: string[], method: string, body?: object, 
         'Content-Type': 'application/json',
       };
       
-      if (token) {
+      if (useAuthHeader) {
+        headers['Authorization'] = getAuthHeader();
+      } else if (token) {
         headers['Authorization'] = `Bearer ${token}`;
       }
       
@@ -125,6 +147,42 @@ async function tryEndpoints(endpoints: string[], method: string, body?: object, 
 export const loginUser = async (credentials: LoginCredentials): Promise<UserProfile> => {
   console.log('Attempting login with:', { username: credentials.username, passwordLength: credentials.password.length });
   try {
+    // First try WordPress REST API authentication
+    try {
+      console.log('Attempting WordPress REST API authentication');
+      
+      const response = await fetch(`${API_BASE}/wp/v2/users/me`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': getAuthHeader(),
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        const userData = await response.json();
+        console.log('WordPress REST API authentication successful', userData);
+        
+        return {
+          id: userData.id,
+          username: userData.name || userData.slug,
+          email: userData.email || '',
+          firstName: userData.first_name || '',
+          lastName: userData.last_name || '',
+          avatar: userData.avatar_urls?.['96'] || '',
+          roles: userData.roles || [],
+          token: 'wp_rest_api',
+        };
+      }
+      
+      console.log('WordPress REST API authentication failed, trying JSON API');
+    } catch (error) {
+      console.log('Error with WordPress REST API authentication, falling back to JSON API', error);
+    }
+    
+    // Fallback to legacy JSON API
     // Format request body according to nxtmt.com API requirements
     const requestBody = {
       username: credentials.username,
@@ -166,6 +224,54 @@ export const loginUser = async (credentials: LoginCredentials): Promise<UserProf
 export const registerUser = async (userData: SignupData): Promise<UserProfile> => {
   console.log('Attempting registration with:', { username: userData.username, email: userData.email });
   try {
+    // First try WordPress REST API for user creation
+    try {
+      console.log('Attempting WordPress REST API user creation');
+      
+      // Prepare user data for WordPress REST API
+      const restApiBody = {
+        username: userData.username,
+        email: userData.email,
+        password: userData.password,
+        name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || userData.username,
+        first_name: userData.firstName || '',
+        last_name: userData.lastName || '',
+        roles: ['subscriber']
+      };
+      
+      const response = await fetch(`${API_BASE}/wp/v2/users`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': getAuthHeader()
+        },
+        body: JSON.stringify(restApiBody),
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        const userData = await response.json();
+        console.log('WordPress REST API user creation successful', userData);
+        
+        return {
+          id: userData.id,
+          username: userData.name || userData.slug,
+          email: userData.email || '',
+          firstName: userData.first_name || '',
+          lastName: userData.last_name || '',
+          avatar: userData.avatar_urls?.['96'] || '',
+          roles: userData.roles || [],
+          token: 'wp_rest_api',
+        };
+      }
+      
+      console.log('WordPress REST API user creation failed, trying JSON API');
+    } catch (error) {
+      console.log('Error with WordPress REST API user creation, falling back to JSON API', error);
+    }
+    
+    // Fallback to legacy JSON API
     // Format request body according to nxtmt.com API requirements
     const requestBody = {
       username: userData.username,
@@ -242,6 +348,39 @@ export const logoutUser = async (): Promise<void> => {
 export const getCurrentUser = async (token: string): Promise<UserProfile | null> => {
   console.log('Fetching current user data with token');
   try {
+    // If token is from WordPress REST API, use that method
+    if (token === 'wp_rest_api') {
+      try {
+        console.log('Using WordPress REST API to get current user');
+        const response = await fetch(`${API_BASE}/wp/v2/users/me`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': getAuthHeader()
+          },
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          const userData = await response.json();
+          return {
+            id: userData.id,
+            username: userData.name || userData.slug,
+            email: userData.email || '',
+            firstName: userData.first_name || '',
+            lastName: userData.last_name || '',
+            avatar: userData.avatar_urls?.['96'] || '',
+            roles: userData.roles || [],
+            token: 'wp_rest_api',
+          };
+        }
+        
+        console.log('WordPress REST API get user failed, trying JSON API');
+      } catch (error) {
+        console.log('Error with WordPress REST API get user, falling back', error);
+      }
+    }
+    
     // For nxtmt.com, we need to send the token in the body for user data retrieval
     const requestBody = {
       token: token
@@ -321,7 +460,25 @@ export const updateUserProfile = async (userId: number, profileData: Partial<Use
 export const validateToken = async (token: string): Promise<boolean> => {
   console.log('Validating token');
   try {
-    // Try to use the dedicated token validation endpoint
+    // If token is from WordPress REST API, validate through that API
+    if (token === 'wp_rest_api') {
+      try {
+        const response = await fetch(`${API_BASE}/wp/v2/users/me`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': getAuthHeader()
+          },
+          credentials: 'include'
+        });
+        return response.ok;
+      } catch (error) {
+        console.log('Error validating WordPress REST API token', error);
+        return false;
+      }
+    }
+    
+    // Try to use the dedicated token validation endpoint for legacy tokens
     try {
       const response = await tryEndpoints(API_ENDPOINTS.validate, 'POST', { token });
       return response.ok;

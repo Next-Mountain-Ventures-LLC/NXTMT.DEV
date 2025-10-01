@@ -1,26 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Mail, Key } from 'lucide-react';
 
 const LoginForm: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { login, isLoading, error, clearError } = useAuth();
 
+  useEffect(() => {
+    // Reset form state when the component mounts
+    clearError();
+    setIsSubmitted(false);
+  }, [clearError]);
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
+    setIsSubmitted(true);
     
-    if (!username || !password) {
+    if (!email || !password) {
       return;
     }
 
-    console.log('Login form submitting with:', { username });
+    console.log('Login form submitting with:', { email });
     try {
-      await login({ username, password });
+      // Pass email as username since the API supports both formats
+      await login({ username: email, password });
       console.log('Login form submission completed');
     } catch (error) {
       console.error('Login form submission error:', error);
@@ -44,20 +53,26 @@ const LoginForm: React.FC = () => {
       <form onSubmit={handleSubmit} data-form-type="utility">
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="username" className="text-gray-200 block text-sm">
-              Username
+            <Label htmlFor="email" className="text-gray-200 block text-sm">
+              Email Address
             </Label>
-            <Input
-              id="username"
-              name="username"
-              type="text"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
-              className="w-full bg-black/30 border-white/20 placeholder:text-gray-500"
-              disabled={isLoading}
-            />
+            <div className="relative">
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="w-full bg-black/30 border-white/20 placeholder:text-gray-500 pl-10"
+                disabled={isLoading}
+              />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+            </div>
+            {isSubmitted && !email && (
+              <p className="text-red-500 text-xs mt-1">Email is required</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -69,17 +84,23 @@ const LoginForm: React.FC = () => {
                 Forgot password?
               </a>
             </div>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              className="w-full bg-black/30 border-white/20 placeholder:text-gray-500"
-              disabled={isLoading}
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Your password"
+                className="w-full bg-black/30 border-white/20 placeholder:text-gray-500 pl-10"
+                disabled={isLoading}
+              />
+              <Key className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+            </div>
+            {isSubmitted && !password && (
+              <p className="text-red-500 text-xs mt-1">Password is required</p>
+            )}
           </div>
 
           <Button
@@ -97,6 +118,10 @@ const LoginForm: React.FC = () => {
         <a href="/signup" className="text-primary/80 hover:text-primary font-medium transition">
           Sign Up
         </a>
+      </div>
+      
+      <div className="mt-4 border-t border-white/10 pt-4 text-xs text-center text-gray-500">
+        <p>Using WordPress authentication</p>
       </div>
     </div>
   );

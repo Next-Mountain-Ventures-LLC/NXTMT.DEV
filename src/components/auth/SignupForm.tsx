@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Mail, User, Key } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 
 const SignupForm: React.FC = () => {
@@ -17,7 +17,14 @@ const SignupForm: React.FC = () => {
     agreeTerms: false
   });
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { signup, isLoading, error, clearError } = useAuth();
+  
+  useEffect(() => {
+    // Reset form state when the component mounts
+    clearError();
+    setIsSubmitted(false);
+  }, [clearError]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -36,6 +43,7 @@ const SignupForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
+    setIsSubmitted(true);
     
     console.log('Signup form submitting');
     
@@ -49,6 +57,12 @@ const SignupForm: React.FC = () => {
     if (formData.password !== formData.confirmPassword) {
       console.warn('Passwords do not match');
       setPasswordMatch(false);
+      return;
+    }
+    
+    // If any required fields are missing, don't proceed
+    if (!formData.email || !formData.password || !formData.username) {
+      console.warn('Required fields missing');
       return;
     }
 
@@ -123,64 +137,88 @@ const SignupForm: React.FC = () => {
 
           <div className="space-y-2">
             <Label htmlFor="username" className="text-gray-200 block text-sm">Username</Label>
-            <Input
-              id="username"
-              name="username"
-              type="text"
-              required
-              value={formData.username}
-              onChange={handleChange}
-              placeholder="Choose a username"
-              className="w-full bg-black/30 border-white/20 placeholder:text-gray-500"
-              disabled={isLoading}
-            />
+            <div className="relative">
+              <Input
+                id="username"
+                name="username"
+                type="text"
+                required
+                value={formData.username}
+                onChange={handleChange}
+                placeholder="Choose a username"
+                className="w-full bg-black/30 border-white/20 placeholder:text-gray-500 pl-10"
+                disabled={isLoading}
+              />
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+            </div>
+            {isSubmitted && !formData.username && (
+              <p className="text-red-500 text-xs mt-1">Username is required</p>
+            )}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="email" className="text-gray-200 block text-sm">Email</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="your.email@example.com"
-              className="w-full bg-black/30 border-white/20 placeholder:text-gray-500"
-              disabled={isLoading}
-            />
+            <div className="relative">
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="you@example.com"
+                className="w-full bg-black/30 border-white/20 placeholder:text-gray-500 pl-10"
+                disabled={isLoading}
+              />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+            </div>
+            {isSubmitted && !formData.email && (
+              <p className="text-red-500 text-xs mt-1">Email is required</p>
+            )}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="password" className="text-gray-200 block text-sm">Password</Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Create a password"
-              className={`w-full bg-black/30 border-white/20 placeholder:text-gray-500 ${!passwordMatch ? 'border-red-500' : ''}`}
-              disabled={isLoading}
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                required
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Create a password"
+                className={`w-full bg-black/30 border-white/20 placeholder:text-gray-500 pl-10 ${!passwordMatch ? 'border-red-500' : ''}`}
+                disabled={isLoading}
+              />
+              <Key className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+            </div>
+            {isSubmitted && !formData.password && (
+              <p className="text-red-500 text-xs mt-1">Password is required</p>
+            )}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="confirmPassword" className="text-gray-200 block text-sm">Confirm Password</Label>
-            <Input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              required
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirm your password"
-              className={`w-full bg-black/30 border-white/20 placeholder:text-gray-500 ${!passwordMatch ? 'border-red-500' : ''}`}
-              disabled={isLoading}
-            />
+            <div className="relative">
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                required
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirm your password"
+                className={`w-full bg-black/30 border-white/20 placeholder:text-gray-500 pl-10 ${!passwordMatch ? 'border-red-500' : ''}`}
+                disabled={isLoading}
+              />
+              <Key className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+            </div>
             {!passwordMatch && (
               <p className="text-red-500 text-xs mt-1">Passwords do not match</p>
+            )}
+            {isSubmitted && !formData.confirmPassword && (
+              <p className="text-red-500 text-xs mt-1">Please confirm your password</p>
             )}
           </div>
 
@@ -217,6 +255,10 @@ const SignupForm: React.FC = () => {
         <a href="/login" className="text-primary/80 hover:text-primary font-medium transition">
           Sign In
         </a>
+      </div>
+      
+      <div className="mt-4 border-t border-white/10 pt-4 text-xs text-center text-gray-500">
+        <p>Using WordPress authentication</p>
       </div>
     </div>
   );
