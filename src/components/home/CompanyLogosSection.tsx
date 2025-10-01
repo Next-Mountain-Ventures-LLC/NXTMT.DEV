@@ -8,7 +8,6 @@ import chatgptLogo from '../../assets/img_0556_nw_85450984.png';
 import wordpressLogo from '../../assets/img_0559_nw_3d59bc4b.png';
 import elementorLogo from '../../assets/img_0567_nw_b8fb2713.png';
 import woocommerceLogo from '../../assets/img_0564_nw_e35222cf.png';
-import bloomLogo from '../../assets/img_0568_nw_423e856c.jpeg';
 import pressableLogo from '../../assets/img_0569_nw_4fd13c49.jpeg';
 import css5Logo from '../../assets/img_0563_nw_b242d7cf.jpeg';
 
@@ -90,11 +89,6 @@ const WooCommerceIcon = () => (
   </div>
 );
 
-const BloomIcon = () => (
-  <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
-    <img src={bloomLogo.src} alt="Bloom.io" className="w-6 h-6 object-contain" />
-  </div>
-);
 
 const PressableIcon = () => (
   <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center">
@@ -119,9 +113,8 @@ const CompanyLogosSection: React.FC = () => {
     { name: 'WordPress', icon: <WordPressIcon />, delay: 300 },
     { name: 'Elementor', icon: <ElementorIcon />, delay: 350 },
     { name: 'WooCommerce', icon: <WooCommerceIcon />, delay: 400 },
-    { name: 'Bloom.io', icon: <BloomIcon />, delay: 450 },
-    { name: 'Pressable', icon: <PressableIcon />, delay: 500 },
-    { name: 'CSS5', icon: <CSS5Icon />, delay: 550 } // This has specific styling with strong contrast
+    { name: 'Pressable', icon: <PressableIcon />, delay: 450 },
+    { name: 'CSS5', icon: <CSS5Icon />, delay: 500 } // This has specific styling with strong contrast
   ];
 
   return (

@@ -12,10 +12,6 @@ import ProductCarousel from "@/components/wordpress/ProductCarousel";
 import ContactSection from "@/components/home/ContactSection";
 import AnimatedServicesText from "@/components/home/AnimatedServicesText";
 import CompanyLogosSection from "@/components/home/CompanyLogosSection";
-import BloomEmbed from "@/components/BloomEmbed.astro";
-import BloomEmbedSimple from "@/components/BloomEmbedSimple.astro";
-import BloomEmbedAlternative from "@/components/BloomEmbedAlternative.astro";
-import BloomIframe from "@/components/BloomIframe.astro";
 ---
 
 <BaseLayout
@@ -26,9 +22,6 @@ import BloomIframe from "@/components/BloomIframe.astro";
   <AnimatedServicesText client:load />
   <WorkCarousel client:load />
   <PartnershipSectionSimplified client:load />
-  
-  <BloomIframe />
-  
   <CompanyLogosSection client:load />
   <AboutSection client:load />
   <ServicesSection client:load />
