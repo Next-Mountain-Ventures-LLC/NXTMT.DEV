@@ -117,24 +117,82 @@ export async function updateProductWithEnhancements(productId: number, imageUrl:
       return null;
     }
     
-    // Now update the product with the new media and description
-    const response = await fetch(`${WP_API_URL}/product/${productId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': getAuthHeader()
-      },
-      body: JSON.stringify({
-        content: description,
-        featured_media: mediaId
-      })
-    });
+    // Try both product endpoints
+    const endpoints = [
+      `${WP_API_URL}/product/${productId}`,
+      `${WP_API_URL}/products/${productId}`
+    ];
     
-    if (!response.ok) {
-      throw new Error(`Failed to update product: ${response.statusText}`);
+    let response = null;
+    let lastError = null;
+    
+    // Try each endpoint until one works
+    for (const endpoint of endpoints) {
+      try {
+        console.log(`Attempting to update product using endpoint: ${endpoint}`);
+        
+        // The update payload
+        const updateData = {
+          content: description,
+          featured_media: mediaId
+        };
+        
+        console.log('Update payload:', JSON.stringify(updateData, null, 2));
+        
+        const result = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': getAuthHeader(),
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(updateData)
+        });
+        
+        console.log(`Response from ${endpoint}:`, {
+          status: result.status,
+          statusText: result.statusText,
+          headers: Object.fromEntries(result.headers.entries())
+        });
+        
+        if (result.ok) {
+          response = result;
+          break; // Found a working endpoint
+        } else {
+          // Store error for debugging
+          const errorText = await result.text();
+          lastError = `${endpoint} (${result.status}): ${errorText}`;
+          console.error(`Error from ${endpoint}:`, errorText);
+        }
+      } catch (endpointError) {
+        console.error(`Error with endpoint ${endpoint}:`, endpointError);
+        lastError = endpointError instanceof Error ? endpointError.message : String(endpointError);
+      }
     }
     
-    return await response.json();
+    if (!response) {
+      throw new Error(lastError || 'All product update endpoints failed');
+    }
+    
+    // Parse the response
+    const responseText = await response.text();
+    console.log('Success response text:', responseText);
+    
+    try {
+      return JSON.parse(responseText);
+    } catch (parseError) {
+      console.error('Error parsing response:', parseError);
+      // If we can't parse the response but it was a successful status code,
+      // we'll consider it a success but return a basic object
+      if (response.ok) {
+        return { 
+          id: productId,
+          updated: true,
+          featured_media: mediaId
+        };
+      }
+      throw new Error('Failed to parse response from product update');
+    }
   } catch (error) {
     console.error('Error updating product:', error);
     return null;
@@ -150,6 +208,8 @@ export async function updateProductWithEnhancements(productId: number, imageUrl:
  */
 async function createMediaFromUrl(imageUrl: string, title: string): Promise<number | null> {
   try {
+    console.log(`Fetching image from URL: ${imageUrl}`);
+    
     // First, fetch the image data
     const imageResponse = await fetch(imageUrl);
     
@@ -157,31 +217,113 @@ async function createMediaFromUrl(imageUrl: string, title: string): Promise<numb
       throw new Error(`Failed to fetch image: ${imageResponse.statusText}`);
     }
     
+    // Check content type to determine file extension
+    const contentType = imageResponse.headers.get('content-type');
+    console.log(`Image content type: ${contentType}`);
+    
+    // Determine file extension based on content type
+    let fileExtension = 'svg';
+    if (contentType) {
+      if (contentType.includes('jpeg') || contentType.includes('jpg')) {
+        fileExtension = 'jpg';
+      } else if (contentType.includes('png')) {
+        fileExtension = 'png';
+      } else if (contentType.includes('gif')) {
+        fileExtension = 'gif';
+      } else if (contentType.includes('webp')) {
+        fileExtension = 'webp';
+      }
+    }
+    
     // Get the image data as blob
     const imageBlob = await imageResponse.blob();
+    console.log(`Image blob size: ${Math.round(imageBlob.size / 1024)} KB`);
     
     // Create a FormData object to send the file
     const formData = new FormData();
-    formData.append('file', imageBlob, `${title}.svg`);
+    const filename = `${title.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.${fileExtension}`;
+    console.log(`Creating media with filename: ${filename}`);
+    
+    formData.append('file', imageBlob, filename);
     formData.append('title', title);
     formData.append('caption', `Generated image for ${title}`);
     formData.append('alt_text', title);
     
-    // Upload the image to WordPress
-    const uploadResponse = await fetch(`${WP_API_URL}/media`, {
-      method: 'POST',
-      headers: {
-        'Authorization': getAuthHeader()
-      },
-      body: formData
-    });
-    
-    if (!uploadResponse.ok) {
-      throw new Error(`Failed to upload media: ${uploadResponse.statusText}`);
+    // Additional debugging for FormData (this won't show the actual file content)
+    console.log('FormData entries:');
+    for (const [key, value] of formData.entries()) {
+      if (key === 'file') {
+        console.log(`- ${key}: [File object]`);
+      } else {
+        console.log(`- ${key}: ${value}`);
+      }
     }
     
-    const mediaData = await uploadResponse.json();
-    return mediaData.id;
+    // Try different media endpoints
+    const mediaEndpoints = [
+      `${WP_API_URL}/media`,
+      `${WP_API_URL.replace('/wp/v2', '')}/wp/v2/media`
+    ];
+    
+    let uploadResponse = null;
+    let lastError = null;
+    
+    // Try each endpoint
+    for (const endpoint of mediaEndpoints) {
+      try {
+        console.log(`Attempting to upload media to: ${endpoint}`);
+        
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Authorization': getAuthHeader(),
+            // Do not set Content-Type header when using FormData - the browser will set it automatically with the boundary
+          },
+          body: formData
+        });
+        
+        console.log(`Media upload response status: ${response.status}`);
+        
+        if (response.ok) {
+          uploadResponse = response;
+          break; // Found working endpoint
+        } else {
+          // Log the error response
+          const errorText = await response.text();
+          lastError = `${endpoint} (${response.status}): ${errorText}`;
+          console.error(`Media upload error from ${endpoint}:`, errorText);
+        }
+      } catch (endpointError) {
+        console.error(`Error with media endpoint ${endpoint}:`, endpointError);
+        lastError = endpointError instanceof Error ? endpointError.message : String(endpointError);
+      }
+    }
+    
+    if (!uploadResponse) {
+      throw new Error(lastError || 'All media upload endpoints failed');
+    }
+    
+    // Parse the upload response
+    const mediaText = await uploadResponse.text();
+    console.log(`Media upload success response: ${mediaText.substring(0, 200)}...`);
+    
+    try {
+      const mediaData = JSON.parse(mediaText);
+      console.log(`Successfully created media with ID: ${mediaData.id}`);
+      return mediaData.id;
+    } catch (parseError) {
+      console.error('Error parsing media response:', parseError);
+      
+      // Try to extract the ID using regex if parsing failed
+      const idMatch = mediaText.match(/"id":(\d+)/);
+      if (idMatch && idMatch[1]) {
+        const extractedId = parseInt(idMatch[1], 10);
+        console.log(`Extracted media ID from response: ${extractedId}`);
+        return extractedId;
+      }
+      
+      throw new Error('Failed to parse media upload response');
+    }
   } catch (error) {
     console.error('Error creating media from URL:', error);
     return null;

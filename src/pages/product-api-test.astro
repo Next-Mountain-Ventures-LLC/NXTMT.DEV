@@ -1,0 +1,14 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ProductApiTester from "@/components/wordpress/ProductApiTester";
+---
+
+<BaseLayout 
+  title="WordPress Product API Test" 
+  description="Test and debug WordPress product API integration"
+>
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-8">WordPress Product API Test</h1>
+    <ProductApiTester client:load />
+  </div>
+</BaseLayout>
