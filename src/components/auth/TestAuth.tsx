@@ -11,7 +11,7 @@ const TestAuth: React.FC = () => {
   const API_BASE_URL = 'https://nxtmt.com/wp-json';  // Base API URL for WordPress REST API
   
   // WordPress application password credentials
-  const WP_USERNAME = 'admin'; // This should be the WordPress username
+  const WP_USERNAME = 'josh@nextmountain.dev'; // WordPress username provided by user
   const WP_APP_PASSWORD = 'zfOH QAHW dWVP QE0j z2c8 s2Os'; // Application password provided
   
   // Create base64 encoded authentication string for HTTP Basic Auth
