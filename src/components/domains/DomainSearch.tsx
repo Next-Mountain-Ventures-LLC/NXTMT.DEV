@@ -7,7 +7,7 @@ import {
   CardContent,
 } from '@/components/ui/card';
 import { 
-  simulateCheckDomainAvailability,
+  checkDomainAvailability,
   POPULAR_TLDS
 } from '@/utils/namecheap';
 
@@ -66,8 +66,8 @@ const DomainSearch: React.FC = () => {
         return;
       }
 
-      // Use our Namecheap API utility (simulation for now)
-      const apiResults = await simulateCheckDomainAvailability([cleanDomainName], searchAllTlds);
+      // Use our Namecheap API utility with real API
+      const apiResults = await checkDomainAvailability([cleanDomainName], searchAllTlds);
       
       // Transform API results to our component's format
       const transformedResults = apiResults.map((result: DomainAvailability): DomainResult => {
@@ -108,7 +108,20 @@ const DomainSearch: React.FC = () => {
       setSearchPerformed(true);
     } catch (err) {
       console.error('Domain search error:', err);
-      setError(err instanceof Error ? err.message : 'An error occurred while searching for domains');
+      
+      // Display a more user-friendly error message
+      if (err instanceof Error) {
+        if (err.message.includes('API request failed')) {
+          setError('Unable to connect to the domain search service. Please try again later.');
+        } else {
+          setError(err.message);
+        }
+      } else {
+        setError('An error occurred while searching for domains. Please try again later.');
+      }
+      
+      // Clear any previous results to avoid confusion
+      setResults([]);
     } finally {
       setIsSearching(false);
     }

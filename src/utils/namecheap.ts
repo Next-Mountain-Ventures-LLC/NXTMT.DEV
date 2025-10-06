@@ -4,20 +4,15 @@
  * This file contains utilities for interacting with the Namecheap API
  * to check domain availability and handle domain registrations.
  * 
- * Note: This is a client-side simulation of the Namecheap API.
- * In a production environment, you would need to implement a server-side
- * proxy to make the actual API calls to avoid CORS and IP validation issues.
+ * This integrates with our server-side API proxy that handles the 
+ * actual Namecheap API calls with proper authentication.
  */
 
-// Namecheap API credentials - stored here for demonstration
-// In a real implementation, these would be kept server-side
-const API_USER = 'nextmountain'; // API username 
-const API_KEY = 'b73dec8a04e245a78e9c531a5e43db86'; // API key
-const USER_NAME = API_USER; // Usually the same as API_USER
-const CLIENT_IP = '127.0.0.1'; // Server's public IP address
+// API endpoint for our server that proxies Namecheap requests
+const DOMAIN_API_ENDPOINT = 'https://api.new.website/api/domains/check';
 
-// These credentials would be used server-side only
-// Client-side code would call a server endpoint that uses these credentials
+// API credentials are stored securely on the server
+// We don't need to include them in client-side code
 
 // Common TLDs to check
 export const POPULAR_TLDS = [
@@ -71,7 +66,7 @@ export interface DomainAvailability {
  */
 
 /**
- * Check if domains are available - Client-side simulation
+ * Check if domains are available using our server API
  * @param domains Array of domains to check (without TLD if checkAllTlds is true)
  * @param checkAllTlds Whether to check all popular TLDs for each domain
  * @returns Promise with array of domain availability results
@@ -80,19 +75,64 @@ export const checkDomainAvailability = async (
   domains: string[],
   checkAllTlds = false
 ): Promise<DomainAvailability[]> => {
-  // This is a stub that would call your backend API
-  console.log('In a real implementation, this would call your backend API with:', {
-    domains,
-    checkAllTlds,
-    credentials: {
-      ApiUser: API_USER,
-      UserName: USER_NAME,
-      // ApiKey would be server-side only
+  try {
+    // Prepare domains to check
+    let domainsToCheck: string[] = [];
+    
+    if (checkAllTlds) {
+      domains.forEach(domain => {
+        // Make sure the domain doesn't already have a TLD
+        const baseDomain = domain.includes('.') 
+          ? domain.substring(0, domain.lastIndexOf('.')) 
+          : domain;
+          
+        POPULAR_TLDS.forEach(tld => {
+          domainsToCheck.push(`${baseDomain}${tld}`);
+        });
+      });
+    } else {
+      domainsToCheck = domains;
     }
-  });
-  
-  // For now, we'll just call our simulation function
-  return simulateCheckDomainAvailability(domains, checkAllTlds);
+
+    // Call our server-side API endpoint
+    const response = await fetch(DOMAIN_API_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ domains: domainsToCheck }),
+    });
+
+    // Check if the request was successful
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`API request failed: ${response.status} ${errorText}`);
+    }
+
+    // Parse the JSON response
+    const data = await response.json();
+    
+    if (data.error) {
+      throw new Error(data.error);
+    }
+    
+    // Map the API response to our interface
+    return data.domains.map((domain: any): DomainAvailability => ({
+      domain: domain.name,
+      available: domain.available,
+      price: domain.price || getPricingForDomain(domain.name),
+      errorMessage: domain.error
+    }));
+  } catch (error) {
+    console.error('Error checking domain availability:', error);
+    
+    // Return an error result for each domain
+    return domains.map(domain => ({
+      domain,
+      available: false,
+      errorMessage: error instanceof Error ? error.message : String(error)
+    }));
+  }
 };
 
 /**
@@ -118,52 +158,4 @@ export const getPricingForDomain = (domain: string): number => {
   }
 };
 
-/**
- * For client-side implementation, we'll create a simulated version
- * This will avoid CORS issues and ClientIP validation requirements
- */
-export const simulateCheckDomainAvailability = async (
-  domains: string[],
-  checkAllTlds = false
-): Promise<DomainAvailability[]> => {
-  // Simulate a network delay
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
-  // If checkAllTlds is true, expand each domain with all TLDs
-  let domainsToCheck: string[] = [];
-  
-  if (checkAllTlds) {
-    domains.forEach(domain => {
-      // Make sure the domain doesn't already have a TLD
-      const baseDomain = domain.includes('.') 
-        ? domain.substring(0, domain.lastIndexOf('.')) 
-        : domain;
-        
-      POPULAR_TLDS.forEach(tld => {
-        domainsToCheck.push(`${baseDomain}${tld}`);
-      });
-    });
-  } else {
-    domainsToCheck = domains;
-  }
-  
-  // Generate simulated results
-  return domainsToCheck.map(domain => {
-    const tld = domain.substring(domain.lastIndexOf('.'));
-    
-    // Make common TLDs less likely to be available
-    const availabilityChance = tld === '.com' ? 0.2 : 
-                               tld === '.net' || tld === '.org' ? 0.4 : 0.7;
-    
-    // Simulate some special cases for testing
-    const isSpecialCase = domain.includes('test') || 
-                          domain.includes('example') ||
-                          domain.includes('nextmountain');
-    
-    return {
-      domain,
-      available: isSpecialCase ? true : Math.random() > (1 - availabilityChance),
-      price: getPricingForDomain(domain)
-    };
-  });
-};
+// Simulation function has been removed as we're using the real API now
