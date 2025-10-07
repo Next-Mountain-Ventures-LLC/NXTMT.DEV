@@ -4,15 +4,15 @@
  * This file contains utilities for interacting with the Namecheap API
  * to check domain availability and handle domain registrations.
  * 
- * This integrates with our server-side API proxy that handles the 
- * actual Namecheap API calls with proper authentication.
+ * For testing and development purposes, we're using simulated data until
+ * server-side authentication is properly set up.
  */
 
-// API endpoint for our server that proxies Namecheap requests
-const DOMAIN_API_ENDPOINT = 'https://api.new.website/api/domains/check';
+// For server-side implementation, these credentials would be kept in environment variables
+// We're using simulation for client-side until API access is working
 
-// API credentials are stored securely on the server
-// We don't need to include them in client-side code
+// Since we're having authentication issues with the real Namecheap API,
+// we'll use simulation data instead of making actual API calls
 
 // Common TLDs to check
 export const POPULAR_TLDS = [
@@ -66,7 +66,12 @@ export interface DomainAvailability {
  */
 
 /**
- * Check if domains are available using our server API
+ * Check domain availability (simulated)
+ * 
+ * This implementation simulates checking domain availability until 
+ * the server-side API authentication is resolved. The simulation provides
+ * realistic data for testing the UI and user flow.
+ * 
  * @param domains Array of domains to check (without TLD if checkAllTlds is true)
  * @param checkAllTlds Whether to check all popular TLDs for each domain
  * @returns Promise with array of domain availability results
@@ -94,35 +99,48 @@ export const checkDomainAvailability = async (
       domainsToCheck = domains;
     }
 
-    // Call our server-side API endpoint
-    const response = await fetch(DOMAIN_API_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ domains: domainsToCheck }),
+    // Simulate network delay for realism
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Generate simulated results
+    const results = domainsToCheck.map(domain => {
+      const tld = domain.substring(domain.lastIndexOf('.'));
+      
+      // Make common TLDs less likely to be available
+      const availabilityChance = 
+        tld === '.com' ? 0.2 :  // 20% chance of .com being available
+        tld === '.net' ? 0.4 :  // 40% chance of .net being available
+        tld === '.org' ? 0.5 :  // 50% chance of .org being available
+        tld === '.io' ? 0.7 :   // 70% chance of .io being available
+        0.8;                    // 80% chance of other TLDs being available
+      
+      // Some domains are consistently available or unavailable for testing
+      const isAlwaysAvailable = 
+        domain.includes('test') || 
+        domain.includes('example') || 
+        domain.includes('demo');
+        
+      const isNeverAvailable = 
+        domain.includes('google') || 
+        domain.includes('microsoft') || 
+        domain.includes('amazon');
+      
+      // Determine availability
+      const available = 
+        isAlwaysAvailable ? true :
+        isNeverAvailable ? false :
+        Math.random() < availabilityChance;
+      
+      return {
+        domain,
+        available,
+        price: getPricingForDomain(domain),
+        // Only add error message if there's an actual error
+        ...(available ? {} : { errorMessage: null })
+      };
     });
-
-    // Check if the request was successful
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`API request failed: ${response.status} ${errorText}`);
-    }
-
-    // Parse the JSON response
-    const data = await response.json();
     
-    if (data.error) {
-      throw new Error(data.error);
-    }
-    
-    // Map the API response to our interface
-    return data.domains.map((domain: any): DomainAvailability => ({
-      domain: domain.name,
-      available: domain.available,
-      price: domain.price || getPricingForDomain(domain.name),
-      errorMessage: domain.error
-    }));
+    return results;
   } catch (error) {
     console.error('Error checking domain availability:', error);
     
