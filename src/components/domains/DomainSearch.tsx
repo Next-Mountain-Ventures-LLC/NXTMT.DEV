@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, ArrowRight, Check, AlertCircle, Globe, Loader2 } from 'lucide-react';
+import { Search, ArrowRight, Check, AlertCircle, Globe, Loader2, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -10,6 +10,7 @@ import {
   checkDomainAvailability,
   POPULAR_TLDS
 } from '@/utils/namecheap';
+import DomainCheckout from './DomainCheckout';
 
 // Define domain availability interface locally
 interface DomainAvailability {
@@ -41,6 +42,10 @@ const DomainSearch: React.FC = () => {
   
   // Track whether we're searching for all TLDs
   const [searchAllTlds, setSearchAllTlds] = useState(true);
+  
+  // Cart and checkout state
+  const [cart, setCart] = useState<DomainResult[]>([]);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -128,12 +133,53 @@ const DomainSearch: React.FC = () => {
   };
 
   const handleAddToCart = (domain: DomainResult) => {
-    // In a real implementation, this would add the domain to a shopping cart
-    alert(`Added ${domain.name}${domain.extension} to cart for $${domain.price}/year`);
+    // Check if domain is already in cart
+    if (!cart.some(item => item.domain === domain.domain)) {
+      setCart([...cart, domain]);
+    }
+  };
+  
+  const handleRemoveFromCart = (domainName: string) => {
+    setCart(cart.filter(domain => domain.domain !== domainName));
+  };
+  
+  const openCheckout = () => {
+    setIsCheckoutOpen(true);
+  };
+  
+  const closeCheckout = () => {
+    setIsCheckoutOpen(false);
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-4xl mx-auto relative">
+      {/* Shopping Cart Button */}
+      {cart.length > 0 && (
+        <div className="absolute right-0 top-0 z-10">
+          <Button
+            onClick={openCheckout}
+            variant="outline"
+            className="flex items-center gap-2 bg-white"
+          >
+            <ShoppingCart className="h-4 w-4" />
+            <span>Cart ({cart.length})</span>
+          </Button>
+        </div>
+      )}
+      
+      {/* Checkout Modal */}
+      {isCheckoutOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="max-w-2xl w-full bg-white rounded-lg shadow-xl">
+            <DomainCheckout 
+              selectedDomains={cart} 
+              onRemoveDomain={handleRemoveFromCart}
+              onClose={closeCheckout} 
+            />
+          </div>
+        </div>
+      )}
+      
       <form onSubmit={handleSearch} className="relative">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="relative flex-grow">
@@ -272,11 +318,18 @@ const DomainSearch: React.FC = () => {
                       {domain.available ? (
                         <Button 
                           onClick={() => handleAddToCart(domain)}
-                          variant="default" 
+                          variant={cart.some(item => item.domain === domain.domain) ? "outline" : "default"}
                           size="sm"
                           className="ml-4 md:ml-0"
+                          disabled={cart.some(item => item.domain === domain.domain)}
                         >
-                          Add to Cart
+                          {cart.some(item => item.domain === domain.domain) ? (
+                            <>
+                              <Check className="mr-1 h-4 w-4" /> In Cart
+                            </>
+                          ) : (
+                            "Add to Cart"
+                          )}
                         </Button>
                       ) : (
                         <Button 
