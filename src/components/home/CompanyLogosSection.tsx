@@ -19,17 +19,14 @@ interface LogoItemProps {
 
 const LogoItem: React.FC<LogoItemProps> = ({ name, icon, delay }) => {
   return (
-    <div 
-      className="flex items-center bg-gradient-to-r from-primary/30 to-primary/20 backdrop-blur-sm border border-primary/60 rounded-lg p-3 gap-3 transform hover:scale-105 transition-all duration-300"
-      style={{ 
-        animationDelay: `${delay}ms`,
-        textShadow: '0 0 1px rgba(255,255,255,0.5)'
-      }}
+    <div
+      className="logo-item flex items-center bg-gradient-to-r from-primary/30 to-primary/20 backdrop-blur-sm border border-primary/60 rounded-lg p-3 gap-3 transform hover:scale-105 transition-all duration-300"
+      style={{ animationDelay: `${delay}ms` } as React.CSSProperties}
     >
       <div className="flex-shrink-0">
         {icon}
       </div>
-      <div className="font-bold text-sm text-white" style={{ filter: 'brightness(1.2)' }}>{name}</div>
+      <div className="logo-name font-bold text-sm text-white">{name}</div>
     </div>
   );
 };
