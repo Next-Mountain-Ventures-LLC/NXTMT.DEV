@@ -152,13 +152,14 @@ const PartnershipSection: React.FC = () => {
             we're here to help take things to the next level.
           </p>
           
-          <Button 
-            size="lg"
-            className="bg-primary/90 hover:bg-primary shadow-[0_0_15px_rgba(239,68,68,0.5)] hover:shadow-[0_0_20px_rgba(239,68,68,0.8)] transition-all duration-300 font-medium rounded-full px-6 py-4 text-sm"
-            onClick={() => window.open("https://api.new.website/api/submit-form/?form=contact", "_blank")}
-          >
-            Schedule a Consultation
-          </Button>
+          <a href="/#contact">
+            <Button
+              size="lg"
+              className="bg-primary/90 hover:bg-primary shadow-[0_0_15px_rgba(239,68,68,0.5)] hover:shadow-[0_0_20px_rgba(239,68,68,0.8)] transition-all duration-300 font-medium rounded-full px-6 py-4 text-sm"
+            >
+              Schedule a Consultation
+            </Button>
+          </a>
         </div>
       </div>
     </section>
