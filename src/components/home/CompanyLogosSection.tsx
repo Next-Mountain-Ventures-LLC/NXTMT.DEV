@@ -148,14 +148,21 @@ const CompanyLogosSection: React.FC = () => {
         </div>
       </div>
       
-      {/* CSS for the animation */}
-      <style jsx>{`
+      <style>{`
         .logos-container > div {
           opacity: 0;
           transform: translateY(20px);
           animation: fadeInUp 0.5s ease forwards;
         }
-        
+
+        .logo-item {
+          text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+
+        .logo-name {
+          filter: brightness(1.2);
+        }
+
         @keyframes fadeInUp {
           from {
             opacity: 0;
