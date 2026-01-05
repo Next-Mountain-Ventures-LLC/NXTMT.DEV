@@ -25,9 +25,10 @@ export default function ContactForm() {
         formDataObj.append(key, value);
       });
 
-      const response = await fetch("https://api.new.website/api/submit-form/", {
+      // TODO: Configure your form submission endpoint
+      // Options: Formspree, EmailJS, Netlify Forms, or your own backend API
+      const response = await fetch("/api/submit-form/", {
         method: "POST",
-        // Don't manually set Content-Type for FormData - browser will add boundary
         body: formDataObj,
       });
 
