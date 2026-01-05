@@ -70,7 +70,7 @@ const PartnershipSection: React.FC = () => {
       ],
       icon: <Rocket className="h-8 w-8 text-white" />,
       buttonText: "Launch Your Site",
-      buttonLink: "https://api.new.website/api/submit-form/?form=launch-request",
+      buttonLink: "/#contact",
       primaryColor: "bg-primary",
       secondaryColor: "text-primary-foreground/80"
     },
@@ -86,7 +86,7 @@ const PartnershipSection: React.FC = () => {
       ],
       icon: <TreeDeciduous className="h-8 w-8 text-white" />,
       buttonText: "Grow Your Business",
-      buttonLink: "https://api.new.website/api/submit-form/?form=grow-request",
+      buttonLink: "/#contact",
       primaryColor: "bg-secondary",
       secondaryColor: "text-secondary-foreground/80"
     },
@@ -102,7 +102,7 @@ const PartnershipSection: React.FC = () => {
       ],
       icon: <Handshake className="h-8 w-8 text-white" />,
       buttonText: "Apply for Partnership",
-      buttonLink: "https://api.new.website/api/submit-form/?form=partner-application",
+      buttonLink: "/#contact",
       primaryColor: "bg-accent",
       secondaryColor: "text-accent-foreground/80"
     }
