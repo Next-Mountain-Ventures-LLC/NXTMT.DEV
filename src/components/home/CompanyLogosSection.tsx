@@ -1,15 +1,15 @@
 import React from 'react';
-import astroLogo from '../../assets/img_0562_nw_e507d3a0.png';
-import acuityLogo from '../../assets/img_0554_nw_162f879e.png';
-import twilioLogo from '../../assets/img_0558_nw_a452dfbf.png';
-import stripeLogo from '../../assets/img_0553_nw_b750080b.png';
-import squareLogo from '../../assets/img_0555_nw_531214a0.png';
-import chatgptLogo from '../../assets/img_0556_nw_85450984.png';
-import wordpressLogo from '../../assets/img_0559_nw_3d59bc4b.png';
-import elementorLogo from '../../assets/img_0567_nw_b8fb2713.png';
-import woocommerceLogo from '../../assets/img_0564_nw_e35222cf.png';
-import pressableLogo from '../../assets/img_0569_nw_4fd13c49.jpeg';
-import css5Logo from '../../assets/img_0563_nw_b242d7cf.jpeg';
+import astroLogo from '@/assets/img_0562_nw_e507d3a0.png';
+import acuityLogo from '@/assets/img_0554_nw_162f879e.png';
+import twilioLogo from '@/assets/img_0558_nw_a452dfbf.png';
+import stripeLogo from '@/assets/img_0553_nw_b750080b.png';
+import squareLogo from '@/assets/img_0555_nw_531214a0.png';
+import chatgptLogo from '@/assets/img_0556_nw_85450984.png';
+import wordpressLogo from '@/assets/img_0559_nw_3d59bc4b.png';
+import elementorLogo from '@/assets/img_0567_nw_b8fb2713.png';
+import woocommerceLogo from '@/assets/img_0564_nw_e35222cf.png';
+import pressableLogo from '@/assets/img_0569_nw_4fd13c49.jpeg';
+import css5Logo from '@/assets/img_0563_nw_b242d7cf.jpeg';
 
 interface LogoItemProps {
   name: string;
