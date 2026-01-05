@@ -21,9 +21,6 @@ const description = "We build digital experiences that inspire. NXTMT is a creat
 
 <html lang="en">
   <head>
-    <!-- Anti-reload script placed first, before anything else -->
-    <script is:inline src="/scripts/stop-all-reloads.js"></script>
-    
     <HeadSEO title={title} description={description} />
     
     <!-- Other head content -->
@@ -49,23 +46,5 @@ const description = "We build digital experiences that inspire. NXTMT is a creat
       </main>
       <Footer />
     </div>
-    
-    <!-- Prevent new.website script from running -->
-    <script is:inline>
-      // Block any attempts to load new.website script
-      (function() {
-        const newWebsiteScript = document.querySelector('script[src*="new.website"]');
-        if (newWebsiteScript) {
-          console.warn('Removing new.website script');
-          newWebsiteScript.remove();
-        }
-        
-        // Create a dummy version to satisfy dependencies
-        window.newWebsite = {
-          init: function() { console.log('Dummy init'); },
-          reload: function() { console.log('Reload prevented'); return false; }
-        };
-      })();
-    </script>
   </body>
 </html>
