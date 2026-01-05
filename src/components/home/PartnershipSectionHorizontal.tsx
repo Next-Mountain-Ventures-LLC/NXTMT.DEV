@@ -138,7 +138,7 @@ const PartnershipSectionHorizontal: React.FC = () => {
       ],
       icon: <Rocket className="h-6 w-6 text-primary" />,
       buttonText: "Launch Your Site",
-      buttonLink: "https://api.new.website/api/submit-form/?form=launch-request",
+      buttonLink: "/#contact",
       color: "bg-primary",
       price: "Starting at $299"
     },
@@ -170,7 +170,7 @@ const PartnershipSectionHorizontal: React.FC = () => {
       ],
       icon: <TreeDeciduous className="h-6 w-6 text-secondary" />,
       buttonText: "Grow Your Business",
-      buttonLink: "https://api.new.website/api/submit-form/?form=grow-request",
+      buttonLink: "/#contact",
       color: "bg-secondary",
       price: "Starting at $1,500"
     },
@@ -202,7 +202,7 @@ const PartnershipSectionHorizontal: React.FC = () => {
       ],
       icon: <Handshake className="h-6 w-6 text-accent" />,
       buttonText: "Apply for Partnership",
-      buttonLink: "https://api.new.website/api/submit-form/?form=partner-application",
+      buttonLink: "/#contact",
       color: "bg-accent"
     }
   ];
@@ -255,7 +255,7 @@ const PartnershipSectionHorizontal: React.FC = () => {
           <Button 
             size="lg"
             className="bg-primary/90 hover:bg-primary shadow-[0_0_15px_rgba(239,68,68,0.5)] hover:shadow-[0_0_20px_rgba(239,68,68,0.8)] transition-all duration-300 font-medium rounded-full px-6 py-4 text-sm"
-            onClick={() => window.open("https://api.new.website/api/submit-form/?form=contact", "_blank")}
+            onClick={() => window.location.href = "/#contact"}
           >
             Schedule a Consultation
           </Button>
